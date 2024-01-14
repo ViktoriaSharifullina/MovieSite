@@ -13,6 +13,9 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
+    'tmdb' => [
+        'api_key' => env('TMDB_API_KEY'),
+    ],
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),

@@ -22,6 +22,7 @@
                     <li class="menu-list-item">Movies</li>
                     <li class="menu-list-item">Series</li>
                     <li class="menu-list-item">Popular</li>
+                    <li class="menu-list-item">Communities</li>
                 </ul>
             </div>
             <div class="search-container">
@@ -46,6 +47,24 @@
     </div>
     <div class="container">
         <div class="content-container">
+            <div class="featured-img">
+                <img src="{{ 'https://image.tmdb.org/t/p/original/' . $featuredMovie['backdrop_path'] }}" alt="{{ $featuredMovie['title'] }} Backdrop">
+            </div>
+            <div class="movie-details">
+                <div class="title">{{ $featuredMovie['title'] }}</div>
+                <ul class="facts">
+                    <li>
+                        <div class="release-date">{{ $featuredMovie['formatted_release_date'] }}</div>
+                    </li>
+                    <li>
+                        <div class="genres">{{ implode(', ', $featuredMovie['genre_names']) }}</div>
+                    </li>
+                    <li>
+                        <div class="runtime">{{ $featuredMovie['formatted_runtime'] }}</div>
+                    </li>
+                </ul>
+                <div class="desc">{{ $featuredMovie['overview'] }}</div>
+            </div>
 
         </div>
     </div>
