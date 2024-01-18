@@ -1,24 +1,24 @@
-document
-    .querySelectorAll(".row-movie .movie-container")
-    .forEach((container) => {
-        const bookmarkBtn = container.querySelector(".bookmark-btn");
+const arrows = document.querySelectorAll(".arrow");
+const movieLists = document.querySelectorAll(".movie-list");
 
-        container.addEventListener("mouseenter", () => {
-            bookmarkBtn.style.opacity = 1; // Показываем кнопку при наведении
-        });
+arrows.forEach((arrow, i) => {
+    const itemNumber = movieLists[i].querySelectorAll("img").length;
+    const visibleItems = 7; // Количество видимых элементов
+    const moveCount = 2; // Количество элементов, перемещаемых за каждый клик
+    const maxClicks = Math.ceil((itemNumber - visibleItems) / moveCount);
 
-        container.addEventListener("mouseleave", () => {
-            bookmarkBtn.style.opacity = 0; // Скрываем кнопку при уходе курсора
-        });
+    let clickCounter = 0;
 
-        bookmarkBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-
-            // Ваш код для обработки клика на кнопку...
-
-            // Например, добавить анимацию с использованием GSAP
-            gsap.to(bookmarkBtn, {
-                // Ваши настройки анимации...
-            });
-        });
+    arrow.addEventListener("click", () => {
+        if (clickCounter < maxClicks) {
+            movieLists[i].style.transform = `translateX(${
+                movieLists[i].computedStyleMap().get("transform")[0].x.value -
+                230 * moveCount
+            }px)`;
+            clickCounter++;
+        } else {
+            movieLists[i].style.transform = "translateX(0)";
+            clickCounter = 0;
+        }
     });
+});

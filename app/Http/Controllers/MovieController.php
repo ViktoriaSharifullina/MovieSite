@@ -8,38 +8,48 @@ use Carbon\Carbon;
 
 class MovieController extends Controller
 {
+    private $api_key;
+
+    public function __construct()
+    {
+        $this->api_key = config('services.tmdb.api_key');
+    }
 
     public function index()
     {
+        $popular = $this->getPopularMovies();
+        $upcoming = $this->getUpcomingMovies();
+
+        $bannerMovie = $this->getBannerMovie($popular);
+        $popularMovies = $this->getOtherMovies($popular);
+        $upcomingMovies = $this->getOtherMovies($upcoming);
+
+        return view('home', compact('bannerMovie', 'popularMovies', 'upcomingMovies'));
+    }
+
+    private function getPopularMovies()
+    {
         $response = Http::get('https://api.themoviedb.org/3/discover/movie', [
-            'api_key' => config('services.tmdb.api_key'),
+            'api_key' => $this->api_key,
             'sort_by' => 'popularity.desc',
         ]);
 
-        $movies = $response->json()['results'];
-        $featuredMovie = $this->getFeaturedMovie($movies[0]);
-        $otherMovies = $this->getOtherMovies($movies);
-
-        return view('home', compact('featuredMovie', 'otherMovies'));
+        return array_slice($response->json()['results'], 0, 12);
     }
 
-    // public function index($start = 0)
-    // {
-    //     $response = Http::get('https://api.themoviedb.org/3/discover/movie', [
-    //         'api_key' => config('services.tmdb.api_key'),
-    //         'sort_by' => 'popularity.desc',
-    //         'page' => $start / 20 + 1,
-    //     ]);
-
-    //     $movies = $response->json()['results'];
-    //     $featuredMovie = $this->getFeaturedMovie($movies[0]);
-    //     $otherMovies = $this->getOtherMovies($movies);
-
-    //     return view('home', compact('featuredMovie', 'otherMovies', 'start'));
-    // }
-
-    public function getFeaturedMovie($movie)
+    public function getUpcomingMovies()
     {
+        $response = Http::get('https://api.themoviedb.org/3/movie/upcoming', [
+            'api_key' => $this->api_key
+        ]);
+
+        return array_slice($response->json()['results'], 0, 12);
+    }
+
+    public function getBannerMovie($movies)
+    {
+        $random_id = array_rand($movies);
+        $movie = $movies[$random_id];
         $movieDetails = $this->getMovieDetails($movie['id']);
 
         if ($movieDetails) {
@@ -57,7 +67,14 @@ class MovieController extends Controller
             $movieDetails = $this->getMovieDetails($movie['id']);
 
             if ($movieDetails) {
-                $movie['primary_genre'] = $this->getGenresName($movieDetails['genres'])[0];
+
+                if ($movieDetails && isset($movieDetails['genres']) && count($movieDetails['genres']) > 0) {
+                    $movie['primary_genre'] = $this->getGenresName($movieDetails['genres'])[0];
+                } else {
+                    $movie['primary_genre'] = "none";
+                }
+
+                // $movie['primary_genre'] = $this->getGenresName($movieDetails['genres'])[0];
                 $movie['release_year'] = $this->getReleaseYear($movieDetails['release_date']);
             }
         }
@@ -68,12 +85,10 @@ class MovieController extends Controller
     public function getMovieDetails(int $movieId)
     {
         $movieDetailsResponse = Http::get("https://api.themoviedb.org/3/movie/{$movieId}", [
-            'api_key' => config('services.tmdb.api_key')
+            'api_key' => $this->api_key,
         ]);
 
-        $movieDetails = $movieDetailsResponse->json();
-
-        return $movieDetails;
+        return $movieDetailsResponse->json();
     }
 
     public function getGenresName(array $genreIds)

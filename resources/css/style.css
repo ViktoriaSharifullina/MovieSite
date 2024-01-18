@@ -8,9 +8,13 @@ body {
 }
 
 .up-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 50px;
     background-color: black;
+    z-index: 1000;
 }
 
 .navbar-container {
@@ -50,6 +54,56 @@ body {
 .menu-list-item.active {
     font-weight: bold;
     font-size: 18px;
+    color: #ed3f40;
+}
+
+.menu-list-item:hover {
+    color: #ed3f40;
+}
+
+.dropbtn {
+    color: white;
+    text-decoration: none;
+}
+
+.dropbtn:hover {
+    color: #ed3f40;
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown {
+    margin-right: 30px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 10px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    color: #ed3f40;
+    border-radius: 10px;
+    background-color: #e6e6e6;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
 .search-container {
@@ -70,6 +124,12 @@ body {
     padding-left: 45px;
     border-radius: 10px;
     transition: background-color 0.3s ease;
+}
+
+.search-form input#search:hover {
+    background-color: rgb(255, 255, 255);
+    transition: background-color 0.3s ease;
+    outline: none;
 }
 
 .search-form input#search::placeholder {
@@ -135,12 +195,8 @@ body {
     color: goldenrod;
 }
 
-/* .main-container {
-    background-color: #282828;
-    height: 100vh;
-} */
-
 .content-container {
+    top: 50px;
     color: #fff;
     height: 50vh;
     position: relative;
@@ -215,21 +271,93 @@ ul.facts li:first-child {
 }
 
 .feature-button {
+    background-color: #ed3f40 !important;
     margin-top: 20px;
+    color: #fff !important;
 }
 
-.movies-container {
-    width: 100%;
-    margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 100px;
-    /* height: 17vw; */
+.feature-button:hover {
+    background-color: #bc2929 !important;
+    margin-top: 20px;
+    color: #fff !important;
 }
 
-.movies {
+.movie-list-title {
+    color: #ffffff;
+    display: inline-block;
+    margin-left: 10vw;
+    margin-top: 30px;
+    font-size: 35px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.title-popular {
+    margin-top: 80px;
+}
+
+.movie-list-title:hover {
+    color: #bc2929;
+}
+
+.movie-list-wrapper {
+    position: relative;
     margin-left: 10vw;
     margin-right: 10vw;
+    overflow: hidden;
+}
+
+.movie-list {
+    display: flex;
+    margin-top: 30px;
+    transform: translateX(0);
+    transition: all 1s ease-in-out;
+}
+
+.movie-list-item {
+    margin-right: 50px;
+    cursor: pointer;
+}
+
+.gradient {
+    position: absolute;
+    width: 120px;
+    height: 100%;
+    right: 0;
+    top: 0;
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0),
+        rgba(40, 40, 40, 5)
+    );
+}
+
+.movie-list-container {
+    position: relative;
+}
+
+.arrow {
+    color: #fff;
+    opacity: 0.5;
+    cursor: pointer;
+    border-top: 4px solid #ffffff;
+    border-left: 4px solid #ffffff;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    cursor: pointer;
+    position: absolute;
+    top: 45%;
+    right: 6vw;
+}
+
+.arrow:hover {
+    border-color: rgb(255, 255, 255);
+    opacity: 1;
+}
+
+.arrow.next {
+    transform: rotate(135deg);
 }
 
 .movie-poster {
@@ -238,7 +366,7 @@ ul.facts li:first-child {
 }
 
 .movie-poster img {
-    width: 190px;
+    width: 180px;
 }
 
 .rating {
@@ -269,7 +397,7 @@ ul.facts li:first-child {
 }
 
 .movie-facts {
-    width: 190px;
+    width: 180px;
     text-align: left;
     color: #fff;
     margin-top: 10px;
@@ -293,7 +421,7 @@ ul.facts li:first-child {
     left: 10px;
     height: 30px;
     width: 30px;
-    opacity: 0;
+    /* opacity: 0; */
     display: inline-flex;
     justify-content: center;
     padding: 15px 15px;
@@ -314,6 +442,17 @@ ul.facts li:first-child {
 
 .bookmark-btn:focus i {
     animation: ribbon 0.25s cubic-bezier(0.77, 0, 0.17, 1) forwards;
+}
+
+.movie-list-item .bookmark-btn {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.movie-list-item:hover .bookmark-btn {
+    opacity: 1;
+    visibility: visible;
 }
 
 @keyframes ribbon {

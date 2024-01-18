@@ -20,9 +20,23 @@
             <div class="menu-container">
                 <ul class="menu-list">
                     <li class="menu-list-item active">Home</li>
-                    <li class="menu-list-item">Movies</li>
-                    <li class="menu-list-item">Series</li>
-                    <li class="menu-list-item">Popular</li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropbtn">Movies</a>
+                        <div class="dropdown-content">
+                            <a href="#">Popular</a>
+                            <a href="#">Upcoming</a>
+                            <a href="#">Top Rated</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropbtn">Series</a>
+                        <div class="dropdown-content">
+                            <a href="#">Popular</a>
+                            <a href="#">On TV</a>
+                            <a href="#">The best</a>
+                        </div>
+                    </li>
+                    <li class="menu-list-item">People</li>
                     <li class="menu-list-item">Communities</li>
                 </ul>
             </div>
@@ -49,61 +63,85 @@
     <div class="main-container">
         <div class="content-container">
             <div class="featured-img">
-                <img src="{{ 'https://image.tmdb.org/t/p/original/' . $featuredMovie['backdrop_path'] }}" alt="{{ $featuredMovie['title'] }} Backdrop">
+                <img src="{{ 'https://image.tmdb.org/t/p/original/' . $bannerMovie['backdrop_path'] }}" alt="{{ $bannerMovie['title'] }} Backdrop">
             </div>
             <div class="movie-details">
-                <div class="title">{{ $featuredMovie['title'] }}</div>
+                <div class="title">{{ $bannerMovie['title'] }}</div>
                 <ul class="facts">
                     <li>
-                        <div class="release-date">{{ $featuredMovie['formatted_release_date'] }}</div>
+                        <div class="release-date">{{ $bannerMovie['formatted_release_date'] }}</div>
                     </li>
                     <li>
-                        <div class="genres">{{ implode(', ', $featuredMovie['genre_names']) }}</div>
+                        <div class="genres">{{ implode(', ', $bannerMovie['genre_names']) }}</div>
                     </li>
                     <li>
-                        <div class="runtime">{{ $featuredMovie['formatted_runtime'] }}</div>
+                        <div class="runtime">{{ $bannerMovie['formatted_runtime'] }}</div>
                     </li>
                 </ul>
-                <div class="desc">{{ $featuredMovie['overview'] }}</div>
-                <button type="button" class="feature-button btn btn-light">Read more</button>
+                <div class="desc">{{ $bannerMovie['overview'] }}</div>
+                <button type="button" class="feature-button btn">Read more</button>
             </div>
         </div>
 
-        <div class="movies-container">
-            <div class="movies">
-                <div class="text-center">
-                    @php
-                    $moviesChunks = array_chunk($otherMovies, 5);
-                    @endphp
-
-                    @foreach($moviesChunks as $moviesRow)
-                    <div class="row-movie row mb-5 justify-content-center">
-                        @foreach($moviesRow as $movie)
-                        <div class="col">
-                            <div class="movie-container">
-                                <div class="movie-poster">
-                                    <img class="movie-poster" src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
-                                    <button class="bookmark-btn" title="Watch later">
-                                        <i class="fa fa-bookmark"></i>
-                                    </button>
-                                    <div class="rating {{ $movie['vote_average'] < 5 ? 'low' : ($movie['vote_average'] < 7 ? 'medium' : 'high') }}">
-                                        {{ number_format($movie['vote_average'], 1) }}
-                                    </div>
-                                </div>
-                                <div class="movie-facts">
-                                    <div class="movie-title">
-                                        {{ $movie['title'] }}
-                                    </div>
-                                    <span class="release-year">{{ $movie['release_year'] }}, </span>
-                                    <span class="primary-genre">{{ $movie['primary_genre'] }}</span>
-                                </div>
+        <div class="movie-list-container">
+            <div class="movie-list-title title-popular">Popular</div>
+            <div class="movie-list-wrapper">
+                <div class="movie-list">
+                    @foreach ($popularMovies as $movie)
+                    <div class="movie-list-item">
+                        <div class="movie-poster">
+                            <img class="movie-poster" src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
+                            <button class="bookmark-btn" title="Watch later">
+                                <i class="fa fa-bookmark"></i>
+                            </button>
+                            <div class="rating {{ $movie['vote_average'] < 5 ? 'low' : ($movie['vote_average'] < 7 ? 'medium' : 'high') }}">
+                                {{ number_format($movie['vote_average'], 1) }}
                             </div>
                         </div>
-                        @endforeach
+                        <div class="movie-facts">
+                            <div class="movie-title">
+                                {{ $movie['title'] }}
+                            </div>
+                            <span class="release-year">{{ $movie['release_year'] }}, </span>
+                            <span class="primary-genre">{{ $movie['primary_genre'] }}</span>
+                        </div>
                     </div>
                     @endforeach
                 </div>
+                <div class="gradient"></div>
+                <!-- <i class="fas fa-angle-right arrow"></i> -->
             </div>
+            <a title="Next" class="arrow next"></a>
+        </div>
+
+        <div class="movie-list-container">
+            <div class="movie-list-title">Upcoming</div>
+            <div class="movie-list-wrapper">
+                <div class="movie-list">
+                    @foreach ($upcomingMovies as $movie)
+                    <div class="movie-list-item">
+                        <div class="movie-poster">
+                            <img class="movie-poster" src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
+                            <button class="bookmark-btn" title="Watch later">
+                                <i class="fa fa-bookmark"></i>
+                            </button>
+                            <div class="rating {{ $movie['vote_average'] < 5 ? 'low' : ($movie['vote_average'] < 7 ? 'medium' : 'high') }}">
+                                {{ number_format($movie['vote_average'], 1) }}
+                            </div>
+                        </div>
+                        <div class="movie-facts">
+                            <div class="movie-title">
+                                {{ $movie['title'] }}
+                            </div>
+                            <span class="release-year">{{ $movie['release_year'] }}, </span>
+                            <span class="primary-genre">{{ $movie['primary_genre'] }}</span>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                <div class="gradient"></div>
+            </div>
+            <a title="Next" class="arrow next"></a>
         </div>
     </div>
 
