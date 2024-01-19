@@ -17,36 +17,36 @@ class MovieController extends Controller
 
     public function index()
     {
-        $popular = $this->getPopularMovies();
-        $upcoming = $this->getUpcomingMovies();
+        set_time_limit(0);
+
+        $popular = $this->getMovies('popular');
+        $upcoming = $this->getMovies('upcoming');
+        $topRated = $this->getMovies('top_rated');
 
         $bannerMovie = $this->getBannerMovie($popular);
-        $popularMovies = $this->getOtherMovies($popular);
-        $upcomingMovies = $this->getOtherMovies($upcoming);
 
-        return view('home', compact('bannerMovie', 'popularMovies', 'upcomingMovies'));
+        $popularMovies = $this->prepareMovies($popular);
+        $upcomingMovies = $this->prepareMovies($upcoming);
+        $topRatedMovies = $this->prepareMovies($topRated);
+
+        return view('home', compact('bannerMovie', 'popularMovies', 'upcomingMovies', 'topRatedMovies'));
     }
 
-    private function getPopularMovies()
+    private function getMovies($type, $perPage = 10)
     {
-        $response = Http::get('https://api.themoviedb.org/3/discover/movie', [
-            'api_key' => $this->api_key,
-            'sort_by' => 'popularity.desc',
-        ]);
+        return cache()->remember("movies_{$type}", now()->addHours(1), function () use ($type, $perPage) {
+            $response = Http::get("https://api.themoviedb.org/3/movie/{$type}", [
+                'api_key' => $this->api_key,
+                'page' => 1,
+            ]);
 
-        return array_slice($response->json()['results'], 0, 12);
+            $results = $response->json()['results'];
+
+            return array_slice($results, 0, $perPage);
+        });
     }
 
-    public function getUpcomingMovies()
-    {
-        $response = Http::get('https://api.themoviedb.org/3/movie/upcoming', [
-            'api_key' => $this->api_key
-        ]);
-
-        return array_slice($response->json()['results'], 0, 12);
-    }
-
-    public function getBannerMovie($movies)
+    private function getBannerMovie($movies)
     {
         $random_id = array_rand($movies);
         $movie = $movies[$random_id];
@@ -61,28 +61,21 @@ class MovieController extends Controller
         return $movie;
     }
 
-    public function getOtherMovies($movies)
+    public function prepareMovies($movies)
     {
-        foreach ($movies as &$movie) {
+        return collect($movies)->map(function ($movie) {
             $movieDetails = $this->getMovieDetails($movie['id']);
 
             if ($movieDetails) {
-
-                if ($movieDetails && isset($movieDetails['genres']) && count($movieDetails['genres']) > 0) {
-                    $movie['primary_genre'] = $this->getGenresName($movieDetails['genres'])[0];
-                } else {
-                    $movie['primary_genre'] = "none";
-                }
-
-                // $movie['primary_genre'] = $this->getGenresName($movieDetails['genres'])[0];
-                $movie['release_year'] = $this->getReleaseYear($movieDetails['release_date']);
+                $movie['primary_genre'] = $this->getGenresName($movieDetails['genres'])[0] ?? 'Unknown Genre';
+                $movie['release_year'] = $this->getReleaseYear($movieDetails['release_date']) ?? 'Unknown Year';
             }
-        }
 
-        return $movies;
+            return $movie;
+        })->all();
     }
 
-    public function getMovieDetails(int $movieId)
+    private function getMovieDetails(int $movieId)
     {
         $movieDetailsResponse = Http::get("https://api.themoviedb.org/3/movie/{$movieId}", [
             'api_key' => $this->api_key,
@@ -91,24 +84,24 @@ class MovieController extends Controller
         return $movieDetailsResponse->json();
     }
 
-    public function getGenresName(array $genreIds)
+    private function getGenresName(array $genreIds)
     {
         $genreNames = collect($genreIds)->pluck('name')->toArray();
 
         return $genreNames;
     }
 
-    public function getFormattedDate($date)
+    private function getFormattedDate($date)
     {
         return Carbon::parse($date)->format('d/m/Y');
     }
 
-    public function getReleaseYear($date)
+    private function getReleaseYear($date)
     {
         return Carbon::parse($date)->format('Y');
     }
 
-    public function getFormattedRuntime($runtime)
+    private function getFormattedRuntime($runtime)
     {
         $hours = floor($runtime / 60);
         $minutes = $runtime % 60;
