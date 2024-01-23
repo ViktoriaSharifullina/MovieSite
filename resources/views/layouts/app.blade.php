@@ -18,29 +18,6 @@
             <div class="logo-container">
                 <h1 class="logo">KinoFlow</h1>
             </div>
-            <!-- <div class="menu-container">
-                <ul class="menu-list">
-                    <li><a class="menu-list-item active" href="/">Home</a></li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropbtn">Movies</a>
-                        <div class="dropdown-content">
-                            <a href="/movie-catalog">Popular</a>
-                            <a href="/movie-catalog">Upcoming</a>
-                            <a href="/movie-catalog">Top Rated</a>
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropbtn">Series</a>
-                        <div class="dropdown-content">
-                            <a href="/series-catalog">Popular</a>
-                            <a href="/series-catalog">On TV</a>
-                            <a href="/series-catalog">Top Rated</a>
-                        </div>
-                    </li>
-                    <li><a class="menu-list-item" href="/people">People</a></li>
-                    <li><a class="menu-list-item" href="#">Communities</a></li>
-                </ul>
-            </div> -->
             <div class="menu-container">
                 <ul class="menu-list">
                     <li><a class="menu-list-item {{ Request::is('/') ? 'active' : '' }}" href="/">Home</a></li>

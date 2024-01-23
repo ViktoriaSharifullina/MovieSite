@@ -118,4 +118,22 @@ class MovieController extends Controller
 
         return trim($formattedRuntime);
     }
+
+    private function getInfoMovie($movie)
+    {
+        $movie['genre_names'] = $this->getGenresName($movie['genres']);
+        $movie['formatted_release_date'] = $this->getFormattedDate($movie['release_date']);
+        $movie['formatted_runtime'] = $this->getFormattedRuntime($movie['runtime']);
+
+        return $movie;
+    }
+
+
+    public function aboutMovie($id)
+    {
+        $movie = $this->getMovieDetails($id);
+        $movie = $this->getInfoMovie($movie);
+
+        return view('movies/movie', compact('movie'));
+    }
 }

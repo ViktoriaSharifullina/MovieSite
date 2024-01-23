@@ -224,7 +224,6 @@ ul.facts li:first-child {
     left: 10px;
     height: 30px;
     width: 30px;
-    /* opacity: 0; */
     display: inline-flex;
     justify-content: center;
     padding: 15px 15px;

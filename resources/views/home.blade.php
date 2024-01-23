@@ -24,7 +24,7 @@
                 </li>
             </ul>
             <div class="desc">{{ $bannerMovie['overview'] }}</div>
-            <button type="button" class="feature-button btn">Read more</button>
+            <a class="feature-button btn" href="{{ route('movie.about', $bannerMovie['id']) }}">Read more</a>
         </div>
     </div>
 
