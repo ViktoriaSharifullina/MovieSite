@@ -90,24 +90,27 @@ ul.facts li:first-child {
     align-items: center;
 }
 
-.rating {
+.rating-number {
     display: inline-block;
     padding: 15px;
+    height: 70px;
+    width: 70px;
     font-size: 25px;
     font-weight: 500;
     background-color: #7e7e7e;
-    border-radius: 40px;
+    border-radius: 100px;
+    text-align: center;
 }
 
-.rating.low {
+.rating-number.low {
     background-color: rgb(218, 13, 13);
 }
 
-.rating.medium {
+.rating-number.medium {
     background-color: rgb(155, 155, 155);
 }
 
-.rating.high {
+.rating-number.high {
     background-color: rgb(56, 162, 56);
 }
 
@@ -116,7 +119,7 @@ ul.facts li:first-child {
     margin-left: 40px;
 }
 
-.btn i {
+.btn > i {
     height: 40px;
     width: 40px;
     display: inline-flex;
@@ -131,12 +134,48 @@ ul.facts li:first-child {
     border: none;
     border-width: 0 !important;
 }
+
+.btn > .btn-content {
+    height: 40px;
+    width: 40px;
+    display: inline-flex;
+    justify-content: center;
+    color: #7e7e7e;
+    background-color: #fff;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.25s;
+    align-items: center;
+    font-size: 16px;
+    border: none;
+    border-width: 0 !important;
+}
+
+.btn-star-text.hidden {
+    display: none;
+}
+
+.btn-star-text {
+    margin-right: 20px;
+}
+
+#selectedNumber {
+    margin-left: 0px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: "Roboto", sans-serif;
+}
+
+#selectedNumber.hidden {
+    display: none;
+}
+
 .btn {
     --bs-btn-border-width: none !important;
     --bs-btn-padding-x: 10px !important;
 }
 
-.btn:hover i {
+.btn:hover > .btn-content {
     background-color: #e6e6e6;
 }
 
@@ -145,24 +184,55 @@ ul.facts li:first-child {
     transition: color 0.25s;
 }
 
-.rating-group {
-    align-items: center;
+.text-container {
+    position: absolute;
+    color: #fff;
+    top: 70%;
 }
 
-.stars {
-    top: 700px;
-    margin-left: 50px;
+.btn.hidden {
+    display: none;
 }
 
-.rating-button {
-    margin-top: 50px;
+.rating {
+    position: relative;
+    background-color: #fff;
+    width: 320px;
+    height: 40px;
+    top: 6px;
+    margin-left: 10px;
+    border-radius: 30px;
     display: flex;
     align-items: center;
-    cursor: pointer;
-    user-select: none;
-    transition: color 0.3s;
 }
 
-.rating-button:hover {
+.rating-numbers {
+    margin-left: 20px;
+}
+
+.rating.hidden {
+    display: none;
+}
+
+.rating-numbers span {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px;
+    color: #7e7e7e;
+    line-height: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.star-icon {
+    color: #7e7e7e;
+    line-height: 40px;
+    margin-left: 11px;
+}
+
+.rating-numbers span:hover {
     color: #ed3f40;
 }

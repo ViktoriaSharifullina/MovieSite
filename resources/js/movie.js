@@ -11,31 +11,64 @@ for (var i = 0; i < btns.length; i++) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const ratingButton = document.getElementById("ratingButton");
-    const ratingMenu = document.getElementById("ratingMenu");
-    const closeMenu = document.getElementById("closeMenu");
-    const stars = document.getElementById("stars");
-    const ratingValue = document.getElementById("ratingValue");
-    const submitRating = document.getElementById("submitRating");
+document.getElementById("starButton").addEventListener("click", hideStarButton);
 
-    ratingButton.addEventListener("click", function () {
-        ratingMenu.style.display = "block";
-    });
+var starButton = document.getElementById("starButton");
+var ratingMenu = document.getElementById("ratingMenu");
+var textStarBtn = document.getElementById("btn-star-text");
+var selectedNumber = document.getElementById("selectedNumber");
+var btnStarContent = document.querySelector("#btn-star-content");
+var allNumbers = document.querySelectorAll(".number-rate");
+var iconOnMenu = document.getElementById("iconStarMenu");
+var icon = document.getElementById("iconStar");
 
-    closeMenu.addEventListener("click", function () {
-        ratingMenu.style.display = "none";
-    });
+function hideStarButton() {
+    if (!textStarBtn.classList.contains("hidden")) {
+        textStarBtn.classList.add("hidden");
+        starButton.classList.remove("focused");
+        selectedNumber.textContent = "";
+        btnStarContent.style.width = "40px";
+        icon.style.color = "#7e7e7e";
 
-    stars.addEventListener("click", function (e) {
-        if (e.target.tagName === "I") {
-            const rating = parseInt(e.target.getAttribute("data-rating"), 10);
-            ratingValue.textContent = rating.toFixed(1);
-        }
-    });
+        allNumbers.forEach(function (number) {
+            number.style.color = "#7e7e7e";
+        });
+    } else {
+        starButton.classList.remove("focused");
+        starButton.classList.add("hidden");
+        ratingMenu.classList.remove("hidden");
+    }
+}
 
-    submitRating.addEventListener("click", function () {
-        ratingMenu.style.display = "none";
-        // You can perform additional actions here based on the selected rating
-    });
+document
+    .getElementById("ratingMenu")
+    .addEventListener("mouseleave", hideRatingMenu);
+
+function hideRatingMenu() {
+    var ratingMenu = document.getElementById("ratingMenu");
+    var starButton = document.getElementById("starButton");
+
+    ratingMenu.classList.add("hidden");
+    starButton.classList.remove("hidden");
+}
+
+document.querySelectorAll(".number-rate").forEach(function (number) {
+    number.addEventListener("click", rateMovie);
 });
+
+function rateMovie(event) {
+    var clickedNumber = event.target;
+
+    allNumbers.forEach(function (number) {
+        number.style.color = "#7e7e7e";
+    });
+
+    clickedNumber.style.color = "#ed3f40";
+    iconOnMenu.style.color = "#ed3f40";
+    icon.style.color = "#ed3f40";
+    btnStarContent.style.width = "230px";
+
+    selectedNumber.textContent = clickedNumber.textContent;
+    selectedNumber.classList.remove("hidden");
+    textStarBtn.classList.remove("hidden");
+}
