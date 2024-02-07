@@ -29,23 +29,39 @@
 
 .movie-details {
     position: absolute;
-    width: 70%;
+    width: 75%;
+    height: auto;
     margin-left: 8vw;
-    top: 15vh;
+    top: 30px;
+    bottom: 30px;
     display: flex;
-    max-height: 30vh;
     color: #fff;
     display: flex;
-    align-items: center;
+    overflow: auto;
 }
 
 .movie-info {
-    margin-left: 40px;
+    height: auto;
+    margin-left: 0px;
+    overflow: auto;
+}
+
+.movie-info::-webkit-scrollbar {
+    width: 15px;
+}
+
+.movie-info::-webkit-scrollbar-thumb {
+    background-color: #7e7e7ea7;
+    border-radius: 6px;
+}
+
+.movie-info::-webkit-scrollbar-track {
+    background-color: #ffffff10;
 }
 
 .title {
     font-weight: bold;
-    font-size: 45px;
+    font-size: 40px;
 }
 
 ul.facts {
@@ -69,24 +85,40 @@ ul.facts li:first-child {
     font-size: 15px;
 }
 
+.overview {
+    font-weight: bold;
+    font-size: 23px;
+    margin-bottom: 10px;
+}
+
+.tagline {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-weight: 300;
+}
+
 .desc {
     margin-top: 20px;
     max-height: calc(30vh - 40px);
+    min-height: 190px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 6;
     text-overflow: ellipsis;
     white-space: normal;
+    margin-bottom: 30px;
+    margin-right: 50px;
 }
 
 .movie-poster {
-    width: 35vh;
+    height: 100%;
+    object-position: center center;
+    margin-right: 50px;
 }
 
 .horizontal-menu {
     margin-top: 15px;
-    /* background-color: rgb(167, 104, 121); */
     align-items: center;
 }
 
@@ -235,4 +267,162 @@ ul.facts li:first-child {
 
 .rating-numbers span:hover {
     color: #ed3f40;
+}
+
+.director-container {
+    height: 50px;
+    width: 150px;
+    margin-top: 30px;
+    display: inline-block;
+    color: #fff;
+}
+
+.writer-container {
+    height: 50px;
+    width: 150px;
+    display: flex;
+    display: inline-block;
+    color: #fff;
+    margin-left: 200px;
+}
+
+.director-info,
+.writer-info {
+    font-weight: bold;
+}
+
+.director,
+.writer {
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.text-container {
+    position: static;
+    margin-top: 80px;
+    height: 350px;
+    width: 100%;
+    display: flex;
+}
+
+.main-roles {
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    padding: 0 0 30 0;
+}
+
+.main-roles::-webkit-scrollbar {
+    height: 10px;
+}
+
+.main-roles::-webkit-scrollbar-thumb {
+    background-color: #676767;
+    border-radius: 6px;
+}
+
+.main-roles::-webkit-scrollbar-track {
+    background-color: #282828;
+}
+
+.main-roles-container {
+    position: relative;
+    height: 100%;
+    margin-left: 8vw;
+    width: 60%;
+    margin-right: 100px;
+    overflow: hidden;
+}
+
+.main-roles-container-name {
+    color: #fff;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.main-roles {
+    margin-top: 10px;
+}
+
+.actor-img {
+    width: 100% !important;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.card-img {
+    height: 160px;
+    border-radius: 0% !important;
+}
+
+.card-actor {
+    flex: 0 0 auto;
+    width: 140px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-right: 20px;
+    overflow: hidden;
+    border: 0px !important;
+}
+
+.card-title {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.card-text {
+    margin-top: -5px;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.card {
+    background-color: #343434 !important;
+    border-radius: 13px !important;
+}
+
+.actor-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 10px !important;
+    color: white !important;
+}
+
+.gradient {
+    position: absolute;
+    width: 120px;
+    height: 100%;
+    right: 0px;
+    top: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0),
+        rgba(40, 40, 40, 8)
+    );
+}
+
+.more-movie-details {
+    margin-right: 8vw;
+    width: 300px;
+    margin-top: 10px;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.more-movie-details div {
+    margin-block-end: 20px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.original-title-value,
+.status-value,
+.language-value,
+.budget-value,
+.revenue-value {
+    font-weight: 300 !important;
 }

@@ -34,15 +34,17 @@
             <div class="movie-list">
                 @foreach ($popularMovies as $movie)
                 <div class="movie-list-item">
-                    <div class="movie-poster">
-                        <img class="movie-poster" src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
-                        <button class="bookmark-btn" title="Watch later">
-                            <i class="fa fa-bookmark"></i>
-                        </button>
-                        <div class="rating {{ $movie['vote_average'] < 5 ? 'low' : ($movie['vote_average'] < 7 ? 'medium' : 'high') }}">
-                            {{ number_format($movie['vote_average'], 1) }}
+                    <a href="{{ route('movie.about', $movie['id']) }}">
+                        <div class="movie-poster">
+                            <img class="movie-poster" src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
+                            <button class="bookmark-btn" title="Watch later">
+                                <i class="fa fa-bookmark"></i>
+                            </button>
+                            <div class="rating {{ $movie['vote_average'] < 5 ? 'low' : ($movie['vote_average'] < 7 ? 'medium' : 'high') }}">
+                                {{ number_format($movie['vote_average'], 1) }}
+                            </div>
                         </div>
-                    </div>
+                    </a>
                     <div class="movie-facts">
                         <div class="movie-title">
                             {{ $movie['title'] }}
@@ -54,7 +56,6 @@
                 @endforeach
             </div>
             <div class="gradient"></div>
-            <!-- <i class="fas fa-angle-right arrow"></i> -->
         </div>
         <a title="Next" class="arrow next"></a>
     </div>
@@ -65,15 +66,17 @@
             <div class="movie-list">
                 @foreach ($upcomingMovies as $movie)
                 <div class="movie-list-item">
-                    <div class="movie-poster">
-                        <img class="movie-poster" src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
-                        <button class="bookmark-btn" title="Watch later">
-                            <i class="fa fa-bookmark"></i>
-                        </button>
-                        <div class="rating {{ $movie['vote_average'] < 5 ? 'low' : ($movie['vote_average'] < 7 ? 'medium' : 'high') }}">
-                            {{ number_format($movie['vote_average'], 1) }}
+                    <a href="{{ route('movie.about', $movie['id']) }}">
+                        <div class="movie-poster">
+                            <img class="movie-poster" src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
+                            <button class="bookmark-btn" title="Watch later">
+                                <i class="fa fa-bookmark"></i>
+                            </button>
+                            <div class="rating {{ $movie['vote_average'] < 5 ? 'low' : ($movie['vote_average'] < 7 ? 'medium' : 'high') }}">
+                                {{ number_format($movie['vote_average'], 1) }}
+                            </div>
                         </div>
-                    </div>
+                    </a>
                     <div class="movie-facts">
                         <div class="movie-title">
                             {{ $movie['title'] }}
@@ -96,15 +99,17 @@
         <div class="movie-list">
             @foreach ($topRatedMovies as $movie)
             <div class="movie-list-item">
-                <div class="movie-poster">
-                    <img class="movie-poster" src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster" loading="lazy">
-                    <button class="bookmark-btn" title="Watch later">
-                        <i class="fa fa-bookmark"></i>
-                    </button>
-                    <div class="rating {{ $movie['vote_average'] < 5 ? 'low' : ($movie['vote_average'] < 7 ? 'medium' : 'high') }}">
-                        {{ number_format($movie['vote_average'], 1) }}
+                <a href="{{ route('movie.about', $movie['id']) }}">
+                    <div class="movie-poster">
+                        <img class="movie-poster" src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
+                        <button class="bookmark-btn" title="Watch later">
+                            <i class="fa fa-bookmark"></i>
+                        </button>
+                        <div class="rating {{ $movie['vote_average'] < 5 ? 'low' : ($movie['vote_average'] < 7 ? 'medium' : 'high') }}">
+                            {{ number_format($movie['vote_average'], 1) }}
+                        </div>
                     </div>
-                </div>
+                </a>
                 <div class="movie-facts">
                     <div class="movie-title">
                         {{ $movie['title'] }}

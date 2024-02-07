@@ -70,15 +70,66 @@
 
                 </div>
             </div>
-            <div class="desc">{{ $movie['overview'] }}</div>
+            <div class="desc">
+                <div class="tagline"><i>{{ $movie['tagline'] }}</i></div>
+                <div class="overview">Overview</div>
+                {{ $movie['overview'] }}
+            </div>
+            <div class="director-container">
+                <div class="director-info">
+                    {{ $movie['director'] }}
+                </div>
+                <div class="director">
+                    Director
+                </div>
+            </div>
+            <div class="writer-container">
+                <div class="writer-info">
+                    <div class="writer-info">
+                        {{ $movie['writer'] }}
+                    </div>
+                    <div class="writer">
+                        Screenplay
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <div class="text-container">
-
+    <div class="main-roles-container">
+        <div class="main-roles-container-name">Starring</div>
+        <div class="main-roles">
+            @foreach ($mainActors as $actor)
+            <div class="card card-actor">
+                <img class="card-img actor-img" src="{{ $actor['photo'] }}" alt="Card image cap">
+                <div class="card-body actor-card-body">
+                    <div class="card-title">{{ $actor['name'] }}</div>
+                    <div class="card-text">{{ $actor['character'] }}</div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        <div class="gradient"></div>
+    </div>
+    <div class="more-movie-details">
+        <div class="the-original-title">The original title
+            <div class="original-title-value">{{ $movie['original_title'] }}</div>
+        </div>
+        <div class="status">Status
+            <div class="status-value">{{ $movie['status'] }}</div>
+        </div>
+        <div class="the-original-language">The original language
+            <div class="language-value">{{ $movie['original_language'] }}</div>
+        </div>
+        <div class="budget">Budget
+            <div class="budget-value">{{'$' . number_format($movie['budget'], 2, '.', ',')}}</div>
+        </div>
+        <div class="revenue">Revenue
+            <div class="revenue-value">{{'$' . number_format($movie['revenue'], 2, '.', ',')}}</div>
+        </div>
+    </div>
 </div>
-
-
 
 @endsection
 

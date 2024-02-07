@@ -84,6 +84,28 @@ class MovieController extends Controller
         return $movieDetailsResponse->json();
     }
 
+    private function getDirectorInfo(int $movieId)
+    {
+        $creditsResponse = Http::get("https://api.themoviedb.org/3/movie/{$movieId}/credits", [
+            'api_key' => $this->api_key,
+        ]);
+
+        $directorInfo = $creditsResponse->json()['crew'];
+
+        return collect($directorInfo)->firstWhere('job', 'Director');
+    }
+
+    private function getWriterInfo(int $movieId)
+    {
+        $creditsResponse = Http::get("https://api.themoviedb.org/3/movie/{$movieId}/credits", [
+            'api_key' => $this->api_key,
+        ]);
+
+        $writerInfo = $creditsResponse->json()['crew'];
+
+        return collect($writerInfo)->firstWhere('job', 'Screenplay');
+    }
+
     private function getGenresName(array $genreIds)
     {
         $genreNames = collect($genreIds)->pluck('name')->toArray();
@@ -119,21 +141,70 @@ class MovieController extends Controller
         return trim($formattedRuntime);
     }
 
-    private function getInfoMovie($movie)
+    private function getInfoMovie($id)
     {
+        $movie = $this->getMovieDetails($id);
         $movie['genre_names'] = $this->getGenresName($movie['genres']);
         $movie['formatted_release_date'] = $this->getFormattedDate($movie['release_date']);
         $movie['formatted_runtime'] = $this->getFormattedRuntime($movie['runtime']);
 
+        $directorInfo = $this->getDirectorInfo($id);
+        $movie['director'] = $directorInfo ? $directorInfo['name'] : 'Unknown Director';
+
+        $writerInfo = $this->getWriterInfo($id);
+        $movie['writer'] = $writerInfo ? $writerInfo['name'] : 'Unknown Writer';
+
         return $movie;
     }
 
-
-    public function aboutMovie($id)
+    private function getMovieCredits(int $movieId)
     {
-        $movie = $this->getMovieDetails($id);
-        $movie = $this->getInfoMovie($movie);
+        $movieCreditsResponse = Http::get("https://api.themoviedb.org/3/movie/{$movieId}/credits", [
+            'api_key' => $this->api_key,
+        ]);
 
-        return view('movies/movie', compact('movie'));
+        return $movieCreditsResponse->json();
+    }
+
+    public function getMainActors(int $movieId)
+    {
+        $movieCredits = $this->getMovieCredits($movieId);
+
+        $mainActors = collect($movieCredits['cast'])
+            ->where('order', '<=', 10)
+            ->map(function ($actor) {
+                return [
+                    'id' => $actor['id'],
+                    'name' => $actor['name'],
+                    'character' => $actor['character'],
+                ];
+            });
+
+        $actorsWithImages = collect($mainActors)->map(function ($actor) {
+            $actor['photo'] = $this->getActorPhoto($actor['id']);
+            return $actor;
+        });
+
+        return $actorsWithImages;
+    }
+
+    private function getActorPhoto(int $actorId)
+    {
+        $response = Http::get("https://api.themoviedb.org/3/person/{$actorId}", [
+            'api_key' => $this->api_key,
+        ]);
+
+        $actorDetails = $response->json();
+
+        return "https://image.tmdb.org/t/p/original/{$actorDetails['profile_path']}";
+    }
+
+
+    public function aboutMovie(int $id)
+    {
+        $movie = $this->getInfoMovie($id);
+        $mainActors = $this->getMainActors($id);
+
+        return view('movies/movie', compact('movie', 'mainActors'));
     }
 }

@@ -202,3 +202,15 @@ li.dropdown {
 .toggle-icon {
     color: goldenrod;
 }
+
+.footer {
+    margin-top: 100px;
+}
+
+.footer > .border-bottom {
+    border-bottom: var(--bs-border-width) var(--bs-border-style) #575757 !important;
+}
+
+.footer-text {
+    color: #808080 !important;
+}
