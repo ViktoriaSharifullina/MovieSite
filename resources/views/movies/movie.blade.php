@@ -101,13 +101,19 @@
         <div class="main-roles-container-name">Starring</div>
         <div class="main-roles">
             @foreach ($mainActors as $actor)
-            <div class="card card-actor">
-                <img class="card-img actor-img" src="{{ $actor['photo'] }}" alt="Card image cap">
+            <a class="card card-actor" href="{{ route('people.about', $actor['id']) }}">
+                @if(isset($actor['photo']))
+                <img class="card-img" src="{{ 'https://image.tmdb.org/t/p/w500' . $actor['photo'] }}" alt="Card image cap">
+                @else
+                <div class="no-image-overlay" style="height: 160px;">
+                    <span class="no-image-placeholder">No Image</span>
+                </div>
+                @endif
                 <div class="card-body actor-card-body">
                     <div class="card-title">{{ $actor['name'] }}</div>
                     <div class="card-text">{{ $actor['character'] }}</div>
                 </div>
-            </div>
+            </a>
             @endforeach
         </div>
         <div class="gradient"></div>

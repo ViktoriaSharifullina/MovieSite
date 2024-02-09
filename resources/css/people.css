@@ -1,0 +1,154 @@
+.people-left-container {
+    width: 20%;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.people-right-container {
+    margin-left: 50px;
+    width: 75%;
+    height: auto;
+    display: inline-block;
+    color: white;
+    padding: 10px;
+    vertical-align: top;
+}
+
+.content-container {
+    margin-top: 100px;
+    margin-left: 8vw;
+    margin-right: 8vw;
+}
+
+.photo-container img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.people-name-container {
+    width: auto;
+    margin-top: 0px;
+}
+
+.people-name {
+    width: auto;
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.biography {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.biography-container {
+    overflow-x: auto;
+    height: 200px;
+    padding: 0 20 0 0;
+}
+
+.biography-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.biography-container::-webkit-scrollbar-thumb {
+    background-color: #7e7e7ea7;
+    border-radius: 6px;
+}
+
+.biography-container::-webkit-scrollbar-track {
+    background-color: #ffffff10;
+}
+
+.known-for-container {
+    position: relative;
+    margin-top: 30px;
+}
+
+.known-movies {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.known-movies::-webkit-scrollbar {
+    height: 10px;
+}
+
+.known-movies::-webkit-scrollbar-thumb {
+    background-color: #7e7e7ea7;
+    border-radius: 6px;
+}
+
+.known-movies::-webkit-scrollbar-track {
+    background-color: #ffffff10;
+}
+
+.movie-img {
+    height: 180px;
+}
+
+.no-image-overlay {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px !important;
+    background-color: rgba(58, 57, 57, 0.781);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.card-img {
+    object-position: center center;
+    object-fit: cover;
+    height: 180px;
+    border-radius: 10px !important;
+}
+
+.card-movie {
+    cursor: pointer;
+    flex: 0 0 auto;
+    width: 140px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    overflow: hidden;
+    border: 0px !important;
+}
+
+.card-title {
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.card {
+    background-color: #34343400 !important;
+    border-radius: 13px !important;
+}
+
+.movie-card-body {
+    height: auto;
+    text-align: center;
+    padding: 10px !important;
+    color: white !important;
+}
+
+.gradient {
+    position: absolute;
+    width: 120px;
+    height: 100%;
+    right: 0px;
+    top: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0),
+        rgba(40, 40, 40, 8)
+    );
+}

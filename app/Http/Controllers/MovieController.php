@@ -196,7 +196,7 @@ class MovieController extends Controller
 
         $actorDetails = $response->json();
 
-        return "https://image.tmdb.org/t/p/original/{$actorDetails['profile_path']}";
+        return $actorDetails['profile_path'];
     }
 
 

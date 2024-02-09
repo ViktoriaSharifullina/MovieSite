@@ -37,7 +37,7 @@
                             <a href="/series-catalog">Top Rated</a>
                         </div>
                     </li>
-                    <li><a class="menu-list-item {{ Request::is('people') ? 'active' : '' }}" href="/people">People</a></li>
+                    <li><a class="menu-list-item {{ Request::is('people-catalog') ? 'active' : '' }}" href="/people-catalog">People</a></li>
                     <li><a class="menu-list-item {{ Request::is('communities') ? 'active' : '' }}" href="#">Communities</a></li>
                 </ul>
             </div>
