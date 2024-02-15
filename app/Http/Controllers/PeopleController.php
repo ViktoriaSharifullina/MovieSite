@@ -19,7 +19,7 @@ class PeopleController extends Controller
         $person = $this->getPersonInfo($id);
         $knownForMovies = $this->getKnownForMovies($id);
 
-        // dd($knownForMovies);
+        // dd($person);
 
         return view('people.about', compact('person', 'knownForMovies'));
     }

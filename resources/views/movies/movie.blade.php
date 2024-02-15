@@ -8,7 +8,9 @@
 
 <div class="content-container">
     <div class="featured-img">
+        @if ($movie['backdrop_path'])
         <img src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['backdrop_path'] }}" alt="{{ $movie['title'] }} Backdrop">
+        @endif
     </div>
     <div class="movie-details">
         <div class="movie-poster">
@@ -17,15 +19,21 @@
         <div class="movie-info">
             <div class="title">{{ $movie['title'] }}</div>
             <ul class="facts">
+                @if ($movie['formatted_release_date'])
                 <li>
                     <div class="release-date">{{ $movie['formatted_release_date'] }}</div>
                 </li>
+                @endif
+                @if ($movie['genres'])
                 <li>
                     <div class="genres">{{ implode(', ', $movie['genre_names']) }}</div>
                 </li>
+                @endif
+                @if ($movie['formatted_runtime'])
                 <li>
                     <div class="runtime">{{ $movie['formatted_runtime'] }}</div>
                 </li>
+                @endif
             </ul>
             <div class="horizontal-menu">
                 <div class="rating-number {{ $movie['vote_average'] < 5 ? 'low' : ($movie['vote_average'] < 7 ? 'medium' : 'high') }}">

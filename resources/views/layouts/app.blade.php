@@ -53,11 +53,6 @@
                     <span class="profile-text">Profile</span>
                     <i class="fa fa-caret-down" aria-hidden="true"></i>
                 </div>
-                <div class="toggle">
-                    <i class="fa fa-moon toggle-icon"></i>
-                    <i class="fa fa-sun toggle-icon"></i>
-                    <div class="toggle-ball"></div>
-                </div>
             </div>
         </div>
     </div>

@@ -20,7 +20,7 @@ body {
 .navbar-container {
     display: flex;
     align-items: center;
-    padding: 0 30px;
+    padding: 0 40px;
     height: 100%;
     color: white;
     font-family: "Sen", sans-serif !important;
@@ -175,32 +175,6 @@ li.dropdown {
     border-radius: 50%;
     object-fit: cover;
     margin: 0 10px;
-}
-
-.toggle {
-    width: 40px;
-    height: 20px;
-    background-color: #fff;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    position: relative;
-    margin-left: 50px;
-}
-
-.toggle-ball {
-    width: 18px;
-    height: 18px;
-    background-color: black;
-    position: absolute;
-    right: 1px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.toggle-icon {
-    color: goldenrod;
 }
 
 .footer {

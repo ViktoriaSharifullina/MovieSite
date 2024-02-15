@@ -7,6 +7,7 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+    background-color: #555555;
 }
 
 .featured-img > img {
@@ -47,7 +48,7 @@
 }
 
 .movie-info::-webkit-scrollbar {
-    width: 15px;
+    width: 10px;
 }
 
 .movie-info::-webkit-scrollbar-thumb {
@@ -123,15 +124,15 @@ ul.facts li:first-child {
 }
 
 .rating-number {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 15px;
     height: 70px;
     width: 70px;
     font-size: 25px;
     font-weight: 500;
-    background-color: #7e7e7e;
     border-radius: 100px;
-    text-align: center;
 }
 
 .rating-number.low {
@@ -382,6 +383,7 @@ ul.facts li:first-child {
 .card {
     background-color: #343434 !important;
     border-radius: 13px !important;
+    color: #34343400 !important;
 }
 
 .actor-card-body {

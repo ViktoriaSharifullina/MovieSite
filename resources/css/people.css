@@ -25,6 +25,27 @@
     border-radius: 10px;
 }
 
+.personal-info-container {
+    margin-top: 20px;
+    height: auto;
+    /* background-color: rgba(106, 111, 110, 0.306); */
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.personal-info {
+    margin-top: 10px;
+}
+
+.personal-info p {
+    font-weight: 300;
+}
+
+.personal-info div {
+    font-size: 16px;
+}
+
 .people-name-container {
     width: auto;
     margin-top: 0px;
@@ -44,8 +65,10 @@
 
 .biography-container {
     overflow-x: auto;
-    height: 200px;
+    max-height: 200px;
+    height: auto;
     padding: 0 20 0 0;
+    margin-bottom: 40px;
 }
 
 .biography-container::-webkit-scrollbar {
@@ -53,7 +76,7 @@
 }
 
 .biography-container::-webkit-scrollbar-thumb {
-    background-color: #7e7e7ea7;
+    background-color: #7e7e7e7e;
     border-radius: 6px;
 }
 
@@ -63,7 +86,13 @@
 
 .known-for-container {
     position: relative;
-    margin-top: 30px;
+    margin-top: 0px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.known-for-title {
+    margin-bottom: 10px;
 }
 
 .known-movies {
@@ -77,7 +106,7 @@
 }
 
 .known-movies::-webkit-scrollbar-thumb {
-    background-color: #7e7e7ea7;
+    background-color: #7e7e7e7e;
     border-radius: 6px;
 }
 
@@ -100,6 +129,11 @@
     text-align: center;
     color: aliceblue;
     text-decoration: none;
+}
+
+.no-image-placeholder {
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .card-img {
@@ -130,6 +164,7 @@
 .card {
     background-color: #34343400 !important;
     border-radius: 13px !important;
+    color: #34343400 !important;
 }
 
 .movie-card-body {
