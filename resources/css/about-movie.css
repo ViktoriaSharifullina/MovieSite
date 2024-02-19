@@ -337,7 +337,7 @@ ul.facts li:first-child {
     margin-top: 10px;
 }
 
-.card-img {
+.card-img-actor {
     object-position: center center;
     object-fit: cover;
     height: 160px;
@@ -430,4 +430,86 @@ ul.facts li:first-child {
 .budget-value,
 .revenue-value {
     font-weight: 300 !important;
+}
+
+.social-media-container {
+    margin-left: 8vw;
+    margin-right: 8vw;
+    height: auto;
+    margin-top: 40px;
+}
+
+.gradient-menu-left {
+    position: absolute;
+    width: 220px;
+    height: 100%;
+    right: 30px;
+    top: 0;
+    pointer-events: none;
+    background: linear-gradient(to right, rgba(46, 46, 46, 0), rgb(40, 40, 40));
+}
+
+.gradient-menu-right {
+    position: absolute;
+    width: 220px;
+    height: 100%;
+    left: 30px;
+    top: 0;
+    pointer-events: none;
+    background: linear-gradient(to left, rgba(46, 46, 46, 0), rgb(40, 40, 40));
+}
+
+.social-menu div {
+    margin-right: 30px;
+    color: white;
+    display: inline-block;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.social-menu .active {
+    border-bottom: 4px solid #ed3f40;
+}
+
+.social-menu-container {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    position: relative;
+    margin-top: 20px;
+    height: auto;
+    overflow: hidden;
+}
+
+.arrow {
+    color: #fff;
+    opacity: 0.5;
+    cursor: pointer;
+    border-top: 4px solid #ffffff;
+    border-left: 4px solid #ffffff;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 8vw;
+}
+
+.arrow:hover {
+    border-color: rgb(255, 255, 255);
+    opacity: 1;
+}
+
+.arrow.next {
+    position: absolute;
+    right: 10px;
+    top: 45%;
+    transform: rotate(135deg);
+}
+
+.arrow.prev {
+    position: absolute;
+    left: 10px;
+    top: 45%;
+    transform: rotate(315deg);
 }

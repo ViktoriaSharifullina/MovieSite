@@ -1,0 +1,123 @@
+.swiper-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: auto;
+}
+
+.swiper-wrapper {
+    display: flex;
+}
+
+.swiper-slide {
+    position: relative;
+    flex: 0 0 auto;
+    margin: 20px;
+    height: 350px;
+    width: 400px !important;
+    background-color: #343434 !important;
+    border-radius: 13px !important;
+    color: #34343400 !important;
+}
+
+.slide-content {
+    margin: 0 20px;
+    border-radius: 25px;
+    margin-left: 40px;
+    margin-right: 40px;
+    overflow: hidden;
+}
+
+.image-content {
+    display: flex;
+    align-items: center;
+    padding: 15px 15px;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: white;
+}
+
+.card-image {
+    position: relative;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background: #fff;
+    padding: 10px;
+}
+
+.card-image .card-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.name {
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 50px;
+    height: 50px;
+}
+
+.description {
+    font-size: 14px;
+    color: #e1e1e1;
+    text-align: left;
+    font-weight: 400;
+}
+
+.card-content .description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 7;
+    line-clamp: 7;
+}
+
+.button {
+    position: absolute;
+    bottom: 10px;
+    border: none;
+    font-size: 13px;
+    color: #fff;
+    padding: 8px 10px;
+    background-color: #7d7d7d;
+    border-radius: 6px;
+    margin: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background: #5d5d5d;
+}
+
+.swiper-pagination {
+    margin-left: 45%;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    display: flex;
+}
+
+.swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background-color: #eaeaea;
+    opacity: 1;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #ed3f40;
+}

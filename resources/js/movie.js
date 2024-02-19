@@ -72,3 +72,20 @@ function rateMovie(event) {
     selectedNumber.classList.remove("hidden");
     textStarBtn.classList.remove("hidden");
 }
+
+var swiper = new Swiper(".slide-content", {
+    slidesPerView: 3,
+    spaceBetween: 15,
+    loop: true,
+    fade: true,
+    grabCursor: true,
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+        dynamicBullets: true,
+    },
+    navigation: {
+        nextEl: ".arrow.next",
+        prevEl: ".arrow.prev",
+    },
+});

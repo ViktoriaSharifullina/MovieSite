@@ -2,6 +2,7 @@
 
 @section('style')
 @vite(['resources/css/about-movie.css'])
+@vite(['resources/css/slider-reviews.css'])
 @endsection
 
 @section('content')
@@ -111,7 +112,7 @@
             @foreach ($mainActors as $actor)
             <a class="card card-actor" href="{{ route('people.about', $actor['id']) }}">
                 @if(isset($actor['photo']))
-                <img class="card-img" src="{{ 'https://image.tmdb.org/t/p/w500' . $actor['photo'] }}" alt="Card image cap">
+                <img class="card-img-actor" src="{{ 'https://image.tmdb.org/t/p/w500' . $actor['photo'] }}" alt="Card image cap">
                 @else
                 <div class="no-image-overlay" style="height: 160px;">
                     <span class="no-image-placeholder">No Image</span>
@@ -145,9 +146,32 @@
     </div>
 </div>
 
+<div class="social-media-container">
+    <div class="social-menu">
+        <div class="reviews active">
+            Reviews
+        </div>
+        <div class="discussions">
+            Discussions
+        </div>
+    </div>
+    <div class="social-menu-container">
+        @include('layouts/slider-reviews')
+        <div class="gradient-menu-right"></div> -->
+        <div class="gradient-menu-left"></div>
+        <a title="Next" class="arrow prev"></a>
+        <a title="Next" class="arrow next"></a>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+
+
+
+
 @endsection
 
 @section('script')
-
+<script src="//cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/swiper-bundle.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/script.js"></script>
 @vite(['resources/js/movie.js'])
 @endsection
