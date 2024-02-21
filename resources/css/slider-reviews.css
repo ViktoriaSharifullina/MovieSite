@@ -15,7 +15,7 @@
     margin: 20px;
     height: 350px;
     width: 400px !important;
-    background-color: #343434 !important;
+    background-color: #474747 !important;
     border-radius: 13px !important;
     color: #34343400 !important;
 }
@@ -56,6 +56,25 @@
     width: 100%;
     object-fit: cover;
     border-radius: 50%;
+}
+
+.rate {
+    width: 7px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+.rate.hight {
+    background-color: rgb(33, 194, 1);
+}
+
+.rate.medium {
+    background-color: rgb(160, 160, 160);
+}
+
+.rate.low {
+    background-color: rgb(211, 48, 48);
 }
 
 .name {

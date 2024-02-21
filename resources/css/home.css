@@ -74,7 +74,7 @@ ul.facts li:first-child {
 }
 
 .feature-button {
-    background-color: #ed3f40 !important;
+    background-color: rgb(211, 48, 48) !important;
     margin-top: 20px;
     color: #fff !important;
 }
@@ -266,6 +266,6 @@ ul.facts li:first-child {
         transform: scaleY(0.1);
     }
     100% {
-        color: #ed3f40;
+        color: rgb(211, 48, 48);
     }
 }

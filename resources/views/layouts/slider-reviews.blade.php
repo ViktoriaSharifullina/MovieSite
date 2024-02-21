@@ -4,6 +4,7 @@
             <div class="card-wrapper swiper-wrapper">
                 <div class="swiper-slide">
                     <div class="image-content">
+                        <div class="rate hight"></div>
                         <div class="card-image"></div>
                         <div class="name">User 1</div>
                     </div>
@@ -17,6 +18,7 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="image-content">
+                        <div class="rate medium"></div>
                         <div class="card-image"></div>
                         <div class="name">User 2</div>
                     </div>
@@ -29,6 +31,7 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="image-content">
+                        <div class="rate low"></div>
                         <div class="card-image"></div>
                         <div class="name">User 3</div>
                     </div>

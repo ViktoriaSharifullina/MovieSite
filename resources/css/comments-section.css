@@ -1,0 +1,141 @@
+.comments-container {
+    margin-left: 20vw;
+    margin-right: 20vw;
+    position: relative;
+    margin-top: 20px;
+    height: auto;
+}
+
+*,
+*:before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.comment__container {
+    display: none;
+    position: relative;
+}
+
+.comment__container.opened {
+    display: block;
+}
+
+.comment__container::before {
+    content: "";
+    background-color: rgb(197, 196, 196);
+    position: absolute;
+    min-height: 100%;
+    width: 1px;
+    left: -10px;
+}
+
+.comment__container:not(:first-child) {
+    margin-left: 3rem;
+    margin-top: 1rem;
+}
+
+.comment__card {
+    color: white;
+    font-size: 14px;
+    padding: 0 0 20px 15px;
+    border-radius: 0.5rem;
+    min-width: 100%;
+}
+
+.comment__title {
+    display: flex;
+    align-items: center;
+}
+
+.commenter-name {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.image-comment {
+    height: 35px;
+    width: 35px;
+}
+
+.comment__card p {
+    margin-top: 10px;
+    margin-bottom: 1rem;
+}
+
+.cooment__card-footer {
+    display: flex;
+    font-size: 15px;
+    gap: 30px;
+    align-items: center;
+}
+
+.fas-comment,
+.fa-thumbs-up,
+.fa-thumbs-down {
+    color: white;
+}
+
+.write-reply {
+    color: white;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+}
+
+.write-reply:hover {
+    color: rgb(211, 48, 48) !important;
+}
+
+.write-comment-container {
+    margin-top: 20px;
+    align-items: end;
+}
+
+.show-replies {
+    cursor: pointer;
+}
+
+.form-control {
+    color: white !important;
+    border: none !important;
+    border-radius: 13px !important;
+    background-color: #474747 !important;
+}
+
+.send-comment-button {
+    bottom: 10px;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    padding: 10px 12px;
+    background-color: rgb(211, 48, 48);
+    border-radius: 13px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.send-comment-button:hover {
+    background: rgb(174, 39, 39);
+}
+
+.cancel-comment-button {
+    bottom: 10px;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    padding: 10px 12px;
+    background-color: #7d7d7d88;
+    border-radius: 13px;
+    margin-top: 15px;
+    margin-left: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cancel-comment-button:hover {
+    background-color: #7d7d7d;
+}

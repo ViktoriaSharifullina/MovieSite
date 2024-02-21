@@ -56,11 +56,11 @@ body {
 .menu-list-item.active {
     font-weight: bold;
     font-size: 18px;
-    color: #ed3f40;
+    color: rgb(211, 48, 48);
 }
 
 .menu-list-item:hover {
-    color: #ed3f40;
+    color: rgb(211, 48, 48);
 }
 
 .dropbtn {
@@ -69,7 +69,7 @@ body {
 }
 
 .dropbtn:hover {
-    color: #ed3f40;
+    color: rgb(211, 48, 48);
 }
 
 li.dropdown {
@@ -83,7 +83,7 @@ li.dropdown {
 .dropbtn.active {
     font-weight: bold;
     font-size: 18px;
-    color: #ed3f40;
+    color: rgb(211, 48, 48);
 }
 
 .dropdown-content {
@@ -105,7 +105,7 @@ li.dropdown {
 }
 
 .dropdown-content a:hover {
-    color: #ed3f40;
+    color: rgb(211, 48, 48);
     border-radius: 10px;
     background-color: #e6e6e6;
 }

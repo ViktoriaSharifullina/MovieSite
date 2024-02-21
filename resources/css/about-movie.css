@@ -381,9 +381,9 @@ ul.facts li:first-child {
 }
 
 .card {
-    background-color: #343434 !important;
+    background-color: #474747 !important;
     border-radius: 13px !important;
-    color: #34343400 !important;
+    color: #474747 !important;
 }
 
 .actor-card-body {
@@ -441,7 +441,7 @@ ul.facts li:first-child {
 
 .gradient-menu-left {
     position: absolute;
-    width: 220px;
+    width: 180px;
     height: 100%;
     right: 30px;
     top: 0;
@@ -451,7 +451,7 @@ ul.facts li:first-child {
 
 .gradient-menu-right {
     position: absolute;
-    width: 220px;
+    width: 180px;
     height: 100%;
     left: 30px;
     top: 0;

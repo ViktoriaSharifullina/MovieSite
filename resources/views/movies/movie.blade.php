@@ -3,6 +3,7 @@
 @section('style')
 @vite(['resources/css/about-movie.css'])
 @vite(['resources/css/slider-reviews.css'])
+@vite(['resources/css/comments-section.css'])
 @endsection
 
 @section('content')
@@ -159,9 +160,12 @@
         @include('layouts/slider-reviews')
         <div class="gradient-menu-right"></div> -->
         <div class="gradient-menu-left"></div>
-        <a title="Next" class="arrow prev"></a>
+        <a title="Previous" class="arrow prev"></a>
         <a title="Next" class="arrow next"></a>
         <div class="swiper-pagination"></div>
+    </div>
+    <div class="comments-container">
+        @include('layouts/comments-section')
     </div>
 </div>
 
@@ -172,6 +176,6 @@
 
 @section('script')
 <script src="//cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/swiper-bundle.min.js"></script>
-<script src="//cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/script.js"></script>
 @vite(['resources/js/movie.js'])
+@vite(['resources/js/comments-section.js'])
 @endsection

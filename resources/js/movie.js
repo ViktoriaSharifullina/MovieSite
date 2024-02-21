@@ -73,7 +73,7 @@ function rateMovie(event) {
     textStarBtn.classList.remove("hidden");
 }
 
-var swiper = new Swiper(".slide-content", {
+var swiper1 = new Swiper(".slide-content", {
     slidesPerView: 3,
     spaceBetween: 15,
     loop: true,
@@ -87,5 +87,22 @@ var swiper = new Swiper(".slide-content", {
     navigation: {
         nextEl: ".arrow.next",
         prevEl: ".arrow.prev",
+    },
+});
+
+var swiper2 = new Swiper(".swiper-container-d", {
+    slidesPerView: 1,
+    spaceBetween: 0,
+    loop: true,
+    fade: true,
+    grabCursor: true,
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+        dynamicBullets: true,
+    },
+    navigation: {
+        nextEl: ".arrow.nextd",
+        prevEl: ".arrow.prevd",
     },
 });
