@@ -15,3 +15,27 @@ showContainers.forEach((btn) =>
         }
     })
 );
+
+document.addEventListener("DOMContentLoaded", function () {
+    var writeReplyButtons = document.querySelectorAll(".write-reply");
+    var cancelButtons = document.querySelectorAll(".cancel-comment-button");
+
+    writeReplyButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            var commentCard = button.closest(".comment__card");
+            var writeCommentContainer = commentCard.querySelector(
+                ".write-comment-container"
+            );
+            writeCommentContainer.style.display = "block";
+        });
+    });
+
+    cancelButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            var writeCommentContainer = button.closest(
+                ".write-comment-container"
+            );
+            writeCommentContainer.style.display = "none";
+        });
+    });
+});

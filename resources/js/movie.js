@@ -73,7 +73,7 @@ function rateMovie(event) {
     textStarBtn.classList.remove("hidden");
 }
 
-var swiper1 = new Swiper(".slide-content", {
+var swiper = new Swiper(".slide-content", {
     slidesPerView: 3,
     spaceBetween: 15,
     loop: true,
@@ -90,19 +90,33 @@ var swiper1 = new Swiper(".slide-content", {
     },
 });
 
-var swiper2 = new Swiper(".swiper-container-d", {
-    slidesPerView: 1,
-    spaceBetween: 0,
-    loop: true,
-    fade: true,
-    grabCursor: true,
-    pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-        dynamicBullets: true,
-    },
-    navigation: {
-        nextEl: ".arrow.nextd",
-        prevEl: ".arrow.prevd",
-    },
+const reviewsTab = document.querySelector(".reviews");
+const discussionsTab = document.querySelector(".discussions");
+
+const reviewsContainer = document.querySelector(".reviews-container");
+const commentsContainer = document.querySelector(".comments-container");
+
+function resetActiveState() {
+    reviewsTab.classList.remove("active");
+    discussionsTab.classList.remove("active");
+    reviewsContainer.style.display = "none";
+    commentsContainer.style.display = "none";
+}
+
+// Обработчик событий для вкладки "Reviews"
+reviewsTab.addEventListener("click", function () {
+    resetActiveState();
+    this.classList.add("active");
+    reviewsContainer.style.display = "block";
 });
+
+// Обработчик событий для вкладки "Discussions"
+discussionsTab.addEventListener("click", function () {
+    resetActiveState();
+    this.classList.add("active");
+    commentsContainer.style.display = "block";
+});
+
+// Инициализируем состояние интерфейса
+resetActiveState();
+reviewsTab.click();

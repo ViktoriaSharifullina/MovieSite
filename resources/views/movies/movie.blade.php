@@ -156,9 +156,9 @@
             Discussions
         </div>
     </div>
-    <div class="social-menu-container">
+    <div class="reviews-container">
         @include('layouts/slider-reviews')
-        <div class="gradient-menu-right"></div> -->
+        <div class="gradient-menu-right"></div>
         <div class="gradient-menu-left"></div>
         <a title="Previous" class="arrow prev"></a>
         <a title="Next" class="arrow next"></a>

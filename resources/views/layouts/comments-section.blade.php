@@ -8,10 +8,10 @@
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur, reprehenderit a inventore dolorem explicabo in quibusdam eum voluptatum facere nemo nam et commodi fugit quas accusantium temporibus corporis quod natus.
         </p>
         <div class="cooment__card-footer">
-            <div><i class="fa-regular fa-thumbs-up"></i> 123</div>
-            <div><i class="fa-regular fa-thumbs-down"></i> 10</div>
-            <div class="show-replies"><i class="fa-regular fa-comment"></i> 2</div>
-            <button class="write-reply"><i class="fa-solid fa-reply"></i></button>
+            <button class="thumbs-up"><i class="fa-regular fa-thumbs-up"></i> 123</и>
+                <button class="thumbs-down"><i class="fa-regular fa-thumbs-down"></i> 10</button>
+                <button class="show-replies"><i class="fa-regular fa-comment"></i> 2</button>
+                <button class="write-reply"><i class="fa-solid fa-reply"></i></button>
         </div>
         <div class="write-comment-container">
             <div class="input-group input-group-comment">
@@ -28,9 +28,17 @@
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur, reprehenderit a inventore dolorem explicabo in quibusdam eum voluptatum facere nemo nam et commodi fugit quas accusantium temporibus corporis quod natus.
             </p>
             <div class="cooment__card-footer">
-                <div><i class="fa-regular fa-thumbs-up"></i> 123</div>
-                <div><i class="fa-regular fa-thumbs-down"></i></div>
-                <div class="show-replies"><i class="fa-regular fa-comment"></i> 1</div>
+                <button class="thumbs-up"><i class="fa-regular fa-thumbs-up"></i> 123</и>
+                    <button class="thumbs-down"><i class="fa-regular fa-thumbs-down"></i> 10</button>
+                    <button class="show-replies"><i class="fa-regular fa-comment"></i> 2</button>
+                    <button class="write-reply"><i class="fa-solid fa-reply"></i></button>
+            </div>
+            <div class="write-comment-container">
+                <div class="input-group input-group-comment">
+                    <textarea class="form-control" aria-label="With textarea"></textarea>
+                </div>
+                <button class="send-comment-button">Comment</button>
+                <button class="cancel-comment-button">Cancel</button>
             </div>
         </div>
         <div class="comment__container" dataset="first-reply" id="first-first-reply">
@@ -40,9 +48,17 @@
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur, reprehenderit a inventore dolorem explicabo in quibusdam eum voluptatum facere nemo nam et commodi fugit quas accusantium temporibus corporis quod natus.
                 </p>
                 <div class="cooment__card-footer">
-                    <div><i class="fa-regular fa-thumbs-up"></i> 123</div>
-                    <div><i class="fa-regular fa-thumbs-down"></i></div>
-                    <div class="show-replies"><i class="fa-regular fa-comment"></i> 0</div>
+                    <button class="thumbs-up"><i class="fa-regular fa-thumbs-up"></i> 123</и>
+                        <button class="thumbs-down"><i class="fa-regular fa-thumbs-down"></i> 10</button>
+                        <button class="show-replies"><i class="fa-regular fa-comment"></i> 2</button>
+                        <button class="write-reply"><i class="fa-solid fa-reply"></i></button>
+                </div>
+                <div class="write-comment-container">
+                    <div class="input-group input-group-comment">
+                        <textarea class="form-control" aria-label="With textarea"></textarea>
+                    </div>
+                    <button class="send-comment-button">Comment</button>
+                    <button class="cancel-comment-button">Cancel</button>
                 </div>
             </div>
         </div>
@@ -54,9 +70,17 @@
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur, reprehenderit a inventore dolorem explicabo in quibusdam eum voluptatum facere nemo nam et commodi fugit quas accusantium temporibus corporis quod natus.
             </p>
             <div class="cooment__card-footer">
-                <div><i class="fa-regular fa-thumbs-up"></i> 123</div>
-                <div><i class="fa-regular fa-thumbs-down"></i></div>
-                <div class="show-replies"><i class="fa-regular fa-comment"></i> 0</div>
+                <button class="thumbs-up"><i class="fa-regular fa-thumbs-up"></i> 123</и>
+                    <button class="thumbs-down"><i class="fa-regular fa-thumbs-down"></i> 10</button>
+                    <button class="show-replies"><i class="fa-regular fa-comment"></i> 2</button>
+                    <button class="write-reply"><i class="fa-solid fa-reply"></i></button>
+            </div>
+            <div class="write-comment-container">
+                <div class="input-group input-group-comment">
+                    <textarea class="form-control" aria-label="With textarea"></textarea>
+                </div>
+                <button class="send-comment-button">Comment</button>
+                <button class="cancel-comment-button">Cancel</button>
             </div>
         </div>
     </div>
