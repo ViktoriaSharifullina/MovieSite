@@ -2,50 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Services\PeopleService;
 
 class PeopleController extends Controller
 {
-    private $api_key;
+    protected $peopleService;
 
-    public function __construct()
+    public function __construct(PeopleService $peopleService)
     {
-        $this->api_key = config('services.tmdb.api_key');
+        $this->peopleService = $peopleService;
     }
 
     public function index(int $id)
     {
-        $person = $this->getPersonInfo($id);
-        $knownForMovies = $this->getKnownForMovies($id);
-
-        // dd($person);
+        $person = $this->peopleService->getPersonInfo($id);
+        $knownForMovies = $this->peopleService->getKnownForMovies($id);
 
         return view('people.about', compact('person', 'knownForMovies'));
     }
 
-    private function getPersonInfo(int $id)
+    public function getPopularPeople()
     {
-        $response = Http::get("https://api.themoviedb.org/3/person/{$id}", [
-            'api_key' => $this->api_key,
-        ]);
+        $popularPeople = $this->peopleService->getPopularPeople();
 
-        return $response->json();
-    }
-
-    private function getKnownForMovies(int $id)
-    {
-        $response = Http::get("https://api.themoviedb.org/3/person/{$id}/combined_credits", [
-            'api_key' => $this->api_key,
-        ]);
-        $credits = $response->json();
-
-        $knownForMovies = collect($credits['cast'])
-            ->sortByDesc('vote_average')
-            ->take(8)
-            ->all();
-
-
-        return   $knownForMovies;
+        return view('people.catalog', compact('popularPeople'));
     }
 }

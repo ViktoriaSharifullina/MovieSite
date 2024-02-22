@@ -25,6 +25,6 @@ class MovieController extends Controller
     {
         $movieData = $this->movieService->getMovieDetailsAndActors($id);
 
-        return view('movies/movie', $movieData);
+        return view('movies/about', $movieData);
     }
 }

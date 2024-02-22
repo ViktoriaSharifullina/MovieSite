@@ -1,7 +1,7 @@
 @extends('layouts/app')
 
 @section('style')
-@vite(['resources/css/people.css'])
+@vite(['resources/css/people/people.css'])
 @endsection
 
 @section('content')

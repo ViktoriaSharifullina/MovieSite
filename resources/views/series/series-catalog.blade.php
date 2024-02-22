@@ -1,7 +1,7 @@
 @extends('layouts/app')
 
 @section('style')
-@vite(['resources/css/series-catalog.css'])
+@vite(['resources/css/series/series-catalog.css'])
 @endsection
 
 @section('content')

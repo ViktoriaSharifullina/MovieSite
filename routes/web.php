@@ -8,15 +8,13 @@ Route::get('/', [MovieController::class, 'index'])->name('home');
 Route::get('/movie/{id}', [MovieController::class, 'aboutMovie'])->name('movie.about');
 
 Route::get('/movie-catalog', function () {
-    return view('/movies/movie-catalog');
+    return view('/movies/catalog');
 });
 Route::get('/series-catalog', function () {
     return view('/series/series-catalog');
 });
 
-Route::get('/people-catalog', function () {
-    return view('people/catalog');
-});
+Route::get('/people-catalog', [PeopleController::class, 'getPopularPeople'])->name('people.catalog');
 Route::get('/people/{id}', [PeopleController::class, 'index'])->name('people.about');
 
 Route::get('/profile', function () {

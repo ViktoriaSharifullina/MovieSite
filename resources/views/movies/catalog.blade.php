@@ -1,7 +1,7 @@
 @extends ('layouts/app')
 
 @section('style')
-@vite(['resources/css/movie-catalog.css'])
+@vite(['resources/css/movie/movie-catalog.css'])
 @endsection
 
 @section('content')

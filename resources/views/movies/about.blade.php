@@ -1,9 +1,9 @@
 @extends('layouts/app')
 
 @section('style')
-@vite(['resources/css/about-movie.css'])
-@vite(['resources/css/slider-reviews.css'])
-@vite(['resources/css/comments-section.css'])
+@vite(['resources/css/movie/about-movie.css'])
+@vite(['resources/css/movie/slider-reviews.css'])
+@vite(['resources/css/movie/comments-section.css'])
 @endsection
 
 @section('content')

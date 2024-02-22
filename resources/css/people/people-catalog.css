@@ -1,0 +1,97 @@
+.container-people-catalog {
+    margin-top: 50px;
+    margin-left: 13vw;
+    margin-right: 13vw;
+    position: relative;
+}
+
+#search-form {
+    display: flex;
+    align-items: center;
+}
+
+#search-input {
+    width: 60%;
+    margin-right: 30px;
+    border-radius: 12px;
+}
+
+.btn-search {
+    bottom: 10px;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    padding: 10px 12px;
+    background-color: #646464;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-search:hover {
+    background-color: #474747;
+}
+
+.compilations-container {
+    margin-top: 50px;
+    color: white;
+}
+
+.compilations-container-title {
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.people-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card-actor {
+    cursor: pointer;
+    flex: 0 0 auto;
+    width: 180px;
+    height: 250px !important;
+    display: flex;
+    margin-right: 20px;
+    margin-top: 20px;
+    overflow: hidden;
+    border: 0px !important;
+    background-color: #474747 !important;
+    border-radius: 13px !important;
+    color: #474747 !important;
+}
+
+.no-image-overlay {
+    width: 100%;
+    height: 100% !important;
+    border-radius: 10px !important;
+    background-color: rgba(58, 57, 57, 0.717);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.card-img-actor {
+    object-position: center center;
+    object-fit: cover;
+    height: 205px !important;
+    border-radius: 0% !important;
+}
+
+.actor-name {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.actor-card-body {
+    flex-direction: column;
+    text-align: left;
+    padding: 10px !important;
+    color: white !important;
+    height: auto !important;
+}
