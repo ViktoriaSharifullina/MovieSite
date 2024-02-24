@@ -14,7 +14,8 @@ Route::get('/series-catalog', function () {
     return view('/series/series-catalog');
 });
 
-Route::get('/people-catalog', [PeopleController::class, 'getPopularPeople'])->name('people.catalog');
+Route::get('/people-catalog', [PeopleController::class, 'showCatalog'])->name('people.catalog');
+// Route::get('/people/search', [PeopleController::class, 'search'])->name('people.search');
 Route::get('/people/{id}', [PeopleController::class, 'index'])->name('people.about');
 
 Route::get('/profile', function () {

@@ -46,4 +46,37 @@ class PeopleService
 
         return   $knownForMovies;
     }
+
+    public function searchPeople(string $query)
+    {
+        $response = Http::get('https://api.themoviedb.org/3/search/person', [
+            'api_key' => config('services.tmdb.api_key'),
+            'query'   => $query,
+        ]);
+
+        $results = $response->json()['results'] ?? [];
+
+        if (is_array($results)) {
+            usort($results, function ($a, $b) {
+                return $b['popularity'] <=> $a['popularity'];
+            });
+        }
+
+        return $results;
+    }
+
+    public function searchPeopleWithFlag(string $query)
+    {
+        $searchPerformed = !empty($query);
+        $searchResults = [];
+
+        if ($searchPerformed) {
+            $searchResults = $this->searchPeople($query);
+        }
+
+        return [
+            'searchPerformed' => $searchPerformed,
+            'searchResults' => $searchResults
+        ];
+    }
 }

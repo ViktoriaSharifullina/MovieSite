@@ -32,6 +32,18 @@
     background-color: #474747;
 }
 
+.search-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    color: #fff;
+}
+
+.no-people-found {
+    font-size: 17px !important;
+    margin-top: 30px;
+}
+
 .compilations-container {
     margin-top: 50px;
     color: white;
