@@ -30,7 +30,7 @@
                         </div>
                     </li>
                     <li class="dropdown">
-                        <a class="dropbtn {{ Request::is('series-catalog') ? 'active' : '' }}">Series</a>
+                        <a class="dropbtn {{ Request::is('series-catalog') ? 'active' : '' }}">Shows</a>
                         <div class="dropdown-content">
                             <a href="/series-catalog">Popular</a>
                             <a href="/series-catalog">On TV</a>
@@ -41,21 +41,54 @@
                     <li><a class="menu-list-item {{ Request::is('communities') ? 'active' : '' }}" href="#">Communities</a></li>
                 </ul>
             </div>
-            <div class="search-container">
-                <form class="search-form">
-                    <span class="icon"><i class="fa fa-search"></i></span>
-                    <input type="search" id="search" placeholder="Search..." />
-                </form>
-            </div>
-            <div class="profile-container">
-                <img class="profile-picture" src="{{ Vite::asset('resources/img/profile.jpg') }}" alt="">
-                <div class="profile-text-container">
-                    <span class="profile-text">Profile</span>
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+            <li class="dropdown profile-dropdown">
+                <div class="profile-container">
+                    <a class="dropbtn profile-dropbtn">
+                        <div class="profile-picture">
+                            <i class="fa-solid fa-user"></i>
+                            <!-- <img class="profile-picture" src="{{ Vite::asset('resources/img/profile.jpg') }}" alt=""> -->
+                        </div>
+                        <div class="profile-text-container">
+                            <span class="profile-text">Profile</span>
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </div>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="#" id="loginLink">Log in</a>
+                        <a href="#">Registration</a>
+                    </div>
                 </div>
-            </div>
+            </li>
         </div>
     </div>
+
+    <div id="overlay" class="overlay-modal">
+        <div id="loginModal" class="container-modal-window">
+            <label for="show" class="close-btn fas fa-times" title="close"></label>
+            <div class="text">
+                Login Form
+            </div>
+            <form action="#">
+                <div class="data">
+                    <label>Email</label>
+                    <input type="email" required class="input-modal">
+                </div>
+                <div class="data">
+                    <label>Password</label>
+                    <input type="password" required class="input-modal">
+                </div>
+                <div class="btn btn-login">
+                    <div class="inner"></div>
+                    <button type="submit">LOGIN</button>
+                </div>
+                <div class="signup-link">
+                    Not a member? <a href="#">Signup now</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     @yield('content')
 
     <div class="container footer-container">
@@ -69,6 +102,7 @@
     <script src="https://kit.fontawesome.com/04c178ddc6.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    @vite(['resources/js/app.js'])
     @yield('script')
 </body>
 

@@ -15,7 +15,6 @@ Route::get('/series-catalog', function () {
 });
 
 Route::get('/people-catalog', [PeopleController::class, 'showCatalog'])->name('people.catalog');
-// Route::get('/people/search', [PeopleController::class, 'search'])->name('people.search');
 Route::get('/people/{id}', [PeopleController::class, 'index'])->name('people.about');
 
 Route::get('/profile', function () {

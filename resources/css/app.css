@@ -74,6 +74,7 @@ body {
 
 li.dropdown {
     display: inline-block;
+    align-items: center;
 }
 
 .dropdown {
@@ -114,57 +115,8 @@ li.dropdown {
     display: block;
 }
 
-.search-container {
-    flex: 2;
-    align-items: center;
-    justify-content: flex-end;
-    white-space: nowrap;
-    position: relative;
-}
-
-.search-form input#search {
-    height: 30px;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.6);
-    border: none;
-    float: left;
-    color: #262626;
-    padding-left: 45px;
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.search-form input#search:hover {
-    background-color: rgb(255, 255, 255);
-    transition: background-color 0.3s ease;
-    outline: none;
-}
-
-.search-form input#search::placeholder {
-    color: rgb(33, 33, 33);
-}
-
-.search-form input#search:focus::placeholder {
-    color: #414141;
-}
-
-.search-form input#search:focus {
-    background-color: rgb(255, 255, 255);
-    transition: background-color 0.3s ease;
-    outline: none;
-}
-
-.search-form .icon {
-    margin-top: 6px;
-    position: absolute;
-    margin-left: 15px;
-    z-index: 1;
-    color: #4f5b66;
-}
-
 .profile-container {
     flex: 2;
-    display: flex;
     align-items: center;
     justify-content: flex-end;
 }
@@ -173,8 +125,12 @@ li.dropdown {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    object-fit: cover;
     margin: 0 10px;
+    background-color: #7a7a7a00;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    border: solid 2px white;
 }
 
 .footer {
@@ -187,4 +143,133 @@ li.dropdown {
 
 .footer-text {
     color: #808080 !important;
+}
+
+li.profile-dropdown {
+    display: flex !important;
+    align-items: center;
+}
+
+.profile-dropbtn {
+    display: flex;
+    align-items: center;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1001;
+}
+
+.container-modal-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    background: #fff;
+    width: 410px;
+    padding: 30px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.container-modal-window .close-btn {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.container-modal-window .close-btn:hover {
+    color: rgb(173, 43, 43);
+}
+
+.container-modal-window .text {
+    font-size: 35px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.input-modal {
+    border-radius: 13px;
+}
+
+.container-modal-window form {
+    margin-top: -20px;
+}
+
+.container-modal-window form .data {
+    height: 45px;
+    width: 100%;
+    margin: 40px 0;
+}
+
+form .data label {
+    font-size: 18px;
+}
+
+form .data input {
+    height: 100%;
+    width: 100%;
+    padding-left: 10px;
+    font-size: 17px;
+    border: 1px solid rgb(197, 197, 197);
+}
+
+form .data input:focus {
+    border-color: rgb(211, 48, 48);
+    border-bottom-width: 1px !important;
+}
+
+form .data input:hover {
+    border-color: rgb(211, 48, 48);
+    border-bottom-width: 1px !important;
+}
+
+form .btn-login {
+    margin: 30px 0;
+    height: 45px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    --bs-btn-padding-y: 0;
+    --bs-btn-padding-x: 0;
+}
+
+.btn-login button {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(211, 48, 48);
+    border: none !important;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 13px;
+}
+
+.btn-login button:hover {
+    background-color: rgb(185, 47, 47);
+}
+
+.signup-link {
+    text-align: center;
+}
+
+.signup-link a {
+    color: rgb(211, 48, 48);
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
 }
