@@ -1,24 +1,48 @@
 document.addEventListener("DOMContentLoaded", function () {
-    var modal = document.getElementById("loginModal");
+    var loginModal = document.getElementById("loginModal");
+    var signupModal = document.getElementById("signupModal");
     var overlay = document.getElementById("overlay");
+    var signupLink = document.getElementById("signup-link");
+    var loginLink = document.getElementById("login-link");
+    console.log(signupLink);
 
     document
         .getElementById("loginLink")
         .addEventListener("click", function (event) {
             event.preventDefault();
-            modal.style.display = "block";
+            loginModal.style.display = "block";
             overlay.style.display = "block";
         });
 
     document
-        .querySelector(".overlay-modal")
-        .addEventListener("click", function () {
-            modal.style.display = "none";
-            overlay.style.display = "none";
+        .getElementById("signupLink")
+        .addEventListener("click", function (event) {
+            event.preventDefault();
+            signupModal.style.display = "block";
+            overlay.style.display = "block";
         });
 
-    document.querySelector(".close-btn").addEventListener("click", function () {
-        modal.style.display = "none";
-        overlay.style.display = "none";
+    document.querySelectorAll(".close-btn").forEach(function (button) {
+        button.addEventListener("click", function () {
+            loginModal.style.display = "none";
+            signupModal.style.display = "none";
+            overlay.style.display = "none";
+        });
     });
+
+    document
+        .getElementById("login-link")
+        .addEventListener("click", function (event) {
+            event.preventDefault();
+            loginModal.style.display = "block";
+            signupModal.style.display = "none";
+        });
+
+    document
+        .getElementById("signup-link")
+        .addEventListener("click", function (event) {
+            event.preventDefault();
+            signupModal.style.display = "block";
+            loginModal.style.display = "none";
+        });
 });

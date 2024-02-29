@@ -196,10 +196,7 @@ li.profile-dropdown {
     font-size: 35px;
     font-weight: 500;
     text-align: center;
-}
-
-.input-modal {
-    border-radius: 13px;
+    margin-bottom: 40px;
 }
 
 .container-modal-window form {
@@ -207,34 +204,61 @@ li.profile-dropdown {
 }
 
 .container-modal-window form .data {
-    height: 45px;
+    height: auto;
     width: 100%;
-    margin: 40px 0;
+    margin: 10px 0;
 }
 
 form .data label {
     font-size: 18px;
+    display: flex;
+}
+
+.data .req {
+    margin-left: 3px;
+    color: rgb(211, 48, 48);
 }
 
 form .data input {
-    height: 100%;
+    border-radius: 13px;
+    height: 45px;
     width: 100%;
     padding-left: 10px;
+    padding-right: 10px;
     font-size: 17px;
     border: 1px solid rgb(197, 197, 197);
 }
 
+form .data {
+    display: block !important;
+}
+
+.input-modal-date {
+    display: block;
+    width: 100% !important;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 17px;
+    border: 1px solid rgb(197, 197, 197);
+}
+
+.form-select {
+    border-radius: 13px !important;
+    height: 45px;
+    width: 100% !important;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 17px;
+    border: 1px solid rgb(197, 197, 197) !important;
+}
+
 form .data input:focus {
-    border-color: rgb(211, 48, 48);
-    border-bottom-width: 1px !important;
+    outline: none !important;
+    border: 1px solid rgb(116, 116, 116);
 }
 
-form .data input:hover {
-    border-color: rgb(211, 48, 48);
-    border-bottom-width: 1px !important;
-}
-
-form .btn-login {
+form .btn-login,
+form .btn-signup {
     margin: 30px 0;
     height: 45px;
     width: 100%;
@@ -244,7 +268,8 @@ form .btn-login {
     --bs-btn-padding-x: 0;
 }
 
-.btn-login button {
+.btn-login button,
+.btn-signup button {
     height: 100%;
     width: 100%;
     background-color: rgb(211, 48, 48);
@@ -257,19 +282,23 @@ form .btn-login {
     border-radius: 13px;
 }
 
-.btn-login button:hover {
+.btn-login button:hover,
+.btn-signup button:hover {
     background-color: rgb(185, 47, 47);
 }
 
-.signup-link {
+.signup-link,
+.login-link {
     text-align: center;
 }
 
-.signup-link a {
+.signup-link a,
+.login-link a {
     color: rgb(211, 48, 48);
     text-decoration: none;
 }
 
-.signup-link a:hover {
+.signup-link a:hover,
+.login-link a:hover {
     text-decoration: underline;
 }

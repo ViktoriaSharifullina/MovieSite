@@ -54,8 +54,8 @@
                         </div>
                     </a>
                     <div class="dropdown-content">
-                        <a href="#" id="loginLink">Log in</a>
-                        <a href="#">Registration</a>
+                        <a href="#" id="loginLink">Sign in</a>
+                        <a href="#" id="signupLink">Sign up</a>
                     </div>
                 </div>
             </li>
@@ -66,23 +66,69 @@
         <div id="loginModal" class="container-modal-window">
             <label for="show" class="close-btn fas fa-times" title="close"></label>
             <div class="text">
-                Login Form
+                Sign in
             </div>
             <form action="#">
                 <div class="data">
-                    <label>Email</label>
+                    <label>Email<div class="req">*</div></label>
                     <input type="email" required class="input-modal">
                 </div>
                 <div class="data">
-                    <label>Password</label>
+                    <label>Password<div class="req">*</div></label>
                     <input type="password" required class="input-modal">
                 </div>
                 <div class="btn btn-login">
                     <div class="inner"></div>
                     <button type="submit">LOGIN</button>
                 </div>
-                <div class="signup-link">
-                    Not a member? <a href="#">Signup now</a>
+                <div class="signup-link" id="signup-link">
+                    Not a member? <a href="#">Sign up now</a>
+                </div>
+            </form>
+        </div>
+
+        <div id="signupModal" class="container-modal-window">
+            <label for="show" class="close-btn fas fa-times" title="close"></label>
+            <div class="text">
+                Sign up
+            </div>
+            <form action="#">
+                <div class="data">
+                    <label>Username<div class="req">*</div></label>
+                    <input type="text" required class="input-modal">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="data">
+                            <label>Gender</label>
+                            <select class="form-select">
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="data">
+                            <label>Birthday</label>
+                            <input type="date" class="input-modal-date">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="data">
+                    <label>Email<div class="req">*</div></label>
+                    <input type="email" required class="input-modal">
+                </div>
+                <div class="data">
+                    <label>Password<div class="req">*</div></label>
+                    <input type="password" required class="input-modal">
+                </div>
+                <div class="btn btn-signup">
+                    <div class="inner"></div>
+                    <button type="submit">SIGNUP</button>
+                </div>
+                <div class="login-link" id="login-link">
+                    Already a member? <a href="#">Sign in now</a>
                 </div>
             </form>
         </div>
