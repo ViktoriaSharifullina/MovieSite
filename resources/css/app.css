@@ -68,7 +68,16 @@ body {
     text-decoration: none;
 }
 
-.dropbtn:hover {
+.profile-text {
+    margin-right: 10px;
+}
+
+.profile-text-container {
+    display: flex;
+    align-items: center;
+}
+
+.profile-text-container:hover {
     color: rgb(211, 48, 48);
 }
 
@@ -126,7 +135,7 @@ li.dropdown {
     height: 32px;
     border-radius: 50%;
     margin: 0 10px;
-    background-color: #7a7a7a00;
+    background-color: #6c6c6cc4;
     align-items: center;
     display: inline-flex;
     justify-content: center;

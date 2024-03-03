@@ -2,9 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var loginModal = document.getElementById("loginModal");
     var signupModal = document.getElementById("signupModal");
     var overlay = document.getElementById("overlay");
-    var signupLink = document.getElementById("signup-link");
-    var loginLink = document.getElementById("login-link");
-    console.log(signupLink);
 
     document
         .getElementById("loginLink")
