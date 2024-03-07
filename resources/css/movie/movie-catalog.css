@@ -20,9 +20,9 @@
 }
 
 .right-container {
-    height: 500px;
+    height: auto;
     margin-left: 50px;
-    background-color: rgba(177, 189, 247, 0.258);
+    overflow: hidden;
 }
 
 .sort-menu-container {
@@ -301,4 +301,190 @@
 
 .filter-genres-container li.selected {
     background-color: #d33030;
+}
+
+.btn-search-filters {
+    border: none;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: calc(100% - 40px);
+    font-size: 14px;
+    color: #fff;
+    padding: 0.375rem 0.75rem;
+    background-color: #656565;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.btn-search-filters:hover {
+    background-color: #d33030;
+}
+
+.search-input {
+    width: 60%;
+    border-radius: 8px;
+    border: none;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.btn-search {
+    border: none;
+    margin-left: 20px;
+    font-size: 14px;
+    color: #fff;
+    padding: 0.375rem 0.75rem;
+    background-color: #656565;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-search:hover {
+    background-color: #656565b8;
+}
+
+.search-input:focus {
+    outline: none !important;
+    border: none;
+}
+
+.movie-list-title {
+    color: #ffffff;
+    display: inline-block;
+    margin-top: 30px;
+    font-size: 35px;
+    font-weight: 400;
+    cursor: pointer;
+    word-wrap: break-word;
+}
+
+.movie-list-title:hover {
+    color: #bc2929;
+}
+
+.movie-list {
+    display: flex;
+    justify-content: left;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    row-gap: 20px;
+}
+
+.movie-list-item {
+    margin-right: 60px;
+    width: 140px;
+    cursor: pointer;
+}
+
+.movie-list-container {
+    position: relative;
+}
+
+.movie-poster {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 200px;
+}
+
+.rating {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(155, 155, 155, 0.756);
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.movie-poster .rating.low {
+    background-color: rgb(218, 13, 13);
+    color: white;
+}
+
+.movie-poster .rating.medium {
+    background-color: rgb(125, 125, 125);
+    color: rgb(255, 255, 255);
+}
+
+.movie-poster .rating.high {
+    background-color: rgb(56, 162, 56);
+    color: white;
+}
+
+.movie-facts {
+    width: 100%;
+    text-align: left;
+    color: #fff;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.movie-title {
+    font-size: 18px;
+}
+
+.release-year,
+.primary-genre {
+    color: #aeaeae;
+    font-size: 15px;
+}
+
+.bookmark-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: 30px;
+    width: 30px;
+    display: inline-flex;
+    justify-content: center;
+    padding: 15px 15px;
+    color: #3a3d52;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.25s;
+    align-items: center;
+    box-shadow: 0 0 5px rgb(0, 0, 0.25s);
+    border: 2px solid #eee;
+    font-size: 17px;
+}
+
+.bookmark-btn:hover {
+    background-color: #e6e6e6;
+}
+
+.bookmark-btn:focus i {
+    animation: ribbon 0.25s cubic-bezier(0.77, 0, 0.17, 1) forwards;
+}
+
+.movie-list-item .bookmark-btn {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.movie-list-item:hover .bookmark-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+@keyframes ribbon {
+    0% {
+        transform: scaleY(0.1);
+    }
+    25% {
+        transform: scaleY(0.1);
+    }
+    100% {
+        color: rgb(211, 48, 48);
+    }
 }

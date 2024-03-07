@@ -24,9 +24,9 @@
                     <li class="dropdown">
                         <a class="dropbtn {{ Request::is('movie-catalog') ? 'active' : '' }}">Movies</a>
                         <div class="dropdown-content">
-                            <a href="/movie-catalog">Popular</a>
-                            <a href="/movie-catalog">Upcoming</a>
-                            <a href="/movie-catalog">Top Rated</a>
+                            <a href="/movie-catalog?filter=popular">Popular</a>
+                            <a href="/movie-catalog?filter=upcoming">Upcoming</a>
+                            <a href="/movie-catalog?filter=top_rated">Top Rated</a>
                         </div>
                     </li>
                     <li class="dropdown">

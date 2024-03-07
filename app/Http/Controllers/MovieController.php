@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Services\MovieService;
 
 class MovieController extends Controller
@@ -26,5 +27,14 @@ class MovieController extends Controller
         $movieData = $this->movieService->getMovieDetailsAndActors($id);
 
         return view('movies/about', $movieData);
+    }
+
+    public function catalog(Request $request)
+    {
+        $filter = $request->query('filter', 'popular');
+
+        $moviesData = $this->movieService->getMoviesByFilter($filter);
+
+        return view('movies.catalog', ['moviesData' => $moviesData, 'filter' => $filter]);
     }
 }

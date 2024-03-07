@@ -150,4 +150,16 @@ class MovieService
 
         return compact('movie', 'mainActors');
     }
+
+    public function getMoviesByFilter($filter)
+    {
+        if (!in_array($filter, ['popular', 'upcoming', 'top_rated'])) {
+            $filter = 'popular';
+        }
+
+        $movies = $this->movieApiService->getMovies($filter);
+        $preparedMovies = $this->prepareMovies($movies);
+
+        return $preparedMovies;
+    }
 }

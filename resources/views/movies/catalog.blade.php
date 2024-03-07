@@ -82,16 +82,74 @@
                         <div class="filter-title">Genres</div>
                         <ul id="filterGenres" class="filter-genres-container"></ul>
                     </div>
+                    <button type="submit" class="btn-search-filters">Search by filters</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-right">
         <div class="right-container">
-            <div class="search-container"></div>
-            <div class="movie-catalog-container"></div>
+            <div class="search-container">
+                <form id="search-form" action="" method="GET">
+                    <input type="text" class="search-input" id="search-input" name="query" placeholder="Search for movies...">
+                    <button type="submit" class="btn-search">Search</button>
+                </form>
+            </div>
+            <div class="movie-catalog-container">
+                <div class="movie-list-container">
+                    <div class="movie-list-title">
+                        @switch($filter)
+                        @case('popular')
+                        Popular
+                        @break
+                        @case('upcoming')
+                        Upcoming
+                        @break
+                        @case('top_rated')
+                        Top Rated
+                        @break
+                        @default
+                        Movies
+                        @endswitch
+                    </div>
+
+                    <div class="movie-list">
+                        @if(!empty($moviesData))
+                        @foreach($moviesData as $movie)
+                        <div class="movie-list-item">
+                            <a href="{{ route('movie.about', $movie['id']) }}">
+                                <div class="movie-poster">
+                                    @if(isset($movie['poster_path']))
+                                    <img src="https://image.tmdb.org/t/p/w185{{ $movie['poster_path'] }}" class="movie-poster">
+                                    @else
+                                    <img src="/path/to/default/poster.jpg" class="movie-poster">
+                                    @endif
+                                    <button class="bookmark-btn" title="Watch later">
+                                        <i class="fa fa-bookmark"></i>
+                                    </button>
+                                    <div class="rating {{ $movie['vote_average'] < 5 ? 'low' : ($movie['vote_average'] < 7 ? 'medium' : 'high') }}">
+                                        {{ number_format($movie['vote_average'], 1) }}
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="movie-facts">
+                                <div class="movie-title">
+                                    {{ $movie['title'] }}
+                                </div>
+                                <span class="release-year">{{ $movie['release_year'] }}, </span>
+                                <span class="primary-genre">{{ $movie['primary_genre'] }}</span>
+                            </div>
+                        </div>
+                        @endforeach
+                        @else
+                        <p>No movies found.</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
 </div>
 @endsection

@@ -7,7 +7,7 @@
 @section('content')
 <div class="container-people-catalog">
     <form id="search-form" action="{{ route('people.catalog') }}" method="GET">
-        <input type="text" class="form-control" id="search-input" name="query" placeholder="Search for actors...">
+        <input type="text" class="search-input" id="search-input" name="query" placeholder="Search for actors...">
         <button type="submit" class="btn-search">Search</button>
     </form>
 

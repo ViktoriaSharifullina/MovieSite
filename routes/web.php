@@ -7,9 +7,7 @@ use App\Http\Controllers\PeopleController;
 Route::get('/', [MovieController::class, 'index'])->name('home');
 Route::get('/movie/{id}', [MovieController::class, 'aboutMovie'])->name('movie.about');
 
-Route::get('/movie-catalog', function () {
-    return view('/movies/catalog');
-});
+Route::get('/movie-catalog', [MovieController::class, 'catalog'])->name('movie.catalog');
 Route::get('/series-catalog', function () {
     return view('/series/series-catalog');
 });

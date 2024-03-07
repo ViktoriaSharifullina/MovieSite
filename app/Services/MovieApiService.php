@@ -13,17 +13,18 @@ class MovieApiService
         $this->api_key = config('services.tmdb.api_key');
     }
 
-    public function getMovies($type, $perPage = 10)
+    public function getMovies($type)
     {
-        return cache()->remember("movies_{$type}", now()->addHours(1), function () use ($type, $perPage) {
+        return cache()->remember("movies_{$type}", now()->addHours(1), function () use ($type) {
             $response = Http::get("https://api.themoviedb.org/3/movie/{$type}", [
                 'api_key' => $this->api_key,
                 'page' => 1,
             ]);
 
-            $results = $response->json()['results'];
+            $data = $response->json();
+            $results = $data['results'];
 
-            return array_slice($results, 0, $perPage);
+            return $results;
         });
     }
 
