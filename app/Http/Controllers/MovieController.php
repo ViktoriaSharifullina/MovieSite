@@ -29,12 +29,24 @@ class MovieController extends Controller
         return view('movies/about', $movieData);
     }
 
-    public function catalog(Request $request)
+    public function catalogBasic(Request $request)
     {
-        $filter = $request->query('filter', 'popular');
+        $sort = $request->query('sort_by', 'popular');
+        $moviesData = $this->movieService->getMoviesByFilter($sort);
 
-        $moviesData = $this->movieService->getMoviesByFilter($filter);
+        return view('movies.catalog', ['moviesData' => $moviesData, 'currentSort' => $sort]);
+    }
 
-        return view('movies.catalog', ['moviesData' => $moviesData, 'filter' => $filter]);
+    public function catalogAdvanced(Request $request)
+    {
+        // dd($request);
+        $moviesData = $this->movieService->getMoviesFilteredAndSorted($request);
+
+        return view('movies.catalog', [
+            'moviesData' => $moviesData['movies'],
+            'currentSort' => $request->input('sort_by', 'popularity.desc'),
+            'currentPage' => $moviesData['current_page'],
+            'totalPages' => $moviesData['total_pages'],
+        ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use App\Services\MovieApiService;
 
 class MovieService
@@ -161,5 +162,36 @@ class MovieService
         $preparedMovies = $this->prepareMovies($movies);
 
         return $preparedMovies;
+    }
+
+    public function filterNonEmptyParams($params)
+    {
+        return array_filter($params, function ($value) {
+            return !empty($value);
+        });
+    }
+
+    public function getMoviesFilteredAndSorted(Request $request)
+    {
+        $filterParams = [
+            'sort_by' => $request->input('sort_by'),
+            'with_genres' => $request->input('genre'),
+            'with_original_language' => $request->input('language'),
+            'primary_release_date.gte' => $request->input('release_date_gte'),
+            'primary_release_date.lte' => $request->input('release_date_lte'),
+        ];
+
+        $filteredParams = $this->filterNonEmptyParams($filterParams);
+
+        $page = $request->input('page', 1);
+        $moviesData = $this->movieApiService->getMoviesFromApi($filteredParams, $page);
+        $preparedMovies = $this->prepareMovies($moviesData['results']);
+
+        return [
+            'movies' => $preparedMovies,
+            'current_page' => $page,
+            'total_pages' => $moviesData['total_pages'],
+            'total_results' => $moviesData['total_results'],
+        ];
     }
 }

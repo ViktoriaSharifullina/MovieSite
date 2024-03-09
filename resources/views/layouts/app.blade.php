@@ -22,11 +22,11 @@
                 <ul class="menu-list">
                     <li><a class="menu-list-item {{ Request::is('/') ? 'active' : '' }}" href="/">Home</a></li>
                     <li class="dropdown">
-                        <a class="dropbtn {{ Request::is('movie-catalog') ? 'active' : '' }}">Movies</a>
+                        <a class="dropbtn {{ Request::is('movie-catalog*') ? 'active' : '' }}">Movies</a>
                         <div class="dropdown-content">
-                            <a href="/movie-catalog?filter=popular">Popular</a>
-                            <a href="/movie-catalog?filter=upcoming">Upcoming</a>
-                            <a href="/movie-catalog?filter=top_rated">Top Rated</a>
+                            <a href="{{ route('movie.catalogBasic', ['sort' => 'popular']) }}">Popular</a>
+                            <a href="{{ route('movie.catalogBasic', ['sort' => 'upcoming']) }}">Upcoming</a>
+                            <a href="{{ route('movie.catalogBasic', ['sort' => 'top_rated']) }}">Top Rated</a>
                         </div>
                     </li>
                     <li class="dropdown">

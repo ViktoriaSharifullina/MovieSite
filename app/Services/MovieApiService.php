@@ -13,6 +13,11 @@ class MovieApiService
         $this->api_key = config('services.tmdb.api_key');
     }
 
+    public function getApiKey()
+    {
+        return $this->api_key;
+    }
+
     public function getMovies($type)
     {
         return cache()->remember("movies_{$type}", now()->addHours(1), function () use ($type) {
@@ -86,5 +91,36 @@ class MovieApiService
         $actorDetails = $response->json();
 
         return $actorDetails['profile_path'];
+    }
+
+    public function getMoviesSorted($type, $sort, $page = 1)
+    {
+        $queryParams = [
+            'api_key' => $this->api_key,
+            'page' => $page,
+            'sort_by' => $sort,
+        ];
+
+        $response = Http::get("https://api.themoviedb.org/3/movie/{$type}", $queryParams);
+
+        return $response->json();
+    }
+
+    public function getMoviesFromApi($filterParams, $page = 1)
+    {
+        $queryParams = array_merge([
+            'api_key' => $this->api_key,
+            'page' => $page,
+        ], $filterParams);
+
+        // dd($filterParams);
+
+        $response = Http::get("https://api.themoviedb.org/3/discover/movie", $queryParams);
+
+        if ($response->successful()) {
+            return $response->json();
+        } else {
+            throw new \Exception("Error fetching movies from TMDB API: " . $response->body());
+        }
     }
 }

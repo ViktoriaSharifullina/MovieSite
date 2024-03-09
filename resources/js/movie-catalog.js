@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var sortContentMenu = document.getElementById("sortContentMenu");
     var sortContent = document.getElementById("sortContent");
     var arrow = document.getElementById("arrow");
-    var filterCountryContent = document.getElementById("filterCountry");
+    var filterLanguage = document.getElementById("filterLanguage");
+    var sortOptions = document.querySelectorAll(".sort-option");
 
     document
         .getElementById("sortButtonMenu")
@@ -30,20 +31,15 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     document
-        .getElementById("filterCountryBtn")
+        .getElementById("filterLanguageBtn")
         .addEventListener("click", function (event) {
             event.preventDefault();
-            if (filterCountryContent.style.display === "block") {
-                filterCountryContent.style.display = "none";
+            if (filterLanguage.style.display === "block") {
+                filterLanguage.style.display = "none";
             } else {
-                filterCountryContent.style.display = "block";
+                filterLanguage.style.display = "block";
             }
         });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    var sortOptions = document.querySelectorAll(".sort-option");
-    var sortContent = document.getElementById("sortContent");
 
     sortOptions.forEach(function (option) {
         option.addEventListener("click", function (e) {
@@ -58,28 +54,117 @@ document.addEventListener("DOMContentLoaded", function () {
             sortBtn.appendChild(caretIcon);
         });
     });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-    var countryOptions = document.querySelectorAll(".country-option");
-    var filterCountryContent = document.getElementById("filterCountry");
+    const languages = [
+        { code: "en", name: "English" },
+        { code: "fr", name: "French" },
+        { code: "es", name: "Spanish" },
+        { code: "de", name: "German" },
+        { code: "ja", name: "Japanese" },
+        { code: "pt", name: "Portuguese" },
+        { code: "zh", name: "Chinese" },
+        { code: "it", name: "Italian" },
+        { code: "ru", name: "Russian" },
+        { code: "ko", name: "Korean" },
+        { code: "cs", name: "Czech" },
+        { code: "ar", name: "Arabic" },
+        { code: "nl", name: "Dutch" },
+        { code: "hi", name: "Hindi" },
+        { code: "sv", name: "Swedish" },
+        { code: "tr", name: "Turkish" },
+        { code: "pl", name: "Polish" },
+        { code: "tl", name: "Tagalog" },
+        { code: "cn", name: "Cantonese" },
+        { code: "xx", name: "No Language" },
+    ];
 
-    countryOptions.forEach(function (option) {
-        option.addEventListener("click", function (e) {
+    const languageDropdown = document.getElementById("filterLanguage");
+    const filterLanguageBtn = document.getElementById("filterLanguageBtn");
+    const filterCaretIcon = filterLanguageBtn.querySelector(".fa-caret-down");
+
+    languages.forEach((language) => {
+        const languageLink = document.createElement("a");
+        languageLink.href = "#";
+        languageLink.className = "language-option";
+        languageLink.dataset.language = language.code;
+        languageLink.textContent = language.name;
+
+        languageLink.addEventListener("click", function (e) {
             e.preventDefault();
-            filterCountryContent.style.display = "none";
-            var selectedCountry = option.textContent.trim();
-            var filterBtn = document.getElementById("filterCountryBtn");
-            var caretIcon = document.getElementById("filterCaretIcon");
-
-            filterBtn.innerHTML = "";
-            filterBtn.textContent = selectedCountry;
-            filterBtn.appendChild(caretIcon);
+            languageDropdown.style.display = "none";
+            filterLanguageBtn.textContent = this.textContent;
+            filterLanguageBtn.appendChild(filterCaretIcon);
         });
-    });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
+        languageDropdown.appendChild(languageLink);
+    });
+
     var today = new Date().toISOString().substr(0, 10);
     document.getElementById("inputBefore").value = today;
+
+    // Обработка выбора сортировки
+    document.querySelectorAll(".sort-option").forEach((option) => {
+        option.addEventListener("click", function (e) {
+            e.preventDefault();
+            const sortValue = this.getAttribute("data-sort");
+            document.getElementById("hiddenSortField").value = sortValue;
+        });
+    });
+
+    document.querySelectorAll(".language-option").forEach((option) => {
+        option.addEventListener("click", function (e) {
+            e.preventDefault();
+            const languageValue = this.getAttribute("data-language");
+            document.getElementById("hiddenLanguageField").value =
+                languageValue;
+        });
+    });
+
+    // Обработка даты релиза
+    // document
+    //     .getElementById("inputFrom")
+    //     .addEventListener("change", function () {
+    //         document.getElementById("hiddenReleaseDateGteField").value =
+    //             this.value;
+    //     });
+    // document
+    //     .getElementById("inputBefore")
+    //     .addEventListener("change", function () {
+    //         document.getElementById("hiddenReleaseDateLteField").value =
+    //             this.value;
+    //     });
+
+    var form = document.getElementById("formFilter");
+
+    form.addEventListener("submit", function (event) {
+        // Предотвращаем стандартное поведение формы (отправку)
+        // event.preventDefault();
+
+        // Получаем значения полей
+        var inputFromValue = document.getElementById("inputFrom").value;
+        var inputBeforeValue = document.getElementById("inputBefore").value;
+
+        if (inputFromValue) {
+            document.getElementById("hiddenReleaseDateGteField").value =
+                inputFromValue;
+        }
+        if (inputBeforeValue) {
+            document.getElementById("hiddenReleaseDateLteField").value =
+                inputBeforeValue;
+        }
+    });
+
+    document
+        .querySelector(".btn-search-filters")
+        .addEventListener("click", function (e) {
+            var dateFromValue = document.getElementById("inputFrom").value;
+            document.getElementById("hiddenReleaseDateGteField").value =
+                dateFromValue;
+
+            var dateBeforeValue =
+                document.getElementById("inputBefore").value ||
+                new Date().toISOString().slice(0, 10);
+            document.getElementById("hiddenReleaseDateLteField").value =
+                dateBeforeValue;
+        });
 });

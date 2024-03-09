@@ -22,6 +22,12 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
     var filterGenresContainer = document.getElementById("filterGenres");
+    var hiddenGenresField = document.getElementById("hiddenGenresField");
+
+    if (!filterGenresContainer || !hiddenGenresField) {
+        console.error("Some elements are missing.");
+        return;
+    }
 
     genres.forEach(function (genre) {
         var li = document.createElement("li");
@@ -29,9 +35,20 @@ document.addEventListener("DOMContentLoaded", function () {
         li.textContent = genre.name;
 
         li.addEventListener("click", function () {
-            li.classList.toggle("selected");
+            this.classList.toggle("selected");
+            updateSelectedGenres();
         });
 
         filterGenresContainer.appendChild(li);
     });
+
+    function updateSelectedGenres() {
+        var selectedGenres = Array.from(
+            document.querySelectorAll("#filterGenres li.selected")
+        ).map(function (li) {
+            return li.getAttribute("data-value");
+        });
+
+        hiddenGenresField.value = selectedGenres.join(",");
+    }
 });
