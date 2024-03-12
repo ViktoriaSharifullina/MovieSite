@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Http\Contracts\PeopleApiClientInterface;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
+use App\Http\Contracts\PeopleApiClientInterface;
 
 class PeopleApiClient implements PeopleApiClientInterface
 {
@@ -14,40 +15,48 @@ class PeopleApiClient implements PeopleApiClientInterface
         $this->apiKey = config('services.tmdb.api_key');
     }
 
+    private function performApiRequest(string $url, array $queryParams = []): array
+    {
+        try {
+            $response = Http::get($url, array_merge(['api_key' => $this->apiKey], $queryParams));
+
+            if (!$response->successful()) {
+                Log::error('TMDB API request failed', [
+                    'url' => $url,
+                    'queryParams' => $queryParams,
+                    'responseStatus' => $response->status(),
+                    'response' => $response->body(),
+                ]);
+                throw new \Exception("Failed to fetch data from TMDB API. Status code: " . $response->status());
+            }
+
+            return $response->json();
+        } catch (\Exception $e) {
+            Log::error('Exception caught in PeopleApiClient', [
+                'exceptionMessage' => $e->getMessage(),
+                'exception' => $e
+            ]);
+            throw new \Exception("An error occurred while fetching data.");
+        }
+    }
+
     public function getPopularPeople(): array
     {
-        $response = Http::get("https://api.themoviedb.org/3/person/popular", [
-            'api_key' => $this->apiKey,
-        ]);
-
-        return $response->json()['results'];
+        return $this->performApiRequest("https://api.themoviedb.org/3/person/popular", [])['results'];
     }
 
     public function getPersonInfo(int $id): array
     {
-        $response = Http::get("https://api.themoviedb.org/3/person/{$id}", [
-            'api_key' => $this->apiKey,
-        ]);
-
-        return $response->json();
+        return $this->performApiRequest("https://api.themoviedb.org/3/person/{$id}", []);
     }
 
     public function getKnownForMovies(int $id): array
     {
-        $response = Http::get("https://api.themoviedb.org/3/person/{$id}/combined_credits", [
-            'api_key' => $this->apiKey,
-        ]);
-
-        return $response->json();
+        return $this->performApiRequest("https://api.themoviedb.org/3/person/{$id}/combined_credits", []);
     }
 
     public function searchPeople(string $query): array
     {
-        $response = Http::get('https://api.themoviedb.org/3/search/person', [
-            'api_key' => $this->apiKey,
-            'query' => $query,
-        ]);
-
-        return $response->json()['results'] ?? [];
+        return $this->performApiRequest('https://api.themoviedb.org/3/search/person', ['query' => $query])['results'];
     }
 }
