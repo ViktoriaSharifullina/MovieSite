@@ -3,7 +3,7 @@
 namespace App\Http\Contracts;
 
 
-interface MovieDataServiceInterface
+interface MovieServiceInterface
 {
     /**
      * Получить данные для главной страницы.

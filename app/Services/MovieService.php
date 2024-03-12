@@ -3,14 +3,14 @@
 namespace App\Services;
 
 use Carbon\Carbon;
-use App\Http\Contracts\MovieApiServiceInterface;
-use App\Http\Contracts\MovieDataServiceInterface;
+use App\Http\Contracts\MovieApiClientInterface;
+use App\Http\Contracts\MovieServiceInterface;
 
-class MovieService implements MovieDataServiceInterface
+class MovieService implements MovieServiceInterface
 {
     private $movieApiService;
 
-    public function __construct(MovieApiServiceInterface $movieApiService)
+    public function __construct(MovieApiClientInterface $movieApiService)
     {
         $this->movieApiService = $movieApiService;
     }

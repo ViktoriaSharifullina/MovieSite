@@ -2,7 +2,7 @@
 
 namespace App\Http\Contracts;
 
-interface MovieApiServiceInterface
+interface MovieApiClientInterface
 {
     public function getMovies(string $type): array;
     public function getMovieDetails(int $movieId): array;

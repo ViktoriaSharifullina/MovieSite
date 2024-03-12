@@ -2,59 +2,43 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
+use App\Services\PeopleApiClient;
+use App\Http\Contracts\PeopleServiceInterface;
 
-class PeopleService
+class PeopleService implements PeopleServiceInterface
 {
-    protected $apiKey;
+    protected $apiClient;
 
-    public function __construct()
+    public function __construct(PeopleApiClient $apiClient)
     {
-        $this->apiKey = config('services.tmdb.api_key');
+        $this->apiClient = $apiClient;
     }
 
-    public function getPopularPeople()
+    public function getPopularPeople(): array
     {
-        $response = Http::get("https://api.themoviedb.org/3/person/popular", [
-            'api_key' => $this->apiKey,
-        ]);
-
-        return $response->json()['results'];
+        return $this->apiClient->getPopularPeople();
     }
 
-    public function getPersonInfo(int $id)
+    public function getPersonInfo(int $id): array
     {
-        $response = Http::get("https://api.themoviedb.org/3/person/{$id}", [
-            'api_key' => $this->apiKey,
-        ]);
-
-        return $response->json();
+        return $this->apiClient->getPersonInfo($id);
     }
 
-    public function getKnownForMovies(int $id)
+    public function getKnownForMovies(int $id): array
     {
-        $response = Http::get("https://api.themoviedb.org/3/person/{$id}/combined_credits", [
-            'api_key' => $this->apiKey,
-        ]);
-        $credits = $response->json();
+        $credits = $this->apiClient->getKnownForMovies($id);
 
         $knownForMovies = collect($credits['cast'])
             ->sortByDesc('vote_average')
             ->take(8)
             ->all();
 
-
-        return   $knownForMovies;
+        return $knownForMovies;
     }
 
-    public function searchPeople(string $query)
+    public function searchPeople(string $query): array
     {
-        $response = Http::get('https://api.themoviedb.org/3/search/person', [
-            'api_key' => config('services.tmdb.api_key'),
-            'query'   => $query,
-        ]);
-
-        $results = $response->json()['results'] ?? [];
+        $results = $this->apiClient->searchPeople($query);
 
         if (is_array($results)) {
             usort($results, function ($a, $b) {
@@ -65,14 +49,10 @@ class PeopleService
         return $results;
     }
 
-    public function searchPeopleWithFlag(string $query)
+    public function searchPeopleWithFlag(string $query): array
     {
         $searchPerformed = !empty($query);
-        $searchResults = [];
-
-        if ($searchPerformed) {
-            $searchResults = $this->searchPeople($query);
-        }
+        $searchResults = $searchPerformed ? $this->searchPeople($query) : [];
 
         return [
             'searchPerformed' => $searchPerformed,

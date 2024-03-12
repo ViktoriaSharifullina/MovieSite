@@ -3,10 +3,14 @@
 namespace App\Providers;
 
 use App\Services\MovieService;
-use App\Services\MovieApiService;
+use App\Services\PeopleService;
+use App\Services\MovieApiClient;
+use App\Services\PeopleApiClient;
 use Illuminate\Support\ServiceProvider;
-use App\Http\Contracts\MovieApiServiceInterface;
-use App\Http\Contracts\MovieDataServiceInterface;
+use App\Http\Contracts\MovieServiceInterface;
+use App\Http\Contracts\PeopleServiceInterface;
+use App\Http\Contracts\MovieApiClientInterface;
+use App\Http\Contracts\PeopleApiClientInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,13 +19,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(MovieApiServiceInterface::class, function ($app) {
-            return new MovieApiService();
+        $this->app->bind(MovieApiClientInterface::class, function ($app) {
+            return new MovieApiClient();
         });
 
-        $this->app->bind(MovieDataServiceInterface::class, function ($app) {
-            $movieApiService = $app->make(MovieApiServiceInterface::class);
+        $this->app->bind(MovieServiceInterface::class, function ($app) {
+            $movieApiService = $app->make(MovieApiClientInterface::class);
             return new MovieService($movieApiService);
+        });
+
+        $this->app->bind(PeopleApiClientInterface::class, function ($app) {
+            return new PeopleApiClient();
+        });
+
+        $this->app->bind(PeopleServiceInterface::class, function ($app) {
+            $movieApiService = $app->make(PeopleApiClientInterface::class);
+            return new PeopleService($movieApiService);
         });
     }
 

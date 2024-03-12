@@ -4,9 +4,9 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
-use App\Http\Contracts\MovieApiServiceInterface;
+use App\Http\Contracts\MovieApiClientInterface;
 
-class MovieApiService implements MovieApiServiceInterface
+class MovieApiClient implements MovieApiClientInterface
 {
     private $api_key;
 
