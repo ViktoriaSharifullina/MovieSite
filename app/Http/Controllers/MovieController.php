@@ -39,8 +39,17 @@ class MovieController extends Controller
 
     public function catalogAdvanced(Request $request)
     {
-        // dd($request);
-        $moviesData = $this->movieService->getMoviesFilteredAndSorted($request);
+        $filterParams = [
+            'sort_by' => $request->input('sort_by'),
+            'with_genres' => $request->input('genre'),
+            'with_original_language' => $request->input('language'),
+            'primary_release_date.gte' => $request->input('release_date_gte'),
+            'primary_release_date.lte' => $request->input('release_date_lte'),
+        ];
+
+        $page = $request->input('page', 1);
+
+        $moviesData = $this->movieService->getMoviesFilteredAndSorted($filterParams, $page);
 
         return view('movies.catalog', [
             'moviesData' => $moviesData['movies'],

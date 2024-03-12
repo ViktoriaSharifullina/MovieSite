@@ -9,13 +9,15 @@ document.addEventListener("DOMContentLoaded", function () {
         .getElementById("sortButtonMenu")
         .addEventListener("click", function (event) {
             event.preventDefault();
-            if (sortContentMenu.style.display === "block") {
-                sortContentMenu.style.display = "none";
-                sortContent.style.display = "none";
+            let sortContentMenu = document.getElementById("sortContentMenu");
+            let arrow = document.getElementById("arrow");
+
+            if (sortContentMenu.style.display === "none") {
+                sortContentMenu.style.display = "block";
                 arrow.style.transform = "rotate(0deg)";
             } else {
-                sortContentMenu.style.display = "block";
-                arrow.style.transform = "rotate(90deg)";
+                sortContentMenu.style.display = "none";
+                arrow.style.transform = "rotate(-90deg)";
             }
         });
 
@@ -120,27 +122,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Обработка даты релиза
-    // document
-    //     .getElementById("inputFrom")
-    //     .addEventListener("change", function () {
-    //         document.getElementById("hiddenReleaseDateGteField").value =
-    //             this.value;
-    //     });
-    // document
-    //     .getElementById("inputBefore")
-    //     .addEventListener("change", function () {
-    //         document.getElementById("hiddenReleaseDateLteField").value =
-    //             this.value;
-    //     });
-
     var form = document.getElementById("formFilter");
 
     form.addEventListener("submit", function (event) {
-        // Предотвращаем стандартное поведение формы (отправку)
-        // event.preventDefault();
-
-        // Получаем значения полей
         var inputFromValue = document.getElementById("inputFrom").value;
         var inputBeforeValue = document.getElementById("inputBefore").value;
 

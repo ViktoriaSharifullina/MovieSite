@@ -20,7 +20,7 @@
                     <div class="sort-menu-container">
                         <div class="sort-dropdown-menu">
                             <button class="sort-dropbtn-menu" id="sortButtonMenu">Sort
-                                <i class="fa-solid fa-angle-right right-arrow" id="arrow"></i>
+                                <i class="fa-solid fa-angle-down right-arrow" id="arrow"></i>
                             </button>
                             <div class="sort-dropdown-content-menu" id="sortContentMenu">
                                 <div class="title-sort">

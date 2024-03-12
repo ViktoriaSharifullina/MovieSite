@@ -3,19 +3,19 @@
 namespace App\Services;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Services\MovieApiService;
+use App\Http\Contracts\MovieApiServiceInterface;
+use App\Http\Contracts\MovieDataServiceInterface;
 
-class MovieService
+class MovieService implements MovieDataServiceInterface
 {
     private $movieApiService;
 
-    public function __construct(MovieApiService $movieApiService)
+    public function __construct(MovieApiServiceInterface $movieApiService)
     {
         $this->movieApiService = $movieApiService;
     }
 
-    public function getMoviesData()
+    public function getMoviesData(): array
     {
         set_time_limit(0);
 
@@ -144,7 +144,7 @@ class MovieService
         return view('movies/movie', compact('movie', 'mainActors'));
     }
 
-    public function getMovieDetailsAndActors(int $movieId)
+    public function getMovieDetailsAndActors(int $movieId): array
     {
         $movie = $this->getInfoMovie($movieId);
         $mainActors = $this->getMainActors($movieId);
@@ -152,7 +152,7 @@ class MovieService
         return compact('movie', 'mainActors');
     }
 
-    public function getMoviesByFilter($filter)
+    public function getMoviesByFilter($filter): array
     {
         if (!in_array($filter, ['popular', 'upcoming', 'top_rated'])) {
             $filter = 'popular';
@@ -171,19 +171,10 @@ class MovieService
         });
     }
 
-    public function getMoviesFilteredAndSorted(Request $request)
+    public function getMoviesFilteredAndSorted(array $filterParams, int $page = 1): array
     {
-        $filterParams = [
-            'sort_by' => $request->input('sort_by'),
-            'with_genres' => $request->input('genre'),
-            'with_original_language' => $request->input('language'),
-            'primary_release_date.gte' => $request->input('release_date_gte'),
-            'primary_release_date.lte' => $request->input('release_date_lte'),
-        ];
-
         $filteredParams = $this->filterNonEmptyParams($filterParams);
 
-        $page = $request->input('page', 1);
         $moviesData = $this->movieApiService->getMoviesFromApi($filteredParams, $page);
         $preparedMovies = $this->prepareMovies($moviesData['results']);
 

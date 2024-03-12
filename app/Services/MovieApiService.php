@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
+use App\Http\Contracts\MovieApiServiceInterface;
 
-class MovieApiService
+class MovieApiService implements MovieApiServiceInterface
 {
     private $api_key;
 
@@ -18,109 +20,95 @@ class MovieApiService
         return $this->api_key;
     }
 
-    public function getMovies($type)
+    private function performApiRequest(string $url, array $params = []): array
     {
-        return cache()->remember("movies_{$type}", now()->addHours(1), function () use ($type) {
-            $response = Http::get("https://api.themoviedb.org/3/movie/{$type}", [
-                'api_key' => $this->api_key,
-                'page' => 1,
+        try {
+            $response = Http::get($url, $params + ['api_key' => $this->api_key]);
+
+            if (!$response->successful()) {
+                Log::error('TMDB API request failed', [
+                    'url' => $url,
+                    'params' => $params,
+                    'responseStatus' => $response->status(),
+                    'response' => $response->body(),
+                ]);
+                throw new \Exception("Failed to fetch data from TMDB API. Status code: " . $response->status());
+            }
+
+            return $response->json();
+        } catch (\Exception $e) {
+            Log::error('Exception caught during API request', [
+                'url' => $url,
+                'params' => $params,
+                'exceptionMessage' => $e->getMessage(),
+                'exception' => $e,
             ]);
+            throw new \Exception("An error occurred while fetching data from TMDB API.");
+        }
+    }
 
-            $data = $response->json();
-            $results = $data['results'];
-
-            return $results;
+    public function getMovies($type): array
+    {
+        $results = cache()->remember("movies_{$type}", now()->addHours(1), function () use ($type) {
+            return $this->performApiRequest("https://api.themoviedb.org/3/movie/{$type}", ['page' => 1])['results'];
         });
+
+        return $results;
     }
 
-    public function getMovieDetails($movieId)
+    public function getMovieDetails($movieId): array
     {
-        $movieDetailsResponse = Http::get("https://api.themoviedb.org/3/movie/{$movieId}", [
-            'api_key' => $this->api_key,
-        ]);
-
-        return $movieDetailsResponse->json();
+        return $this->performApiRequest("https://api.themoviedb.org/3/movie/{$movieId}");
     }
 
-    public function getMovieCredits($movieId)
+    public function getMovieCredits($movieId): array
     {
-        $movieCreditsResponse = Http::get("https://api.themoviedb.org/3/movie/{$movieId}/credits", [
-            'api_key' => $this->api_key,
-        ]);
-
-        return $movieCreditsResponse->json();
+        return $this->performApiRequest("https://api.themoviedb.org/3/movie/{$movieId}/credits");
     }
 
-    public function getActorDetails($actorId)
+    public function getActorDetails($actorId): array
     {
-        $response = Http::get("https://api.themoviedb.org/3/person/{$actorId}", [
-            'api_key' => $this->api_key,
-        ]);
-
-        return $response->json();
+        return $this->performApiRequest("https://api.themoviedb.org/3/person/{$actorId}", []);
     }
 
-    public function getDirectorInfo(int $movieId)
+    public function getDirectorInfo(int $movieId): array
     {
-        $creditsResponse = Http::get("https://api.themoviedb.org/3/movie/{$movieId}/credits", [
-            'api_key' => $this->api_key,
-        ]);
-
-        $directorInfo = $creditsResponse->json()['crew'];
-
-        return collect($directorInfo)->firstWhere('job', 'Director');
+        $creditsResponse = $this->performApiRequest("https://api.themoviedb.org/3/movie/{$movieId}/credits", []);
+        $directorInfo = collect($creditsResponse['crew'])->firstWhere('job', 'Director');
+        return $directorInfo ?: [];
     }
 
-    public function getWriterInfo(int $movieId)
+    public function getWriterInfo(int $movieId): array
     {
-        $creditsResponse = Http::get("https://api.themoviedb.org/3/movie/{$movieId}/credits", [
-            'api_key' => $this->api_key,
-        ]);
-
-        $writerInfo = $creditsResponse->json()['crew'];
-
-        return collect($writerInfo)->firstWhere('job', 'Screenplay');
+        $creditsResponse = $this->performApiRequest("https://api.themoviedb.org/3/movie/{$movieId}/credits", []);
+        $writerInfo = collect($creditsResponse['crew'])->firstWhere('job', 'Screenplay');
+        return $writerInfo ?: [];
     }
 
-    public function getActorPhoto(int $actorId)
+    public function getActorPhoto(int $actorId): string
     {
-        $response = Http::get("https://api.themoviedb.org/3/person/{$actorId}", [
-            'api_key' => $this->api_key,
-        ]);
+        $actorDetails = $this->performApiRequest("https://api.themoviedb.org/3/person/{$actorId}", []);
 
-        $actorDetails = $response->json();
-
-        return $actorDetails['profile_path'];
+        return $actorDetails['profile_path'] ?: [];
     }
 
-    public function getMoviesSorted($type, $sort, $page = 1)
+    public function getMoviesSorted($type, $sort, $page = 1): array
     {
         $queryParams = [
-            'api_key' => $this->api_key,
             'page' => $page,
             'sort_by' => $sort,
         ];
 
-        $response = Http::get("https://api.themoviedb.org/3/movie/{$type}", $queryParams);
-
-        return $response->json();
+        return $this->performApiRequest("https://api.themoviedb.org/3/movie/{$type}", $queryParams);
     }
 
-    public function getMoviesFromApi($filterParams, $page = 1)
+    public function getMoviesFromApi($filterParams, $page = 1): array
     {
         $queryParams = array_merge([
             'api_key' => $this->api_key,
             'page' => $page,
         ], $filterParams);
 
-        // dd($filterParams);
-
-        $response = Http::get("https://api.themoviedb.org/3/discover/movie", $queryParams);
-
-        if ($response->successful()) {
-            return $response->json();
-        } else {
-            throw new \Exception("Error fetching movies from TMDB API: " . $response->body());
-        }
+        return $this->performApiRequest("https://api.themoviedb.org/3/discover/movie", $queryParams);
     }
 }
