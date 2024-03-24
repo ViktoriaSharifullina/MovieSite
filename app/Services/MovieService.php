@@ -8,20 +8,20 @@ use App\Http\Contracts\MovieServiceInterface;
 
 class MovieService implements MovieServiceInterface
 {
-    private $movieApiService;
+    private $movieApiClientInterface;
 
-    public function __construct(MovieApiClientInterface $movieApiService)
+    public function __construct(MovieApiClientInterface $movieApiClientInterface)
     {
-        $this->movieApiService = $movieApiService;
+        $this->movieApiClientInterface = $movieApiClientInterface;
     }
 
     public function getMoviesData(): array
     {
         set_time_limit(0);
 
-        $popular = $this->movieApiService->getMovies('popular');
-        $upcoming = $this->movieApiService->getMovies('upcoming');
-        $topRated = $this->movieApiService->getMovies('top_rated');
+        $popular = $this->movieApiClientInterface->getMovies('popular');
+        $upcoming = $this->movieApiClientInterface->getMovies('upcoming');
+        $topRated = $this->movieApiClientInterface->getMovies('top_rated');
 
         $bannerMovie = $this->getBannerMovie($popular);
 
@@ -37,7 +37,7 @@ class MovieService implements MovieServiceInterface
     {
         $random_id = array_rand($movies);
         $movie = $movies[$random_id];
-        $movieDetails = $this->movieApiService->getMovieDetails($movie['id']);
+        $movieDetails = $this->movieApiClientInterface->getMovieDetails($movie['id']);
 
         if ($movieDetails) {
             $movie['genre_names'] = $this->getGenresName($movieDetails['genres']);
@@ -51,7 +51,7 @@ class MovieService implements MovieServiceInterface
     public function prepareMovies($movies)
     {
         return collect($movies)->map(function ($movie) {
-            $movieDetails = $this->movieApiService->getMovieDetails($movie['id']);
+            $movieDetails = $this->movieApiClientInterface->getMovieDetails($movie['id']);
 
             if ($movieDetails) {
                 $movie['primary_genre'] = $this->getGenresName($movieDetails['genres'])[0] ?? 'Unknown Genre';
@@ -99,15 +99,15 @@ class MovieService implements MovieServiceInterface
 
     private function getInfoMovie($id)
     {
-        $movie = $this->movieApiService->getMovieDetails($id);
+        $movie = $this->movieApiClientInterface->getMovieDetails($id);
         $movie['genre_names'] = $this->getGenresName($movie['genres']);
         $movie['formatted_release_date'] = $this->getFormattedDate($movie['release_date']);
         $movie['formatted_runtime'] = $this->getFormattedRuntime($movie['runtime']);
 
-        $directorInfo = $this->movieApiService->getDirectorInfo($id);
+        $directorInfo = $this->movieApiClientInterface->getDirectorInfo($id);
         $movie['director'] = $directorInfo ? $directorInfo['name'] : 'Unknown Director';
 
-        $writerInfo = $this->movieApiService->getWriterInfo($id);
+        $writerInfo = $this->movieApiClientInterface->getWriterInfo($id);
         $movie['writer'] = $writerInfo ? $writerInfo['name'] : 'Unknown Writer';
 
         return $movie;
@@ -115,7 +115,7 @@ class MovieService implements MovieServiceInterface
 
     public function getMainActors(int $movieId)
     {
-        $movieCredits = $this->movieApiService->getMovieCredits($movieId);
+        $movieCredits = $this->movieApiClientInterface->getMovieCredits($movieId);
 
         $mainActors = collect($movieCredits['cast'])
             ->where('order', '<=', 10)
@@ -128,7 +128,7 @@ class MovieService implements MovieServiceInterface
             });
 
         $actorsWithImages = collect($mainActors)->map(function ($actor) {
-            $actor['photo'] = $this->movieApiService->getActorPhoto($actor['id']);
+            $actor['photo'] = $this->movieApiClientInterface->getActorPhoto($actor['id']);
             return $actor;
         });
 
@@ -158,7 +158,7 @@ class MovieService implements MovieServiceInterface
             $filter = 'popular';
         }
 
-        $movies = $this->movieApiService->getMovies($filter);
+        $movies = $this->movieApiClientInterface->getMovies($filter);
         $preparedMovies = $this->prepareMovies($movies);
 
         return $preparedMovies;
@@ -175,7 +175,7 @@ class MovieService implements MovieServiceInterface
     {
         $filteredParams = $this->filterNonEmptyParams($filterParams);
 
-        $moviesData = $this->movieApiService->getMoviesFromApi($filteredParams, $page);
+        $moviesData = $this->movieApiClientInterface->getMoviesFromApi($filteredParams, $page);
         $preparedMovies = $this->prepareMovies($moviesData['results']);
 
         return [
@@ -184,5 +184,13 @@ class MovieService implements MovieServiceInterface
             'total_pages' => $moviesData['total_pages'],
             'total_results' => $moviesData['total_results'],
         ];
+    }
+
+    public function searchMovies(string $query): array
+    {
+        $movies = $this->movieApiClientInterface->searchMovies($query);
+        $preparedMovies = $this->prepareMovies($movies);
+
+        return $preparedMovies;
     }
 }

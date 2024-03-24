@@ -128,13 +128,14 @@ li.dropdown {
     flex: 2;
     align-items: center;
     justify-content: flex-end;
+    cursor: pointer;
 }
 
 .profile-picture {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    margin: 0 10px;
+    margin-right: 10px;
     background-color: #6c6c6cc4;
     align-items: center;
     display: inline-flex;
@@ -205,7 +206,7 @@ li.profile-dropdown {
     font-size: 35px;
     font-weight: 500;
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .container-modal-window form {
@@ -268,7 +269,7 @@ form .data input:focus {
 
 form .btn-login,
 form .btn-signup {
-    margin: 30px 0;
+    margin: 10px 0;
     height: 45px;
     width: 100%;
     position: relative;
@@ -310,4 +311,8 @@ form .btn-signup {
 .signup-link a:hover,
 .login-link a:hover {
     text-decoration: underline;
+}
+
+.errors-container {
+    margin-top: 20px;
 }

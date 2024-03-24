@@ -113,7 +113,7 @@
             @foreach ($mainActors as $actor)
             <a class="card card-actor" href="{{ route('people.about', $actor['id']) }}">
                 @if(isset($actor['photo']))
-                <img class="card-img-actor" src="{{ 'https://image.tmdb.org/t/p/w500' . $actor['photo'] }}" alt="Card image cap">
+                <img class="card-img-actor" src="{{ 'https://image.tmdb.org/t/p/w185' . $actor['photo'] }}" alt="Card image cap">
                 @else
                 <div class="no-image-overlay" style="height: 160px;">
                     <span class="no-image-placeholder">No Image</span>

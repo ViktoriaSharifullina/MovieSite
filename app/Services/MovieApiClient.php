@@ -111,4 +111,11 @@ class MovieApiClient implements MovieApiClientInterface
 
         return $this->performApiRequest("https://api.themoviedb.org/3/discover/movie", $queryParams);
     }
+
+    public function searchMovies(string $query): array
+    {
+        return $this->performApiRequest('https://api.themoviedb.org/3/search/movie', ['query' => $query])['results'];
+
+        // return $response['results'] ?? [];
+    }
 }

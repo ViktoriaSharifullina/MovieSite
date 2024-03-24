@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\MovieService;
+use App\Http\Contracts\MovieServiceInterface;
 
 class MovieController extends Controller
 {
 
-    private $movieService;
+    private MovieServiceInterface $movieService;
 
-    public function __construct(MovieService $movieService)
+    public function __construct(MovieServiceInterface $movieService)
     {
         $this->movieService = $movieService;
     }
@@ -56,6 +56,17 @@ class MovieController extends Controller
             'currentSort' => $request->input('sort_by', 'popularity.desc'),
             'currentPage' => $moviesData['current_page'],
             'totalPages' => $moviesData['total_pages'],
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $moviesData = $this->movieService->searchMovies($query);
+
+        return view('movies.catalog', [
+            'moviesData' => $moviesData,
+            'currentSort' => 'search',
         ]);
     }
 }

@@ -35,4 +35,12 @@ interface MovieServiceInterface
      * @return array
      */
     public function getMoviesFilteredAndSorted(array $filterParams): array;
+
+    /**
+     * Произвести поиск на основе запроса из строки поиска.
+     *
+     * @param string $query
+     * @return array
+     */
+    public function searchMovies(string $query): array;
 }

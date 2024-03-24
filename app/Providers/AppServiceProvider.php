@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(MovieServiceInterface::class, function ($app) {
-            $movieApiService = $app->make(MovieApiClientInterface::class);
-            return new MovieService($movieApiService);
+            $movieService = $app->make(MovieApiClientInterface::class);
+            return new MovieService($movieService);
         });
 
         $this->app->bind(PeopleApiClientInterface::class, function ($app) {

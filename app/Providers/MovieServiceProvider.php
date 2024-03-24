@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Services\MovieService;
-use App\Services\MovieApiService;
+use App\Services\MovieApiClient;
 use Illuminate\Support\ServiceProvider;
 
 class MovieServiceProvider extends ServiceProvider
@@ -14,11 +14,11 @@ class MovieServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(MovieService::class, function ($app) {
-            return new MovieService($app->make(MovieApiService::class));
+            return new MovieService($app->make(MovieApiClient::class));
         });
 
-        $this->app->singleton(MovieApiService::class, function () {
-            return new MovieApiService();
+        $this->app->singleton(MovieService::class, function () {
+            return new MovieApiClient();
         });
     }
 

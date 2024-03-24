@@ -13,4 +13,5 @@ interface MovieApiClientInterface
     public function getActorPhoto(int $actorId): string;
     public function getMoviesSorted(string $type, string $sort, int $page = 1): array;
     public function getMoviesFromApi(array $filterParams, int $page = 1): array;
+    public function searchMovies(string $query): array;
 }

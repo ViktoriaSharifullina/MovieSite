@@ -1,0 +1,119 @@
+.user-profile-container {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-top: 90px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 20px;
+}
+
+.top-container {
+    display: flex;
+    align-items: center;
+}
+
+.user-photo {
+    height: 160px;
+    width: 130px;
+    background-color: rgba(179, 194, 194, 0.24);
+}
+
+.user-name {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.email,
+.location,
+.birthday,
+.name-and-surname {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.fa {
+    margin-right: 5px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100px;
+    margin-left: 50px;
+}
+
+.row-container {
+    margin-top: 10px;
+    display: flex;
+}
+
+.birthday {
+    margin-left: 20px;
+}
+
+.btn-change-info {
+    margin-top: 20px;
+    width: 80px;
+    bottom: 10px;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    padding: 0.375rem 0.75rem;
+    background-color: #646464;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-change-info:hover {
+    background-color: rgb(211, 48, 48);
+}
+
+.profile-menu {
+    display: flex;
+    margin-top: 30px;
+    width: 100%;
+    height: auto;
+}
+
+.item-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100% !important;
+    width: 130px;
+    margin-bottom: 5px;
+}
+
+.profile-link {
+    height: auto;
+    width: auto;
+    text-decoration: none;
+    color: white;
+}
+
+.profile-link:hover {
+    color: rgb(211, 48, 48);
+    border-bottom: 4px solid rgb(211, 48, 48);
+}
+
+.profile-link.active {
+    color: rgb(211, 48, 48);
+    border-bottom: 4px solid rgb(211, 48, 48);
+}
+
+.item-container-value {
+    font-family: "PT Sans Narrow";
+    color: #ffffff;
+    font-size: 36px;
+    height: auto;
+}
+
+.item-description {
+    font-size: 14px;
+    font-weight: 300 !important;
+}

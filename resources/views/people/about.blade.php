@@ -87,7 +87,7 @@
                 <a class="card card-movie" href="{{ route('movie.about', $movie['id']) }}">
                     <div class="movie-img">
                         @if(isset($movie['poster_path']))
-                        <img class="card-img" src="{{ 'https://image.tmdb.org/t/p/w500' . $movie['poster_path'] }}" alt="Card image cap">
+                        <img class="card-img" src="{{ 'https://image.tmdb.org/t/p/w185' . $movie['poster_path'] }}" alt="Card image cap">
                         @else
                         <div class="no-image-overlay">
                             <span class="no-image-placeholder">No Image</span>

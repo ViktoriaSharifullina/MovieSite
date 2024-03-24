@@ -82,7 +82,7 @@
 <div class="col-right">
     <div class="right-container">
         <div class="search-container">
-            <form id="search-form" action="" method="GET">
+            <form id="search-form" action="{{ route('movies.search') }}" method="GET">
                 <input type="text" class="search-input" id="search-input" name="query" placeholder="Search for movies...">
                 <button type="submit" class="btn-search">Search</button>
             </form>
@@ -134,7 +134,7 @@
                     </div>
                     @endforeach
                     @else
-                    <p>No movies found.</p>
+                    <div class="no-movies-found">No movies found.</div>
                     @endif
                 </div>
             </div>

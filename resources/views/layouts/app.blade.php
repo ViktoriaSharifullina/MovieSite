@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/app.css'])
     @yield('style')
@@ -54,8 +55,16 @@
                         </div>
                     </a>
                     <div class="dropdown-content">
+                        @guest
                         <a href="#" id="loginLink">Sign in</a>
                         <a href="#" id="signupLink">Sign up</a>
+                        @endguest
+
+                        @auth
+                        <a href="#">Profile</a>
+                        <a href="#">Messages</a>
+                        <a href="{{ route('logout') }}">Log out</a>
+                        @endauth
                     </div>
                 </div>
             </li>
@@ -92,37 +101,43 @@
             <div class="text">
                 Sign up
             </div>
-            <form action="#">
+            <form action="{{ route('register') }}" method="POST" id="signupForm" data-url="{{ route('register') }}">
+                @csrf
                 <div class="data">
                     <label>Username<div class="req">*</div></label>
-                    <input type="text" required class="input-modal">
+                    <input type="text" name="username" class="input-modal">
                 </div>
                 <div class="row">
                     <div class="col">
                         <div class="data">
                             <label>Gender</label>
                             <select class="form-select">
-                                <option value="1">Male</option>
-                                <option value="2">Female</option>
+                                <option value="m">Male</option>
+                                <option value="f">Female</option>
                             </select>
                         </div>
                     </div>
                     <div class="col">
                         <div class="data">
                             <label>Birthday</label>
-                            <input type="date" class="input-modal-date">
+                            <input type="date" name="birthday" class="input-modal-date">
                         </div>
                     </div>
                 </div>
 
                 <div class="data">
                     <label>Email<div class="req">*</div></label>
-                    <input type="email" required class="input-modal">
+                    <input type="email" name="email" class="input-modal">
                 </div>
                 <div class="data">
                     <label>Password<div class="req">*</div></label>
-                    <input type="password" required class="input-modal">
+                    <input type="password" name="password" class="input-modal">
                 </div>
+                <div class="data">
+                    <label>Password repeat<div class="req">*</div></label>
+                    <input type="password" id="password_confirmation" class="input-modal" name="password_confirmation">
+                </div>
+                <div class="errors-container"></div>
                 <div class="btn btn-signup">
                     <div class="inner"></div>
                     <button type="submit">SIGNUP</button>
