@@ -64,10 +64,59 @@ document.addEventListener("DOMContentLoaded", function () {
                         .map((key) => `<li>${errors[key].join(". ")}</li>`)
                         .join("");
                     errorContainer.innerHTML = `<div class="alert alert-danger"><ul>${errorList}</ul></div>`;
+                } else if (errorData.error) {
+                    errorsContainer.innerHTML = `<div class="alert alert-danger">${errorData.error}</div>`;
                 } else {
                     window.location.href = "/profile";
                 }
             })
             .catch((error) => console.error("Error:", error));
+    });
+
+    const loginForm = document.getElementById("loginForm");
+
+    loginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(loginForm);
+
+        let url = this.getAttribute("data-url");
+        const errorsContainer = document.querySelector(".errors-container");
+        errorsContainer.innerHTML = "";
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+            },
+            credentials: "same-origin",
+            body: formData,
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log("User logged in successfully:", data);
+                window.location.href = "/profile"; // Или любая другая страница
+            })
+            .catch((errorResponse) => {
+                errorResponse.json().then((errorData) => {
+                    console.error("Error:", errorData);
+                    if (errorData.errors) {
+                        const errors = errorData.errors;
+                        const errorList = Object.keys(errors)
+                            .map((key) => `<li>${errors[key].join(". ")}</li>`)
+                            .join("");
+                        errorsContainer.innerHTML = `<div class="alert alert-danger"><ul>${errorList}</ul></div>`;
+                    } else if (errorData.error) {
+                        errorsContainer.innerHTML = `<div class="alert alert-danger">${errorData.error}</div>`;
+                    }
+                });
+            });
     });
 });

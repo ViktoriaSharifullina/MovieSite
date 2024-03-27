@@ -1,6 +1,7 @@
 <?php
 
 // use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MovieController;
@@ -26,7 +27,5 @@ Route::get('/profile', function () {
 });
 
 Route::post('/register', [UserController::class, 'register'])->name('register');
-Route::get('/logout', function () {
-    Auth::logout();
-    return redirect('/');
-})->name('logout');
+Route::post('/login', [UserController::class, 'login'])->name('login');
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');

@@ -77,15 +77,17 @@
             <div class="text">
                 Sign in
             </div>
-            <form action="#">
+            <form action="{{ route('login') }}" method="POST" id="loginForm" data-url="{{ route('login') }}">
+                @csrf
                 <div class="data">
                     <label>Email<div class="req">*</div></label>
-                    <input type="email" required class="input-modal">
+                    <input type="email" name="email" class="input-modal">
                 </div>
                 <div class="data">
                     <label>Password<div class="req">*</div></label>
-                    <input type="password" required class="input-modal">
+                    <input type="password" name="password" class="input-modal">
                 </div>
+                <div class="errors-container"></div>
                 <div class="btn btn-login">
                     <div class="inner"></div>
                     <button type="submit">LOGIN</button>
