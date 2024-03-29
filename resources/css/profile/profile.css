@@ -21,7 +21,7 @@
 }
 
 .user-name {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 500;
 }
 
@@ -55,9 +55,10 @@
 }
 
 .btn-change-info {
+    text-decoration: none;
+    text-align: center;
     margin-top: 20px;
     width: 80px;
-    bottom: 10px;
     border: none;
     font-size: 14px;
     color: #fff;

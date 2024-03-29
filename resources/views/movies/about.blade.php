@@ -42,15 +42,11 @@
                     {{ number_format($movie['vote_average'], 1) }}
                 </div>
                 <div class="buttons-container" id="buttons-container">
-                    <button class="btn bookmark-btn" title="Watch later">
-                        <div class="btn-content">
-                            <i class="fa fa-bookmark"></i>
-                        </div>
+                    <button class="btn bookmark-btn {{ $isInWatchLater ? 'focused' : '' }}" title="Watch later" data-movie-id="{{ $movie['id'] }}" data-list-type="watch_later" data-url="{{ route('watchlist.toggle') }}">
+                        <i class="fa fa-bookmark"></i>
                     </button>
-                    <button class="btn heart-btn">
-                        <div class="btn-content">
-                            <i class="fa fa-heart"></i>
-                        </div>
+                    <button class="btn heart-btn {{ $isFavorite ? 'focused' : '' }}" title="Add to favorites" data-movie-id="{{ $movie['id'] }}" data-list-type="favorites" data-url="{{ route('watchlist.toggle') }}">
+                        <i class="fa fa-heart"></i>
                     </button>
                     <button id="starButton" class="btn star-btn">
                         <div class="btn-content" id="btn-star-content">

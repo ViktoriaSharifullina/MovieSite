@@ -54,4 +54,10 @@ class UserController extends Controller
 
         return redirect('/');
     }
+
+    public function showProfile()
+    {
+        $user = Auth::user();
+        return view('/profile/user-profile', ['user' => $user]);
+    }
 }

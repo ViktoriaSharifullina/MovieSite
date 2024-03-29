@@ -4,18 +4,18 @@ document.addEventListener("DOMContentLoaded", function () {
     var overlay = document.getElementById("overlay");
 
     document
-        .getElementById("loginLink")
-        .addEventListener("click", function (event) {
-            event.preventDefault();
-            loginModal.style.display = "block";
-            overlay.style.display = "block";
-        });
-
-    document
         .getElementById("signupLink")
         .addEventListener("click", function (event) {
             event.preventDefault();
             signupModal.style.display = "block";
+            overlay.style.display = "block";
+        });
+
+    document
+        .getElementById("loginLink")
+        .addEventListener("click", function (event) {
+            event.preventDefault();
+            loginModal.style.display = "block";
             overlay.style.display = "block";
         });
 
@@ -33,6 +33,14 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
             loginModal.style.display = "block";
             signupModal.style.display = "none";
+        });
+
+    document
+        .getElementById("signup-link")
+        .addEventListener("click", function (event) {
+            event.preventDefault();
+            signupModal.style.display = "block";
+            loginModal.style.display = "none";
         });
 
     const form = document.querySelector("#signupModal form");
@@ -73,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch((error) => console.error("Error:", error));
     });
 
-    const loginForm = document.getElementById("loginForm");
+    const loginForm = document.querySelector("#loginModal form");
 
     loginForm.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -102,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then((data) => {
                 console.log("User logged in successfully:", data);
-                window.location.href = "/profile"; // Или любая другая страница
+                window.location.href = "/profile";
             })
             .catch((errorResponse) => {
                 errorResponse.json().then((errorData) => {

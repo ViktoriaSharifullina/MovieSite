@@ -12,14 +12,14 @@
     <div class="top-container">
         <div class="user-photo"></div>
         <div class="user-info">
-            <div class="user-name">@hom0_sapienz</div>
-            <div class="name-and-surname">Виктория Шарифуллина</div>
-            <div class="email">viktoriasharifullina@gmail.com</div>
+            <div class="user-name">{{ $user->username }}</div>
+            <div class="name-and-surname">{{ $user->name }} {{ $user->surname }}</div>
+            <div class="email">{{ $user->email }}</div>
             <div class="row-container">
-                <div class="location"><i class="fa fa-map-marker" aria-hidden="true"></i> Moscow</div>
-                <div class="birthday"><i class="fa fa-birthday-cake" aria-hidden="true"></i> 28.01.2002</div>
+                <div class="location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $user->location ?? 'Location not set' }}</div>
+                <div class="birthday"><i class="fa fa-birthday-cake" aria-hidden="true"></i> {{ $user->birthday ? $user->birthday->format('d.m.Y') : 'Birthday not set' }}</div>
             </div>
-            <button type="submit" class="btn-change-info">Change</button>
+            <a href="{{ route('change-info') }}" class="btn-change-info">Change</a>
         </div>
     </div>
     <div class="profile-menu">

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PeopleController;
+use App\Http\Controllers\WatchlistController;
 
 Route::get('/', [MovieController::class, 'index'])->name('home');
 Route::get('/movie/{id}', [MovieController::class, 'aboutMovie'])->name('movie.about');
@@ -22,10 +23,14 @@ Route::get('/series-catalog', function () {
 Route::get('/people-catalog', [PeopleController::class, 'showCatalog'])->name('people.catalog');
 Route::get('/people/{id}', [PeopleController::class, 'index'])->name('people.about');
 
-Route::get('/profile', function () {
-    return view('/profile/user-profile');
-});
-
 Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::post('/login', [UserController::class, 'login'])->name('login');
-Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
+    Route::get('/change-info', function () {
+        return view('/profile/change-info');
+    })->name('change-info');
+    Route::post('/watchlist/toggle', [WatchlistController::class, 'toggle'])->name('watchlist.toggle');
+});

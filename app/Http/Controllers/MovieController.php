@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Contracts\MovieServiceInterface;
+use Illuminate\Support\Facades\Auth;
+
 
 class MovieController extends Controller
 {
@@ -24,9 +26,14 @@ class MovieController extends Controller
 
     public function aboutMovie(int $id)
     {
-        $movieData = $this->movieService->getMovieDetailsAndActors($id);
+        $movieDetails = $this->movieService->getMovieDetailsAndActors($id);
 
-        return view('movies/about', $movieData);
+        $movie = $movieDetails['movie'];
+        $mainActors = $movieDetails['mainActors'];
+        $isInWatchLater = Auth::user()->isInWatchLater($id);
+        $isFavorite = Auth::user()->isFavorite($id);
+
+        return view('movies.about', compact('movie', 'mainActors', 'isInWatchLater', 'isFavorite'));
     }
 
     public function catalogBasic(Request $request)

@@ -1,15 +1,51 @@
 var btnContainer = document.getElementById("buttons-container");
-var btns = btnContainer.getElementsByClassName("btn");
+// var btns = btnContainer.getElementsByClassName("btn");
 
-for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function () {
-        if (this.classList.contains("focused")) {
-            this.classList.remove("focused");
-        } else {
-            this.classList.add("focused");
-        }
+// for (var i = 0; i < btns.length; i++) {
+//     btns[i].addEventListener("click", function () {
+//         if (this.classList.contains("focused")) {
+//             this.classList.remove("focused");
+//         } else {
+//             this.classList.add("focused");
+//         }
+//     });
+// }
+
+document.querySelectorAll(".bookmark-btn, .heart-btn").forEach((button) => {
+    button.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const movieId = this.dataset.movieId;
+        const listType = this.getAttribute("data-list-type");
+        const url = this.getAttribute("data-url");
+        const csrfToken = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content");
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": csrfToken,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                movie_tmdb_id: movieId,
+                list_type: listType,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                if (data.status === "added") {
+                    this.classList.add("focused");
+                } else if (data.status === "removed") {
+                    this.classList.remove("focused");
+                }
+            })
+            .catch((error) => console.error("Error:", error));
     });
-}
+});
 
 document.getElementById("starButton").addEventListener("click", hideStarButton);
 
