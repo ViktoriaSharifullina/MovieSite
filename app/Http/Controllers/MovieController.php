@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rating;
 use Illuminate\Http\Request;
-use App\Http\Contracts\MovieServiceInterface;
+use App\Services\RatingService;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Contracts\MovieServiceInterface;
 
 
 class MovieController extends Controller
 {
 
     private MovieServiceInterface $movieService;
+    protected RatingService $ratingService;
 
-    public function __construct(MovieServiceInterface $movieService)
+    public function __construct(MovieServiceInterface $movieService, RatingService $ratingService)
     {
         $this->movieService = $movieService;
+        $this->ratingService = $ratingService;
     }
 
     public function index()
@@ -30,10 +34,19 @@ class MovieController extends Controller
 
         $movie = $movieDetails['movie'];
         $mainActors = $movieDetails['mainActors'];
-        $isInWatchLater = Auth::user()->isInWatchLater($id);
-        $isFavorite = Auth::user()->isFavorite($id);
 
-        return view('movies.about', compact('movie', 'mainActors', 'isInWatchLater', 'isFavorite'));
+        $isInWatchLater = false;
+        $isFavorite = false;
+        $userRating = null;
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            $isInWatchLater = $user->isInWatchLater($id);
+            $isFavorite = $user->isFavorite($id);
+            $userRating = $this->ratingService->getUserRating($id);
+        }
+
+        return view('movies.about', compact('movie', 'mainActors', 'isInWatchLater', 'isFavorite', 'userRating'));
     }
 
     public function catalogBasic(Request $request)

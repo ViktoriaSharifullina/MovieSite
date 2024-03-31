@@ -184,6 +184,10 @@ ul.facts li:first-child {
     border-width: 0 !important;
 }
 
+.btn-content-wide {
+    width: 230px !important;
+}
+
 .btn-star-text.hidden {
     display: none;
 }

@@ -36,6 +36,11 @@ class User extends Authenticatable
         return $this->hasMany(Watchlist::class);
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
     public function isInWatchLater($movieId)
     {
         return $this->watchlists()->where('movie_tmdb_id', $movieId)->where('list_type', 'watch_later')->exists();
