@@ -1,7 +1,7 @@
 .content-container {
     top: 50px;
     color: #fff;
-    height: 60vh;
+    height: 55vh;
     position: relative;
     overflow: hidden;
     width: 100%;
@@ -101,7 +101,7 @@ ul.facts li:first-child {
 .desc {
     margin-top: 20px;
     max-height: calc(30vh - 40px);
-    min-height: 190px;
+    min-height: 160px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;

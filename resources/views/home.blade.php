@@ -36,7 +36,7 @@
                 <div class="movie-list-item">
                     <a href="{{ route('movie.about', $movie['id']) }}">
                         <div class="movie-poster">
-                            <img src="https://image.tmdb.org/t/p/w342{{ $movie['poster_path'] }}" class="movie-poster">
+                            <img src="https://image.tmdb.org/t/p/w154{{ $movie['poster_path'] }}" class="movie-poster">
                             <button class="bookmark-btn" title="Watch later">
                                 <i class="fa fa-bookmark"></i>
                             </button>

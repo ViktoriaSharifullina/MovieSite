@@ -27,10 +27,13 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
     Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
-    Route::get('/change-info', function () {
-        return view('/profile/change-info');
-    })->name('change-info');
+    Route::get('/profile/info', [UserController::class, 'editProfile'])->name('profile.info');
+    Route::put('/user/update', [UserController::class, 'updateUser'])->name('user.update');
+
+    Route::get('/profile/list/{listType}', [MovieController::class, 'showList'])->name('profile.list');
+
     Route::post('/watchlist/toggle', [WatchlistController::class, 'toggle'])->name('watchlist.toggle');
     Route::post('/rating/toggle', [RatingController::class, 'toggle'])->name('rating.toggle');
 });

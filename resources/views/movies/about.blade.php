@@ -52,7 +52,7 @@
                         <button id="starButton" class="btn star-btn" data-movie-id="{{ $movie['id'] }}" data-url="{{ route('rating.toggle') }}">
                             <div class="btn-content {{ $userRating ? 'btn-content-wide' : '' }}" id="btn-star-content">
                                 <div class="btn-star-text {{ $userRating ? '' : 'hidden' }}" id="btn-star-text">Delete the rating</div>
-                                <i class="fa fa-star" id="iconStar" style="color: #ed3f40;">
+                                <i class="fa fa-star" id="iconStar">
                                     <span id="selectedNumber" class="{{ $userRating ? '' : 'hidden' }}">{{ $userRating ? $userRating->rating_value : '' }}</span>
                                 </i>
                             </div>

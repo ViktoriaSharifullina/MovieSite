@@ -8,6 +8,7 @@ use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserUpdateRequest;
 
 class UserController extends Controller
@@ -59,5 +60,20 @@ class UserController extends Controller
     {
         $user = Auth::user();
         return view('/profile/user-profile', ['user' => $user]);
+    }
+
+    public function editProfile()
+    {
+        $user = Auth::user();
+        return view('/profile/change-info', compact('user'));
+    }
+
+    public function updateUser(UpdateUserRequest $request)
+    {
+        $user = Auth::user();
+
+        $this->userService->updateUser($user, $request->validated());
+
+        return redirect()->route('profile.info', $user->id)->with('success', 'Profile updated successfully!');
     }
 }

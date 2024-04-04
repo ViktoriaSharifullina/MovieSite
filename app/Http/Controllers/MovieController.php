@@ -89,4 +89,20 @@ class MovieController extends Controller
             'currentSort' => 'search',
         ]);
     }
+
+    public function showList(Request $request, $listType)
+    {
+        $user = Auth::user();
+        $movieIds = $user->watchlists()->where('list_type', $listType)->pluck('movie_tmdb_id');
+
+        $moviesDetails = [];
+        foreach ($movieIds as $id) {
+            $movieDetails = $this->movieService->getInfoMovie($id);
+            if ($movieDetails) {
+                $moviesDetails[] = $movieDetails;
+            }
+        }
+
+        return view('profile.user-profile', ['movies' => $moviesDetails, 'user' => $user, 'listType' => $listType]);
+    }
 }

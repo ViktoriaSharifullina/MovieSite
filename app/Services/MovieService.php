@@ -97,7 +97,7 @@ class MovieService implements MovieServiceInterface
         return trim($formattedRuntime);
     }
 
-    private function getInfoMovie($id)
+    public function getInfoMovie($id)
     {
         $movie = $this->movieApiClientInterface->getMovieDetails($id);
         $movie['genre_names'] = $this->getGenresName($movie['genres']);

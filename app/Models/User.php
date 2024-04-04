@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Watchlist;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
@@ -16,6 +17,7 @@ class User extends Authenticatable
         'password',
         'username',
         'surname',
+        'location',
         'photo',
         'gender',
         'birthday',
