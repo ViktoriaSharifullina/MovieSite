@@ -3,9 +3,8 @@
 namespace App\Services;
 
 use App\Services\PeopleApiClient;
-use App\Http\Contracts\PeopleServiceInterface;
 
-class PeopleService implements PeopleServiceInterface
+class PeopleService
 {
     protected $apiClient;
 
@@ -29,11 +28,21 @@ class PeopleService implements PeopleServiceInterface
         $credits = $this->apiClient->getKnownForMovies($id);
 
         $knownForMovies = collect($credits['cast'])
-            ->sortByDesc('vote_average')
-            ->take(8)
+            ->where('media_type', 'movie')
+            ->sortByDesc('popularity')
+            ->take(5)
             ->all();
 
-        return $knownForMovies;
+        $knownForTvShows = collect($credits['cast'])
+            ->where('media_type', 'tv')
+            ->sortByDesc('popularity')
+            ->unique('id')
+            ->take(5)
+            ->all();
+
+        $knownFor = array_merge($knownForMovies, $knownForTvShows);
+
+        return $knownFor;
     }
 
     public function searchPeople(string $query): array

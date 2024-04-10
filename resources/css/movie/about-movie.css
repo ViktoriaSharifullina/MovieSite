@@ -44,20 +44,6 @@
 .movie-info {
     height: auto;
     margin-left: 0px;
-    overflow: auto;
-}
-
-.movie-info::-webkit-scrollbar {
-    width: 10px;
-}
-
-.movie-info::-webkit-scrollbar-thumb {
-    background-color: #7e7e7ea7;
-    border-radius: 6px;
-}
-
-.movie-info::-webkit-scrollbar-track {
-    background-color: #ffffff10;
 }
 
 .title {
@@ -100,16 +86,29 @@ ul.facts li:first-child {
 
 .desc {
     margin-top: 20px;
-    max-height: calc(30vh - 40px);
-    min-height: 160px;
-    overflow: hidden;
+    max-height: calc(30vh - 100px);
+    min-height: 120px;
+    overflow: auto;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 6;
     text-overflow: ellipsis;
     white-space: normal;
-    margin-bottom: 30px;
     margin-right: 50px;
+    padding-right: 50px;
+}
+
+.desc::-webkit-scrollbar {
+    margin-left: 20px;
+    width: 10px;
+}
+
+.desc::-webkit-scrollbar-thumb {
+    background-color: #7e7e7ea7;
+    border-radius: 6px;
+}
+
+.desc::-webkit-scrollbar-track {
+    background-color: #ffffff10;
 }
 
 .movie-poster {
@@ -268,19 +267,21 @@ ul.facts li:first-child {
     color: #ed3f40;
 }
 
+.writer-and-director {
+    display: flex;
+}
+
 .director-container {
     height: 50px;
-    width: 150px;
+    width: auto;
     margin-top: 30px;
-    display: inline-block;
     color: #fff;
 }
 
 .writer-container {
     height: 50px;
-    width: 150px;
-    display: flex;
-    display: inline-block;
+    width: auto;
+    margin-top: 30px;
     color: #fff;
     margin-left: 200px;
 }
@@ -288,12 +289,15 @@ ul.facts li:first-child {
 .director-info,
 .writer-info {
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
 }
 
 .director,
 .writer {
     font-size: 15px;
     font-weight: 300;
+    color: #fff;
 }
 
 .text-container {
@@ -485,6 +489,7 @@ ul.facts li:first-child {
     margin-right: 2vw;
     position: relative;
     margin-top: 20px;
+    margin-bottom: 20px;
     height: auto;
     overflow: hidden;
 }
@@ -521,4 +526,75 @@ ul.facts li:first-child {
     left: 10px;
     top: 45%;
     transform: rotate(315deg);
+}
+
+.btn-write-rewiew {
+    text-decoration: none;
+    text-align: center;
+    width: auto;
+    height: auto;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    padding: 8px 10px;
+    background-color: #7d7d7d;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.write-container {
+    margin: 20px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-write-rewiew:hover {
+    background-color: rgb(211, 48, 48);
+}
+
+.write-form-container {
+    margin-top: 40px;
+    background-color: #474747;
+    height: auto;
+    width: 500px;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.label-select-rating {
+    color: #fff;
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.review-area {
+    background: #ffffff !important;
+    border-radius: 8px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-send-rewiew {
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    font-size: 17px;
+    color: #fff;
+    padding: 8px 10px;
+    background-color: #7d7d7d;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.btn-send-rewiew:hover {
+    background-color: rgb(211, 48, 48);
 }

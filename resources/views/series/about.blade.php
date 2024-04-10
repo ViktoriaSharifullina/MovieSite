@@ -11,45 +11,46 @@
 <body data-user-authenticated="{{ Auth::check() }}">
     <div class="content-container">
         <div class="featured-img">
-            @if ($movie['backdrop_path'])
-            <img src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['backdrop_path'] }}" alt="{{ $movie['title'] }} Backdrop">
+            @if ($tv['backdrop_path'])
+            <img src="{{ 'https://image.tmdb.org/t/p/original/' . $tv['backdrop_path'] }}">
             @endif
         </div>
         <div class="movie-details">
             <div class="movie-poster">
-                <img class="movie-poster" src="{{ 'https://image.tmdb.org/t/p/original/' . $movie['poster_path'] }}" alt="{{ $movie['title'] }} Poster">
+                <img class="movie-poster" src="{{ 'https://image.tmdb.org/t/p/original/' . $tv['poster_path'] }}">
             </div>
             <div class="movie-info">
-                <div class="title">{{ $movie['title'] }}</div>
+                <div class="title">{{ $tv['name'] }}</div>
                 <ul class="facts">
-                    @if ($movie['formatted_release_date'])
+                    @if ($tv['first_air_date'])
                     <li>
-                        <div class="release-date">{{ $movie['formatted_release_date'] }}</div>
+                        <div class="release-date">Comes out on the {{ \Carbon\Carbon::parse($tv['first_air_date'])->format('d/m/Y') }}
+                            @if(isset($tv['in_production']) && $tv['in_production'])
+                            to the present
+                            @elseif(isset($tv['last_air_date']))
+                            to {{ \Carbon\Carbon::parse($tv['last_air_date'])->format('d/m/Y') }}
+                            @endif
+                        </div>
                     </li>
                     @endif
-                    @if ($movie['genres'])
+                    @if ($tv['genres'])
                     <li>
-                        <div class="genres">{{ implode(', ', $movie['genre_names']) }}</div>
-                    </li>
-                    @endif
-                    @if ($movie['formatted_runtime'])
-                    <li>
-                        <div class="runtime">{{ $movie['formatted_runtime'] }}</div>
+                        <div class="genres">{{ implode(', ', $tv['genre_names']) }}</div>
                     </li>
                     @endif
                 </ul>
                 <div class="horizontal-menu">
-                    <div class="rating-number {{ $movie['vote_average'] < 5 ? 'low' : ($movie['vote_average'] < 7 ? 'medium' : 'high') }}">
-                        {{ number_format($movie['vote_average'], 1) }}
+                    <div class="rating-number {{ $tv['vote_average'] < 5 ? 'low' : ($tv['vote_average'] < 7 ? 'medium' : 'high') }}">
+                        {{ number_format($tv['vote_average'], 1) }}
                     </div>
                     <div class="buttons-container" id="buttons-container">
-                        <button class="btn bookmark-btn {{ $isInWatchLater ? 'focused' : '' }}" title="Watch later" data-movie-id="{{ $movie['id'] }}" data-list-type="watch_later" data-url="{{ route('watchlist.toggle') }}" data-media-type="{{ $movie['media_type'] }}">
+                        <button class="btn bookmark-btn {{ $isInWatchLater ? 'focused' : '' }}" title="Watch later" data-movie-id="{{ $tv['id'] }}" data-list-type="watch_later" data-url="{{ route('watchlist.toggle') }}" data-media-type="{{ $tv['media_type'] }}">
                             <i class="fa fa-bookmark"></i>
                         </button>
-                        <button class="btn heart-btn {{ $isFavorite ? 'focused' : '' }}" title="Add to favorites" data-movie-id="{{ $movie['id'] }}" data-list-type="favorites" data-url="{{ route('watchlist.toggle') }}" data-media-type="{{ $movie['media_type'] }}">
+                        <button class="btn heart-btn {{ $isFavorite ? 'focused' : '' }}" title="Add to favorites" data-movie-id="{{ $tv['id'] }}" data-list-type="favorites" data-url="{{ route('watchlist.toggle') }}" data-media-type="{{ $tv['media_type'] }}">
                             <i class="fa fa-heart"></i>
                         </button>
-                        <button id="starButton" class="btn star-btn" data-movie-id="{{ $movie['id'] }}" data-url="{{ route('rating.toggle') }}" data-media-type="{{ $movie['media_type'] }}">
+                        <button id="starButton" class="btn star-btn" data-movie-id="{{ $tv['id'] }}" data-url="{{ route('rating.toggle') }}" data-media-type="{{ $tv['media_type'] }}">
                             <div class="btn-content {{ $userRating ? 'btn-content-wide' : '' }}" id="btn-star-content">
                                 <div class="btn-star-text {{ $userRating ? '' : 'hidden' }}" id="btn-star-text">Delete the rating</div>
                                 <i class="fa fa-star" id="iconStar">
@@ -78,28 +79,16 @@
                     </div>
                 </div>
                 <div class="desc">
-                    <div class="tagline"><i>{{ $movie['tagline'] }}</i></div>
+                    <div class="tagline"><i>{{ $tv['tagline'] }}</i></div>
                     <div class="overview">Overview</div>
-                    {{ $movie['overview'] }}
+                    {{ $tv['overview'] }}
                 </div>
-                <div class="writer-and-director">
-                    <div class="director-container">
-                        <div class="director-info">
-                            {{ $movie['director'] }}
-                        </div>
-                        <div class="director">
-                            Director
-                        </div>
+                <div class="director-container">
+                    <div class="director-info">
+                        {{ collect($tv['creators'])->pluck('name')->implode(', ') }}
                     </div>
-                    <div class="writer-container">
-                        <div class="writer-info">
-                            <div class="writer-info">
-                                {{ $movie['writer'] }}
-                            </div>
-                            <div class="writer">
-                                Screenplay
-                            </div>
-                        </div>
+                    <div class="director">
+                        Creator
                     </div>
                 </div>
             </div>
@@ -129,21 +118,17 @@
         </div>
         <div class="more-movie-details">
             <div class="the-original-title">The original title
-                <div class="original-title-value">{{ $movie['original_title'] }}</div>
+                <div class="original-title-value">{{ $tv['original_name'] }}</div>
             </div>
             <div class="status">Status
-                <div class="status-value">{{ $movie['status'] }}</div>
+                <div class="status-value">{{ $tv['status'] }}</div>
             </div>
             <div class="the-original-language">The original language
-                <div class="language-value">{{ $movie['original_language'] }}</div>
+                <div class="language-value">{{ $tv['original_language'] }}</div>
             </div>
-            <div class="budget">Budget
-                <div class="budget-value">{{'$' . number_format($movie['budget'], 2, '.', ',')}}</div>
-            </div>
-            <div class="revenue">Revenue
-                <div class="revenue-value">{{'$' . number_format($movie['revenue'], 2, '.', ',')}}</div>
-            </div>
+
         </div>
+    </div>
     </div>
 
     <div class="social-media-container">
@@ -161,33 +146,7 @@
             <div class="gradient-menu-left"></div>
             <a title="Previous" class="arrow prev"></a>
             <a title="Next" class="arrow next"></a>
-            <div class="swiper-pagination-container">
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-        <div class="write-container">
-            <a href="#" class="btn-write-rewiew">Write a review</a>
-            <div class="write-form-container">
-                <form action="">
-                    <div class="form-group">
-                        <textarea class="review-area" rows="10"></textarea>
-                    </div>
-                    <label class="label-select-rating" for="select-rating">Select a rating</label>
-                    <select class="select-rating" id="select-rating">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                    </select>
-                    <a href="#" class="btn-send-rewiew">SEND</a>
-                </form>
-            </div>
+            <div class="swiper-pagination"></div>
         </div>
         <div class="comments-container">
             @include('layouts/comments-section')

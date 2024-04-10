@@ -2,15 +2,16 @@
 
 namespace App\Providers;
 
+use App\Services\TvService;
+use App\Services\TvApiClient;
 use App\Services\MovieService;
 use App\Services\PeopleService;
+use App\Services\RatingService;
 use App\Services\MovieApiClient;
 use App\Services\PeopleApiClient;
+use App\Services\UserProfileService;
 use Illuminate\Support\ServiceProvider;
-use App\Http\Contracts\MovieServiceInterface;
-use App\Http\Contracts\PeopleServiceInterface;
-use App\Http\Contracts\MovieApiClientInterface;
-use App\Http\Contracts\PeopleApiClientInterface;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,22 +20,36 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(MovieApiClientInterface::class, function ($app) {
+        $this->app->singleton(MovieService::class, function ($app) {
+            return new MovieService($app->make(MovieApiClient::class));
+        });
+
+        $this->app->singleton(TvService::class, function ($app) {
+            return new TvService($app->make(TvApiClient::class));
+        });
+
+        $this->app->singleton(MovieApiClient::class, function ($app) {
             return new MovieApiClient();
         });
 
-        $this->app->bind(MovieServiceInterface::class, function ($app) {
-            $movieService = $app->make(MovieApiClientInterface::class);
-            return new MovieService($movieService);
+        $this->app->singleton(TvApiClient::class, function ($app) {
+            return new TvApiClient();
         });
 
-        $this->app->bind(PeopleApiClientInterface::class, function ($app) {
+        $this->app->singleton(PeopleApiClient::class, function ($app) {
             return new PeopleApiClient();
         });
 
-        $this->app->bind(PeopleServiceInterface::class, function ($app) {
-            $movieApiService = $app->make(PeopleApiClientInterface::class);
-            return new PeopleService($movieApiService);
+        $this->app->singleton(PeopleService::class, function ($app) {
+            return new PeopleService($app->make(PeopleApiClient::class));
+        });
+
+        $this->app->singleton(UserProfileService::class, function ($app) {
+            return new UserProfileService(
+                $app->make(MovieService::class),
+                $app->make(RatingService::class),
+                $app->make(TvService::class)
+            );
         });
     }
 

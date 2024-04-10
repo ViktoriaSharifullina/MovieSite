@@ -2,28 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rating;
 use Illuminate\Http\Request;
+use App\Services\MovieService;
 use App\Services\RatingService;
+use App\Services\UserProfileService;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Contracts\MovieServiceInterface;
 
 
 class MovieController extends Controller
 {
 
-    private MovieServiceInterface $movieService;
+    private MovieService $movieService;
     protected RatingService $ratingService;
+    protected UserProfileService $userProfileService;
 
-    public function __construct(MovieServiceInterface $movieService, RatingService $ratingService)
+    public function __construct(MovieService $movieService, RatingService $ratingService, UserProfileService $userProfileService)
     {
         $this->movieService = $movieService;
         $this->ratingService = $ratingService;
+        $this->userProfileService = $userProfileService;
     }
 
     public function index()
     {
-        $moviesData = $this->movieService->getMoviesData();
+        $moviesData = $this->movieService->getContentData();
 
         return view('home', $moviesData);
     }
@@ -51,7 +53,7 @@ class MovieController extends Controller
 
     public function catalogBasic(Request $request)
     {
-        $sort = $request->query('sort_by', 'popular');
+        $sort = $request->query('sort', 'popular');
         $moviesData = $this->movieService->getMoviesByFilter($sort);
 
         return view('movies.catalog', ['moviesData' => $moviesData, 'currentSort' => $sort]);
@@ -93,16 +95,41 @@ class MovieController extends Controller
     public function showList(Request $request, $listType)
     {
         $user = Auth::user();
-        $movieIds = $user->watchlists()->where('list_type', $listType)->pluck('movie_tmdb_id');
+        $seriesCount = $user->seriesCount();
+        $moviesCount = $user->moviesCount();
+        $favoriteCount = $user->favoriteCount();
+        $watchLaterCount = $user->watchLaterCount();
+        $moviesDetails = $this->userProfileService->getListDetailsByType($user, $listType);
 
-        $moviesDetails = [];
-        foreach ($movieIds as $id) {
-            $movieDetails = $this->movieService->getInfoMovie($id);
-            if ($movieDetails) {
-                $moviesDetails[] = $movieDetails;
-            }
-        }
+        // dd($moviesDetails);
+        return view('profile.user-profile', [
+            'movies' => $moviesDetails,
+            'user' => $user,
+            'listType' => $listType,
+            'moviesCount' => $moviesCount,
+            'seriesCount' => $seriesCount,
+            'favoriteCount' => $favoriteCount,
+            'watchLaterCount' => $watchLaterCount
+        ]);
+    }
 
-        return view('profile.user-profile', ['movies' => $moviesDetails, 'user' => $user, 'listType' => $listType]);
+    public function showMovies(Request $request)
+    {
+        $user = Auth::user();
+        $seriesCount = $user->seriesCount();
+        $moviesCount = $user->moviesCount();
+        $favoriteCount = $user->favoriteCount();
+        $watchLaterCount = $user->watchLaterCount();
+
+        $movies = $this->movieService->getUserMoviesWithRatings($user->id);
+
+        return view('profile.user-profile', [
+            'movies' => $movies,
+            'user' => $user,
+            'moviesCount' => $moviesCount,
+            'seriesCount' => $seriesCount,
+            'favoriteCount' => $favoriteCount,
+            'watchLaterCount' => $watchLaterCount
+        ]);
     }
 }

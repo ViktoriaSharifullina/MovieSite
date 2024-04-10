@@ -84,7 +84,11 @@
             <div class="known-for-title">Known For</div>
             <div class="known-movies">
                 @foreach ($knownForMovies as $movieId => $movie)
-                <a class="card card-movie" href="{{ route('movie.about', $movie['id']) }}">
+                @php
+                // Определение маршрута в зависимости от типа медиа
+                $routeName = $movie['media_type'] === 'movie' ? 'movie.about' : 'tv.about';
+                @endphp
+                <a class="card card-movie" href="{{ route($routeName, $movie['id']) }}">
                     <div class="movie-img">
                         @if(isset($movie['poster_path']))
                         <img class="card-img" src="{{ 'https://image.tmdb.org/t/p/w185' . $movie['poster_path'] }}" alt="Card image cap">

@@ -59,12 +59,24 @@ class UserController extends Controller
     public function showProfile()
     {
         $user = Auth::user();
-        return view('/profile/user-profile', ['user' => $user]);
+        $seriesCount = $user->seriesCount();
+        $moviesCount = $user->moviesCount();
+        $favoriteCount = $user->favoriteCount();
+        $watchLaterCount = $user->watchLaterCount();
+
+        return view('/profile/user-profile', [
+            'user' => $user,
+            'moviesCount' => $moviesCount,
+            'seriesCount' => $seriesCount,
+            'favoriteCount' => $favoriteCount,
+            'watchLaterCount' => $watchLaterCount
+        ]);
     }
 
     public function editProfile()
     {
         $user = Auth::user();
+
         return view('/profile/change-info', compact('user'));
     }
 

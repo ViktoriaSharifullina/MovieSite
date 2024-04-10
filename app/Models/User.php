@@ -43,6 +43,26 @@ class User extends Authenticatable
         return $this->hasMany(Rating::class);
     }
 
+    public function seriesCount()
+    {
+        return $this->ratings()->where('media_type', 'tv')->count();
+    }
+
+    public function moviesCount()
+    {
+        return $this->ratings()->where('media_type', 'movie')->count();
+    }
+
+    public function favoriteCount()
+    {
+        return $this->watchlists()->where('list_type', 'favorites')->count();
+    }
+
+    public function watchLaterCount()
+    {
+        return $this->watchlists()->where('list_type', 'watch_later')->count();
+    }
+
     public function isInWatchLater($movieId)
     {
         return $this->watchlists()->where('movie_tmdb_id', $movieId)->where('list_type', 'watch_later')->exists();

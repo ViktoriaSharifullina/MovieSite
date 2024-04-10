@@ -71,8 +71,8 @@
     border: none;
     font-size: 14px;
     color: #fff;
-    padding: 0.375rem 0.75rem;
-    background-color: #646464;
+    padding: 8px 10px;
+    background-color: #7d7d7d;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -136,12 +136,12 @@
     margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
+    gap: 25px;
 }
 
 .movie-list-container {
-    flex: 0 1 calc(50%);
+    flex: 0 1 calc(47%);
     color: white;
-    margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid rgba(175, 175, 175, 0.432);
 }
@@ -197,6 +197,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
 
 .movie-site-rating.low {
@@ -212,14 +213,14 @@
 }
 
 .movie-site-rating {
-    font-weight: 500;
+    font-weight: 800;
     font-size: 15px;
 }
 
 .movie-user-rating {
     display: flex;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 500;
     justify-content: center;
     align-items: center;
     border-radius: 50%;

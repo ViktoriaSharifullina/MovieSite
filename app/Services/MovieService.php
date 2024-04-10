@@ -3,55 +3,62 @@
 namespace App\Services;
 
 use Carbon\Carbon;
-use App\Http\Contracts\MovieApiClientInterface;
-use App\Http\Contracts\MovieServiceInterface;
+use App\Models\Rating;
+use GuzzleHttp\Client;
+use App\Services\MovieApiClient;
 
-class MovieService implements MovieServiceInterface
+class MovieService
 {
-    private $movieApiClientInterface;
+    private $movieApiClient;
 
-    public function __construct(MovieApiClientInterface $movieApiClientInterface)
+    public function __construct(MovieApiClient $movieApiClient)
     {
-        $this->movieApiClientInterface = $movieApiClientInterface;
+        $this->movieApiClient = $movieApiClient;
     }
 
-    public function getMoviesData(): array
+    public function getContentData($contentType = 'movie'): array
     {
         set_time_limit(0);
 
-        $popular = $this->movieApiClientInterface->getMovies('popular');
-        $upcoming = $this->movieApiClientInterface->getMovies('upcoming');
-        $topRated = $this->movieApiClientInterface->getMovies('top_rated');
+        $popularContent = $this->movieApiClient->getContentByFilter('popular', $contentType);
+        $upcomingContent = $this->movieApiClient->getContentByFilter('upcoming', $contentType);
+        $topRatedContent = $this->movieApiClient->getContentByFilter('top_rated', $contentType);
 
-        $bannerMovie = $this->getBannerMovie($popular);
+        $bannerMovie = $this->getBanner($popularContent);
 
-        $popularMovies = $this->prepareMovies($popular);
-        $upcomingMovies = $this->prepareMovies($upcoming);
-        $topRatedMovies = $this->prepareMovies($topRated);
+        $pContent = $this->prepareMovies($popularContent);
+        $upContent = $this->prepareMovies($upcomingContent);
+        $topContent = $this->prepareMovies($topRatedContent);
 
-        return compact('bannerMovie', 'popularMovies', 'upcomingMovies', 'topRatedMovies');
+        $result = compact('bannerMovie', 'pContent', 'upContent', 'topContent');
+        return [
+            'bannerMovie' => $result['bannerMovie'],
+            'popularMovies' => $result['pContent'],
+            'upcomingMovies' => $result['upContent'],
+            'topRatedMovies' => $result['topContent'],
+        ];
     }
 
 
-    private function getBannerMovie($movies)
+    private function getBanner($content)
     {
-        $random_id = array_rand($movies);
-        $movie = $movies[$random_id];
-        $movieDetails = $this->movieApiClientInterface->getMovieDetails($movie['id']);
+        $random_id = array_rand($content);
+        $media = $content[$random_id];
+        $contentDetails = $this->movieApiClient->getContentDetails($media['id']);
 
-        if ($movieDetails) {
-            $movie['genre_names'] = $this->getGenresName($movieDetails['genres']);
-            $movie['formatted_release_date'] = $this->getFormattedDate($movieDetails['release_date']);
-            $movie['formatted_runtime'] = $this->getFormattedRuntime($movieDetails['runtime']);
+        if ($contentDetails) {
+            $media['genre_names'] = $this->getGenresName($contentDetails['genres']);
+            $media['formatted_release_date'] = $this->getFormattedDate($contentDetails['release_date']);
+            $media['formatted_runtime'] = $this->getFormattedRuntime($contentDetails['runtime']);
         }
 
-        return $movie;
+        return $media;
     }
 
     public function prepareMovies($movies)
     {
         return collect($movies)->map(function ($movie) {
-            $movieDetails = $this->movieApiClientInterface->getMovieDetails($movie['id']);
+            $movieDetails = $this->movieApiClient->getContentDetails($movie['id']);
 
             if ($movieDetails) {
                 $movie['primary_genre'] = $this->getGenresName($movieDetails['genres'])[0] ?? 'Unknown Genre';
@@ -99,23 +106,25 @@ class MovieService implements MovieServiceInterface
 
     public function getInfoMovie($id)
     {
-        $movie = $this->movieApiClientInterface->getMovieDetails($id);
+        $movie = $this->movieApiClient->getContentDetails($id);
         $movie['genre_names'] = $this->getGenresName($movie['genres']);
         $movie['formatted_release_date'] = $this->getFormattedDate($movie['release_date']);
         $movie['formatted_runtime'] = $this->getFormattedRuntime($movie['runtime']);
 
-        $directorInfo = $this->movieApiClientInterface->getDirectorInfo($id);
+        $directorInfo = $this->movieApiClient->getDirectorInfo($id);
         $movie['director'] = $directorInfo ? $directorInfo['name'] : 'Unknown Director';
 
-        $writerInfo = $this->movieApiClientInterface->getWriterInfo($id);
+        $writerInfo = $this->movieApiClient->getWriterInfo($id);
         $movie['writer'] = $writerInfo ? $writerInfo['name'] : 'Unknown Writer';
+
+        $movie['media_type'] = 'movie';
 
         return $movie;
     }
 
     public function getMainActors(int $movieId)
     {
-        $movieCredits = $this->movieApiClientInterface->getMovieCredits($movieId);
+        $movieCredits = $this->movieApiClient->getContentCredits($movieId);
 
         $mainActors = collect($movieCredits['cast'])
             ->where('order', '<=', 10)
@@ -128,7 +137,7 @@ class MovieService implements MovieServiceInterface
             });
 
         $actorsWithImages = collect($mainActors)->map(function ($actor) {
-            $actor['photo'] = $this->movieApiClientInterface->getActorPhoto($actor['id']);
+            $actor['photo'] = $this->movieApiClient->getActorPhoto($actor['id']);
             return $actor;
         });
 
@@ -158,7 +167,7 @@ class MovieService implements MovieServiceInterface
             $filter = 'popular';
         }
 
-        $movies = $this->movieApiClientInterface->getMovies($filter);
+        $movies = $this->movieApiClient->getContentByFilter($filter);
         $preparedMovies = $this->prepareMovies($movies);
 
         return $preparedMovies;
@@ -175,7 +184,7 @@ class MovieService implements MovieServiceInterface
     {
         $filteredParams = $this->filterNonEmptyParams($filterParams);
 
-        $moviesData = $this->movieApiClientInterface->getMoviesFromApi($filteredParams, $page);
+        $moviesData = $this->movieApiClient->getContentFromApi($filteredParams, $page);
         $preparedMovies = $this->prepareMovies($moviesData['results']);
 
         return [
@@ -188,9 +197,29 @@ class MovieService implements MovieServiceInterface
 
     public function searchMovies(string $query): array
     {
-        $movies = $this->movieApiClientInterface->searchMovies($query);
+        $movies = $this->movieApiClient->searchContent($query);
         $preparedMovies = $this->prepareMovies($movies);
 
         return $preparedMovies;
+    }
+
+    public function getUserMoviesWithRatings($userId)
+    {
+        $ratings = Rating::where('user_id', $userId)
+            ->where('media_type', 'movie')
+            ->orderByDesc('created_at')
+            ->get(['movie_tmdb_id', 'rating_value']);
+
+        $moviesWithRatings = [];
+        foreach ($ratings as $rating) {
+            $movieInfo = $this->getInfoMovie($rating->movie_tmdb_id);
+            $movieInfo['user_rating'] = $rating->rating_value;
+
+            if (!in_array($movieInfo, $moviesWithRatings)) {
+                $moviesWithRatings[] = $movieInfo;
+            }
+        }
+
+        return $moviesWithRatings;
     }
 }

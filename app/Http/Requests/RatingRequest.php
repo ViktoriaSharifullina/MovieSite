@@ -16,6 +16,7 @@ class RatingRequest extends FormRequest
         return [
             'movie_tmdb_id' => 'required|integer',
             'rating_value' => 'required|integer|between:0,10',
+            'media_type' => 'required|string|in:movie,tv',
         ];
     }
 }

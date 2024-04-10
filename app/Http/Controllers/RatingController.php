@@ -21,11 +21,12 @@ class RatingController extends Controller
         $userId = Auth::id();
         $movieId = $validated['movie_tmdb_id'];
         $ratingValue = $validated['rating_value'];
+        $mediaType = $validated['media_type'];
 
         if ($ratingValue == 0) {
-            $response = $this->ratingService->removeRating($userId, $movieId);
+            $response = $this->ratingService->removeRating($userId, $movieId, $mediaType);
         } else {
-            $response = $this->ratingService->setRating($userId, $movieId, $ratingValue);
+            $response = $this->ratingService->setRating($userId, $movieId, $ratingValue, $mediaType);
         }
 
         return response()->json($response);

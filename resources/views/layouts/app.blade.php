@@ -31,11 +31,11 @@
                         </div>
                     </li>
                     <li class="dropdown">
-                        <a class="dropbtn {{ Request::is('series-catalog') ? 'active' : '' }}">Shows</a>
+                        <a class="dropbtn {{ Request::is('series-catalog*') ? 'active' : '' }}">Shows</a>
                         <div class="dropdown-content">
-                            <a href="/series-catalog">Popular</a>
-                            <a href="/series-catalog">On TV</a>
-                            <a href="/series-catalog">Top Rated</a>
+                            <a href="{{ route('tv.catalogBasic', ['sort' => 'popular']) }}">Popular</a>
+                            <!-- <a href="/series-catalog">On TV</a> -->
+                            <a href="{{ route('tv.catalogBasic', ['sort' => 'top_rated']) }}">Top Rated</a>
                         </div>
                     </li>
                     <li><a class="menu-list-item {{ Request::is('people-catalog') ? 'active' : '' }}" href="/people-catalog">People</a></li>

@@ -27,15 +27,15 @@
         </div>
     </div>
     <div class="profile-menu">
-        <a href="#" class="profile-link">
+        <a href="{{ route('profile.movies') }}" class="profile-link">
             <div class="item-container">
-                <div class="item-container-value">441</div>
+                <div class="item-container-value">{{ $moviesCount }}</div>
                 <div class="item-description">Movies</div>
             </div>
         </a>
         <a href="#" class="profile-link">
             <div class="item-container">
-                <div class="item-container-value">121</div>
+                <div class="item-container-value">{{ $seriesCount }}</div>
                 <div class="item-description">Series</div>
             </div>
         </a>
@@ -53,13 +53,13 @@
         </a>
         <a href="{{ route('profile.list', ['listType' => 'favorites']) }}" class="profile-link">
             <div class="item-container">
-                <div class="item-container-value">36</div>
-                <div class="item-description">Favorite movies</div>
+                <div class="item-container-value">{{ $favoriteCount }}</div>
+                <div class="item-description">Favorite</div>
             </div>
         </a>
         <a href="{{ route('profile.list', ['listType' => 'watch_later']) }}" class="profile-link">
             <div class="item-container">
-                <div class="item-container-value">10</div>
+                <div class="item-container-value">{{ $watchLaterCount }}</div>
                 <div class="item-description">Watch later</div>
             </div>
         </a>
@@ -79,15 +79,24 @@
             </div>
             <div class="movie-facts-1">
                 <div class="movie-titles">
-                    <div class="movie-title">{{ $details['title'] }} ({{ \Carbon\Carbon::parse($details['release_date'])->format('Y') }})</div>
-                    <div class="movie-original-title">{{ $details['original_title'] }}, {{ $details['formatted_runtime'] }}</div>
+                    <div class="movie-title">
+                        {{ isset($details['title']) ? $details['title'] : $details['name'] }},
+                        {{ isset($details['release_date']) ? \Carbon\Carbon::parse($details['release_date'])->format('Y') : \Carbon\Carbon::parse($details['first_air_date'])->format('Y')}}
+                    </div>
+                    <div class="movie-original-title">{{ isset($details['original_title']) ? $details['original_title'] : $details['original_name'] }},
+                        {{ isset($details['formatted_runtime']) ? $details['formatted_runtime'] : "" }}
+                    </div>
                 </div>
                 <div class="movie-facts-2">
                     <div class="movie-description">
                         @foreach ($details['production_countries'] as $country)
                         {{ $country['iso_3166_1'] }}
                         @endforeach
+                        @if(isset($details['director']))
                         , dir. {{ $details['director'] }}
+                        @elseif(isset($details['created_by'][0]['name']))
+                        , created by {{ $details['created_by'][0]['name'] }}
+                        @endif
                     </div>
                     <div class="movie-main-genres">
                         @if(!empty($details['genres']) && count($details['genres']) > 0)
@@ -103,7 +112,7 @@
             </div>
             <div class="movie-rating">
                 <div class="movie-site-rating {{ $details['vote_average'] < 5 ? 'low' : ($details['vote_average'] < 7 ? 'medium' : 'high') }}">{{ number_format($details['vote_average'], 1) }}</div>
-                <div class="movie-user-rating">8</div>
+                <div class="movie-user-rating">{{ $details['user_rating'] ?? 'Not rated' }}</div>
                 <div class="movie-actions">
                     <li class="drop-btn">
                         <a class="dropbtn"><i class="fa-solid fa-play"></i></a>

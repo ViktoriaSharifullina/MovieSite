@@ -4,9 +4,8 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
-use App\Http\Contracts\PeopleApiClientInterface;
 
-class PeopleApiClient implements PeopleApiClientInterface
+class PeopleApiClient
 {
     protected $apiKey;
 

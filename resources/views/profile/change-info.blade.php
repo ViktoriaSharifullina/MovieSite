@@ -42,7 +42,7 @@
             <div class="row-inputs">
                 <div class="input-title">
                     Birthday
-                    <input type="date" class="profile-form birthday-input" name="birthday">
+                    <input type="date" class="profile-form birthday-input" value="{{ $user->birthday->format('Y-m-d') }}" name="birthday">
                 </div>
                 <div class="input-title">
                     Location

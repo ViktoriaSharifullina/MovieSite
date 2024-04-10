@@ -2,20 +2,15 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Promise;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 
-class MovieApiClient
+class TvApiClient
 {
     private $api_key;
-    protected $client;
 
     public function __construct()
     {
-        $this->client = new Client();
         $this->api_key = config('services.tmdb.api_key');
     }
 
@@ -53,40 +48,26 @@ class MovieApiClient
 
     public function getContentByFilter($type): array
     {
-        $results = cache()->remember("movies_{$type}", now()->addHours(1), function () use ($type) {
-            return $this->performApiRequest("https://api.themoviedb.org/3/movie/{$type}", ['page' => 1])['results'];
+        $results = cache()->remember("tv_{$type}", now()->addHours(1), function () use ($type) {
+            return $this->performApiRequest("https://api.themoviedb.org/3/tv/{$type}", ['page' => 1])['results'];
         });
 
         return $results;
     }
 
-    public function getContentDetails($contentId, $contentType = 'movie'): array
+    public function getContentDetails($contentId): array
     {
-        return $this->performApiRequest("https://api.themoviedb.org/3/{$contentType}/{$contentId}");
+        return $this->performApiRequest("https://api.themoviedb.org/3/tv/{$contentId}");
     }
 
-    public function getContentCredits($contentId, $contentType = 'movie'): array
+    public function getContentCredits($contentId): array
     {
-        return $this->performApiRequest("https://api.themoviedb.org/3/{$contentType}/{$contentId}/credits");
+        return $this->performApiRequest("https://api.themoviedb.org/3/tv/{$contentId}/credits");
     }
 
     public function getActorDetails($actorId): array
     {
         return $this->performApiRequest("https://api.themoviedb.org/3/person/{$actorId}", []);
-    }
-
-    public function getDirectorInfo(int $contentId, $contentType = 'movie'): array
-    {
-        $creditsResponse = $this->performApiRequest("https://api.themoviedb.org/3/{$contentType}/{$contentId}/credits", []);
-        $directorInfo = collect($creditsResponse['crew'])->firstWhere('job', 'Director');
-        return $directorInfo ?: [];
-    }
-
-    public function getWriterInfo(int $contentId, $contentType = 'movie'): array
-    {
-        $creditsResponse = $this->performApiRequest("https://api.themoviedb.org/3/{$contentType}/{$contentId}/credits", []);
-        $writerInfo = collect($creditsResponse['crew'])->firstWhere('job', 'Screenplay');
-        return $writerInfo ?: [];
     }
 
     public function getActorPhoto(int $actorId): string
@@ -96,28 +77,28 @@ class MovieApiClient
         return $actorDetails['profile_path'] ?: [];
     }
 
-    public function getContentSorted($type, $sort, $page = 1, $contentType = 'movie'): array
+    public function getContentSorted($type, $sort, $page = 1): array
     {
         $queryParams = [
             'page' => $page,
             'sort_by' => $sort,
         ];
 
-        return $this->performApiRequest("https://api.themoviedb.org/3/{$contentType}/{$type}", $queryParams);
+        return $this->performApiRequest("https://api.themoviedb.org/3/tv/{$type}", $queryParams);
     }
 
-    public function getContentFromApi($filterParams, $page = 1, $contentType = 'movie'): array
+    public function getContentFromApi($filterParams, $page = 1): array
     {
         $queryParams = array_merge([
             'api_key' => $this->api_key,
             'page' => $page,
         ], $filterParams);
 
-        return $this->performApiRequest("https://api.themoviedb.org/3/discover/{$contentType}", $queryParams);
+        return $this->performApiRequest("https://api.themoviedb.org/3/discover/tv", $queryParams);
     }
 
-    public function searchContent(string $query, $contentType = 'movie'): array
+    public function searchContent(string $query): array
     {
-        return $this->performApiRequest("https://api.themoviedb.org/3/search/{$contentType}", ['query' => $query])['results'];
+        return $this->performApiRequest("https://api.themoviedb.org/3/search/tv", ['query' => $query])['results'];
     }
 }

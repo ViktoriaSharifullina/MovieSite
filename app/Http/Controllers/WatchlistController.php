@@ -22,7 +22,8 @@ class WatchlistController extends Controller
         }
 
         $user = Auth::user();
-        $status = $this->watchlistService->toggleWatchlist($user, $request->movie_tmdb_id, $request->list_type);
+        $status = $this->watchlistService->toggleWatchlist($user, $request->movie_tmdb_id, $request->list_type, $request->media_type);
+
 
         return response()->json(['status' => $status]);
     }

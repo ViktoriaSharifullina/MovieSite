@@ -13,6 +13,7 @@ class Watchlist extends Model
         'user_id',
         'movie_tmdb_id',
         'list_type',
+        'media_type'
     ];
 
     public function user()

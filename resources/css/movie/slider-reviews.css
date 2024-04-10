@@ -119,10 +119,14 @@
     background: #5d5d5d;
 }
 
-.swiper-pagination {
-    margin-left: 45%;
+.swiper-pagination-container {
+    display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
+}
+
+.swiper-pagination {
     height: 30px;
     display: flex;
 }

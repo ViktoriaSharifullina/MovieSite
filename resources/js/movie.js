@@ -14,8 +14,9 @@ document.querySelectorAll(".bookmark-btn, .heart-btn").forEach((button) => {
         }
 
         const movieId = this.dataset.movieId;
-        const listType = this.getAttribute("data-list-type");
-        const url = this.getAttribute("data-url");
+        const listType = this.dataset.listType;
+        const mediaType = this.dataset.mediaType;
+        const url = this.dataset.url;
         const csrfToken = document
             .querySelector('meta[name="csrf-token"]')
             .getAttribute("content");
@@ -30,6 +31,7 @@ document.querySelectorAll(".bookmark-btn, .heart-btn").forEach((button) => {
             body: JSON.stringify({
                 movie_tmdb_id: movieId,
                 list_type: listType,
+                media_type: mediaType,
             }),
         })
             .then((response) => response.json())
@@ -68,6 +70,10 @@ document.querySelectorAll(".number-rate").forEach((number) => {
         const ratingValue = event.target.textContent;
         const movieId = document.getElementById("starButton").dataset.movieId;
         const url = document.getElementById("starButton").dataset.url;
+        const mediaType =
+            document.getElementById("starButton").dataset.mediaType;
+
+        console.log(mediaType);
 
         var clickedNumber = event.target;
 
@@ -96,6 +102,7 @@ document.querySelectorAll(".number-rate").forEach((number) => {
             body: JSON.stringify({
                 movie_tmdb_id: movieId,
                 rating_value: ratingValue,
+                media_type: mediaType,
             }),
         })
             .then((response) => {
@@ -117,6 +124,7 @@ document.querySelectorAll(".number-rate").forEach((number) => {
 document.getElementById("starButton").addEventListener("click", function () {
     const movieId = this.dataset.movieId;
     const url = this.dataset.url;
+    const mediaType = this.dataset.mediaType;
 
     if (textStarBtn.classList.contains("hidden")) {
         starButton.classList.remove("focused");
@@ -133,6 +141,8 @@ document.getElementById("starButton").addEventListener("click", function () {
             number.style.color = "#7e7e7e";
         });
 
+        console.log(mediaType);
+
         fetch(url, {
             method: "POST",
             headers: {
@@ -145,6 +155,7 @@ document.getElementById("starButton").addEventListener("click", function () {
             body: JSON.stringify({
                 movie_tmdb_id: movieId,
                 rating_value: 0,
+                media_type: mediaType,
             }),
         })
             .then((response) => {
