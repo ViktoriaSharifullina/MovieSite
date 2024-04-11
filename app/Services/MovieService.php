@@ -4,16 +4,20 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Models\Rating;
+use App\Models\Review;
 use GuzzleHttp\Client;
 use App\Services\MovieApiClient;
+use Illuminate\Support\Facades\Auth;
 
 class MovieService
 {
     private $movieApiClient;
+    private $ratingService;
 
-    public function __construct(MovieApiClient $movieApiClient)
+    public function __construct(MovieApiClient $movieApiClient, RatingService $ratingService)
     {
         $this->movieApiClient = $movieApiClient;
+        $this->ratingService = $ratingService;
     }
 
     public function getContentData($contentType = 'movie'): array
@@ -126,24 +130,17 @@ class MovieService
     {
         $movieCredits = $this->movieApiClient->getContentCredits($movieId);
 
-        $mainActors = collect($movieCredits['cast'])
+        return collect($movieCredits['cast'])
             ->where('order', '<=', 10)
             ->map(function ($actor) {
                 return [
                     'id' => $actor['id'],
                     'name' => $actor['name'],
                     'character' => $actor['character'],
+                    'photo' => $this->movieApiClient->getActorPhoto($actor['id']),
                 ];
             });
-
-        $actorsWithImages = collect($mainActors)->map(function ($actor) {
-            $actor['photo'] = $this->movieApiClient->getActorPhoto($actor['id']);
-            return $actor;
-        });
-
-        return $actorsWithImages;
     }
-
 
     public function aboutMovie(int $id)
     {
@@ -159,6 +156,23 @@ class MovieService
         $mainActors = $this->getMainActors($movieId);
 
         return compact('movie', 'mainActors');
+    }
+
+    public function getUserDetailsForMovie(int $movieId): array
+    {
+        $details = ['isInWatchLater' => false, 'isFavorite' => false, 'userRating' => null];
+        if (Auth::check()) {
+            $user = Auth::user();
+            $details['isInWatchLater'] = $user->isInWatchLater($movieId);
+            $details['isFavorite'] = $user->isFavorite($movieId);
+            $details['userRating'] = $this->ratingService->getUserRating($movieId);
+        }
+        return $details;
+    }
+
+    public function getReviewsForMovie(int $movieId)
+    {
+        return Review::where('movie_tmdb_id', $movieId)->get();
     }
 
     public function getMoviesByFilter($filter): array

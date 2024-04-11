@@ -21,7 +21,10 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(MovieService::class, function ($app) {
-            return new MovieService($app->make(MovieApiClient::class));
+            return new MovieService(
+                $app->make(MovieApiClient::class),
+                $app->make(RatingService::class)
+            );
         });
 
         $this->app->singleton(TvService::class, function ($app) {

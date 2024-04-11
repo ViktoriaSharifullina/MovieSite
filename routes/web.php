@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\WatchlistController;
 
 Route::get('/', [MovieController::class, 'index'])->name('home');
@@ -39,4 +40,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/watchlist/toggle', [WatchlistController::class, 'toggle'])->name('watchlist.toggle');
     Route::post('/rating/toggle', [RatingController::class, 'toggle'])->name('rating.toggle');
+
+    Route::post('/review/create', [ReviewController::class, 'store'])->name('review.store');
 });

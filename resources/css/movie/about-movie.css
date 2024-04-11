@@ -528,7 +528,7 @@ ul.facts li:first-child {
     transform: rotate(315deg);
 }
 
-.btn-write-rewiew {
+.btn-write-review {
     text-decoration: none;
     text-align: center;
     width: auto;
@@ -552,7 +552,7 @@ ul.facts li:first-child {
     justify-content: center;
 }
 
-.btn-write-rewiew:hover {
+.btn-write-review:hover {
     background-color: rgb(211, 48, 48);
 }
 
@@ -563,6 +563,7 @@ ul.facts li:first-child {
     width: 500px;
     border-radius: 8px;
     padding: 20px;
+    /* text-align: center; */
 }
 
 .label-select-rating {
@@ -579,22 +580,23 @@ ul.facts li:first-child {
     margin-bottom: 20px;
 }
 
-.btn-send-rewiew {
+.btn-send-review {
     text-decoration: none;
     text-align: center;
     border: none;
-    font-size: 17px;
+    font-size: 14px;
     color: #fff;
-    padding: 8px 10px;
-    background-color: #7d7d7d;
+    padding: 8px 15px;
+    background-color: rgb(211, 48, 48);
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    display: block;
-    margin-top: 20px;
-    font-weight: 600;
 }
 
-.btn-send-rewiew:hover {
-    background-color: rgb(211, 48, 48);
+.btn-send-review:hover {
+    background-color: #7d7d7d;
+}
+
+.hidden {
+    display: none;
 }

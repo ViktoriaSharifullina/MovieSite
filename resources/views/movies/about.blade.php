@@ -166,26 +166,16 @@
             </div>
         </div>
         <div class="write-container">
-            <a href="#" class="btn-write-rewiew">Write a review</a>
-            <div class="write-form-container">
-                <form action="">
+            <a href="#" class="btn-write-review">Write a review</a>
+            <div class="write-form-container hidden">
+                <form id="review-form" action="{{ route('review.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="movie_tmdb_id" value="{{ $movie['id'] }}">
+                    <input type="hidden" name="media_type" value="{{ $movie['media_type'] }}">
                     <div class="form-group">
-                        <textarea class="review-area" rows="10"></textarea>
+                        <textarea class="review-area" name="comment" rows="10"></textarea>
                     </div>
-                    <label class="label-select-rating" for="select-rating">Select a rating</label>
-                    <select class="select-rating" id="select-rating">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                    </select>
-                    <a href="#" class="btn-send-rewiew">SEND</a>
+                    <button type="submit" class="btn-send-review">Send</button>
                 </form>
             </div>
         </div>
@@ -203,4 +193,5 @@
     <script src="//cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/swiper-bundle.min.js"></script>
     @vite(['resources/js/movie.js'])
     @vite(['resources/js/comments-section.js'])
+    @vite(['resources/js/reviews.js'])
     @endsection

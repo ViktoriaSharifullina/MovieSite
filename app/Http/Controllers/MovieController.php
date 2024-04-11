@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Review;
 use Illuminate\Http\Request;
 use App\Services\MovieService;
 use App\Services\RatingService;
@@ -33,22 +34,11 @@ class MovieController extends Controller
     public function aboutMovie(int $id)
     {
         $movieDetails = $this->movieService->getMovieDetailsAndActors($id);
+        $userDetails = $this->movieService->getUserDetailsForMovie($id);
+        $reviews = $this->movieService->getReviewsForMovie($id);
 
-        $movie = $movieDetails['movie'];
-        $mainActors = $movieDetails['mainActors'];
 
-        $isInWatchLater = false;
-        $isFavorite = false;
-        $userRating = null;
-
-        if (Auth::check()) {
-            $user = Auth::user();
-            $isInWatchLater = $user->isInWatchLater($id);
-            $isFavorite = $user->isFavorite($id);
-            $userRating = $this->ratingService->getUserRating($id);
-        }
-
-        return view('movies.about', compact('movie', 'mainActors', 'isInWatchLater', 'isFavorite', 'userRating'));
+        return view('movies.about', array_merge($movieDetails, $userDetails, ['reviews' => $reviews]));
     }
 
     public function catalogBasic(Request $request)
@@ -101,7 +91,6 @@ class MovieController extends Controller
         $watchLaterCount = $user->watchLaterCount();
         $moviesDetails = $this->userProfileService->getListDetailsByType($user, $listType);
 
-        // dd($moviesDetails);
         return view('profile.user-profile', [
             'movies' => $moviesDetails,
             'user' => $user,
