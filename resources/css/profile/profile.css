@@ -2,7 +2,6 @@
     margin-left: 10vw;
     margin-right: 10vw;
     margin-top: 90px;
-    height: 300px;
     display: flex;
     flex-direction: column;
     color: white;
@@ -78,11 +77,33 @@
     transition: all 0.3s ease;
 }
 
-.btn-change-info:hover {
+.btn-change-info:hover,
+.btn-add-friend:hover,
+.btn-write-msg:hover {
     background-color: rgb(211, 48, 48);
 }
 
+.btn-add-friend {
+    margin-right: 30px;
+}
+
+.btn-add-friend,
+.btn-write-msg {
+    text-decoration: none;
+    text-align: center;
+    margin-top: 20px;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    padding: 8px 10px;
+    background-color: #7d7d7d;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
 .profile-menu {
+    /* margin-left: 10vw; */
     display: flex;
     margin-top: 30px;
     width: 100%;

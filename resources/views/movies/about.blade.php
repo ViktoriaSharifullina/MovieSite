@@ -156,6 +156,8 @@
             </div>
         </div>
         <div class="reviews-container">
+            @if($reviews->isNotEmpty())
+            {{-- Слайдер с рецензиями --}}
             @include('layouts/slider-reviews')
             <div class="gradient-menu-right"></div>
             <div class="gradient-menu-left"></div>
@@ -164,6 +166,12 @@
             <div class="swiper-pagination-container">
                 <div class="swiper-pagination"></div>
             </div>
+            @else
+            {{-- Сообщение, если рецензий нет --}}
+            <div class="no-reviews">
+                <p>No reviews available.</p>
+            </div>
+            @endif
         </div>
         <div class="write-container">
             <a href="#" class="btn-write-review">Write a review</a>
@@ -172,6 +180,7 @@
                     @csrf
                     <input type="hidden" name="movie_tmdb_id" value="{{ $movie['id'] }}">
                     <input type="hidden" name="media_type" value="{{ $movie['media_type'] }}">
+                    <input type="hidden" name="rating_value" value="{{ $userRating ? $userRating->rating_value : '' }}">
                     <div class="form-group">
                         <textarea class="review-area" name="comment" rows="10"></textarea>
                     </div>

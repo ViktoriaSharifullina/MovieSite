@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('review_id');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('movie_tmdb_id');
+            $table->unsignedTinyInteger('rating_value');
             $table->enum('media_type', ['movie', 'tv']);
             $table->text('comment');
             $table->timestamps();

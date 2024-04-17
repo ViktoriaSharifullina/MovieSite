@@ -2,6 +2,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const reviewButton = document.querySelector(".btn-write-review");
     const reviewFormContainer = document.querySelector(".write-form-container");
     const reviewForm = document.getElementById("review-form");
+    const ratingValueInput = reviewForm.querySelector(
+        'input[name="rating_value"]'
+    );
+
+    reviewForm.addEventListener("submit", function (event) {
+        const ratingValue = ratingValueInput.value;
+
+        if (!ratingValue || ratingValue === "0") {
+            event.preventDefault();
+            alert("Please rate the movie before submitting your review.");
+        }
+    });
 
     // Переключение между показом формы и изменением текста кнопки
     reviewButton.addEventListener("click", function (event) {

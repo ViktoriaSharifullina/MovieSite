@@ -11,9 +11,7 @@
 <div class="user-profile-container">
     <div class="top-container">
         <div class="user-photo">
-            @if($user->photo)
-            <img src="{{ asset('storage/' . $user->photo) }}" alt="User Photo">
-            @endif
+            <img src="{{ $user->photo ? asset('storage/' . $user->photo) : 'https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg' }}">
         </div>
         <div class="user-info">
             <div class="user-name">{{ $user->username }}</div>
@@ -23,7 +21,16 @@
                 <div class="location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $user->location ?? 'Location not set' }}</div>
                 <div class="birthday"><i class="fa fa-birthday-cake" aria-hidden="true"></i> {{ $user->birthday ? $user->birthday->format('d.m.Y') : 'Birthday not set' }}</div>
             </div>
+            @if($isOwnProfile)
             <a href="{{ route('profile.info') }}" class="btn-change-info">Change</a>
+            @else
+            <div class="communication-container">
+                <button class="btn-add-friend" data-user-id="{{ $user->id }}" data-friend-status="{{ $isFriend ? 'friend' : 'not-friend' }}" data-url="{{ route('toggle.friend', ['userId' => $user->id]) }}" data-csrf-token="{{ csrf_token() }}">
+                    {{ $isFriend ? 'Remove from Friends' : 'Add to Friends' }}
+                </button>
+                <button class="btn-write-msg">Write a message</button>
+            </div>
+            @endif
         </div>
     </div>
     <div class="profile-menu">
@@ -133,4 +140,5 @@
 
 @section('script')
 @vite(['resources/js/profile.js'])
+@vite(['resources/js/follow.js'])
 @endsection

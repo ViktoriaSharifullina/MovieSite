@@ -40,6 +40,7 @@
                     </li>
                     <li><a class="menu-list-item {{ Request::is('people-catalog') ? 'active' : '' }}" href="/people-catalog">People</a></li>
                     <li><a class="menu-list-item {{ Request::is('communities') ? 'active' : '' }}" href="#">Communities</a></li>
+                    <li><a class="menu-list-item {{ Request::is('users') ? 'active' : '' }}" href="/users">Users</a></li>
                 </ul>
             </div>
             <li class="dropdown profile-dropdown">

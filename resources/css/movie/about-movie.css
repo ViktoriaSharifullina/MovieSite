@@ -600,3 +600,10 @@ ul.facts li:first-child {
 .hidden {
     display: none;
 }
+
+.no-reviews {
+    color: white;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}

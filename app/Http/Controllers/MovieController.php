@@ -112,6 +112,7 @@ class MovieController extends Controller
 
         $movies = $this->movieService->getUserMoviesWithRatings($user->id);
 
+        // dd($movies);
         return view('profile.user-profile', [
             'movies' => $movies,
             'user' => $user,

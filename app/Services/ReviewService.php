@@ -13,6 +13,7 @@ class ReviewService
         $review->user_id = Auth::id();
         $review->movie_tmdb_id = $data['movie_tmdb_id'];
         $review->media_type = $data['media_type'];
+        $review->rating_value = $data['rating_value'];
         $review->comment = $data['comment'];
         $review->save();
 

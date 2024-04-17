@@ -5,6 +5,8 @@
                 @foreach ($reviews as $review)
                 <div class="swiper-slide">
                     <div class="image-content">
+                        <div class="rate {{ $review->rating_value < 5 ? 'low' : ($review->rating_value < 7 ? 'medium' : 'high') }}">
+                        </div>
                         <!-- <div class="rate {{ $review->rateClass }}"></div> -->
                         <div class="card-image"></div>
                         <div class="name">{{ $review->user->name }}</div>

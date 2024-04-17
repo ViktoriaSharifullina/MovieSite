@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Follow;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
@@ -56,16 +57,26 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function showProfile()
+    public function showProfile($userId = null)
     {
-        $user = Auth::user();
+        $user = $userId ? User::findOrFail($userId) : Auth::user();
+        $currentUser = Auth::user();
+
         $seriesCount = $user->seriesCount();
         $moviesCount = $user->moviesCount();
         $favoriteCount = $user->favoriteCount();
         $watchLaterCount = $user->watchLaterCount();
 
-        return view('/profile/user-profile', [
+        $isOwnProfile = !$userId || $userId == $currentUser->id;
+
+        $isFriend = !$isOwnProfile && Follow::where('follower_id', $currentUser->id)
+            ->where('following_id', $user->id)
+            ->exists();
+
+        return view('profile.user-profile', [
             'user' => $user,
+            'isOwnProfile' => $isOwnProfile,
+            'isFriend' => $isFriend,
             'moviesCount' => $moviesCount,
             'seriesCount' => $seriesCount,
             'favoriteCount' => $favoriteCount,
@@ -87,5 +98,12 @@ class UserController extends Controller
         $this->userService->updateUser($user, $request->validated());
 
         return redirect()->route('profile.info', $user->id)->with('success', 'Profile updated successfully!');
+    }
+
+    public function show()
+    {
+        $users = User::all();
+
+        return view('users.users', compact('users'));
     }
 }

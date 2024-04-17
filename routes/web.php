@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TvController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ReviewController;
@@ -27,6 +28,11 @@ Route::get('/people/{id}', [PeopleController::class, 'index'])->name('people.abo
 
 Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::post('/login', [UserController::class, 'login'])->name('login');
+
+Route::get('/users', [UserController::class, 'show'])->name('users');
+Route::get('/profile/{userId}', [UserController::class, 'showProfile'])->name('user.profile');
+Route::post('/add-friend/{userId}', [FollowController::class, 'toggleFriend'])->name('toggle.friend');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');

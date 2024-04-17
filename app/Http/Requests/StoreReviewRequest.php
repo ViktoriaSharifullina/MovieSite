@@ -16,6 +16,7 @@ class StoreReviewRequest extends FormRequest
         return [
             'movie_tmdb_id' => 'required|integer',
             'media_type' => 'required|in:movie,tv',
+            'rating_value' => 'required|integer',
             'comment' => 'required|string|max:5000',
         ];
     }

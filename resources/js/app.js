@@ -72,8 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         .map((key) => `<li>${errors[key].join(". ")}</li>`)
                         .join("");
                     errorContainer.innerHTML = `<div class="alert alert-danger"><ul>${errorList}</ul></div>`;
-                } else if (errorData.error) {
-                    errorsContainer.innerHTML = `<div class="alert alert-danger">${errorData.error}</div>`;
                 } else {
                     window.location.href = "/profile";
                 }
